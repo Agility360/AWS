@@ -1,5 +1,5 @@
 #!/bin/sh
-lambda_name="cea-db-crud"
+lambda_name="cea-sql"
 zip_file="${lambda_name}.zip"
 role_arn="arn:aws:iam::788245146769:role/lambda-vpc-execution-role"
 subnet_ids=`aws ec2 describe-subnets |\
@@ -7,7 +7,7 @@ subnet_ids=`aws ec2 describe-subnets |\
 sec_group_id=`aws ec2 describe-security-groups --group-name "rds-launch-wizard" |\
                 jq -r '.SecurityGroups[].GroupId'`
 
-files="cea-db-crud.py rds_config.py"
+files="cea-sql.py rds_config.py"
 chmod 755 ${files}
 zip -r "${zip_file}" pymysql ${files}
 
