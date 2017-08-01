@@ -66,7 +66,7 @@ def lambda_handler(event, context):
     logger.info('SQL statement: ' + sql)
     cursor =  conn.cursor()
     cursor.execute(sql)
-    logger.info('SQL response: ' + str(cursor.description))
+    #logger.info('SQL response: ' + str(cursor.description))
 
 #
 # 5a. format the recordset returned as a JSON string
@@ -91,8 +91,6 @@ def lambda_handler(event, context):
             "update_date" : str(record[12])
         }
 
-    rs_json = json.dumps(candidate)
-
     cursor.close ()
     conn.close ()
 
@@ -100,5 +98,5 @@ def lambda_handler(event, context):
 # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
 #     the API Gateway method will push this JSON string in the http response body
 #
-    logger.info('JSON returned is: ' + rs_json)
-    return rs_json
+    logger.info('JSON returned is: ' + json.dumps(candidate))
+    return candidate
