@@ -16,207 +16,173 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `batch_categories`
---
-
-DROP TABLE IF EXISTS `batch_categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `batch_categories` (
-  `batch_category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `batch_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`batch_category_id`),
-  UNIQUE KEY `UC_batch_categorie` (`batch_id`,`category_id`),
-  KEY `batch_categories_category_id` (`category_id`),
-  CONSTRAINT `batch_categories_batch_id` FOREIGN KEY (`batch_id`) REFERENCES `batches` (`batch_id`),
-  CONSTRAINT `batch_categories_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `batches`
---
-
-DROP TABLE IF EXISTS `batches`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `batches` (
-  `batch_id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) NOT NULL DEFAULT '',
-  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`batch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `candidate_job_history`
---
-
-DROP TABLE IF EXISTS `candidate_job_history`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `candidate_job_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `candidate_id` int(11) NOT NULL,
-  `company_name` varchar(50) NOT NULL,
-  `job_title` varchar(50) NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime DEFAULT NULL,
-  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `final_salary` double DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `job_history_candidate_id_idx` (`candidate_id`),
-  CONSTRAINT `job_history_candidate_id` FOREIGN KEY (`candidate_id`) REFERENCES `candidates` (`candidate_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `candidates`
---
-
-DROP TABLE IF EXISTS `candidates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `candidates` (
-  `candidate_id` int(11) NOT NULL AUTO_INCREMENT,
-  `account_name` varchar(30) NOT NULL DEFAULT '',
-  `first_name` varchar(30) NOT NULL DEFAULT '',
-  `middle_name` varchar(30) DEFAULT NULL,
-  `last_name` varchar(30) NOT NULL DEFAULT '',
-  `email` varchar(30) NOT NULL DEFAULT '',
-  `phone_number` varchar(30) DEFAULT NULL,
-  `industry_id` int(11) NOT NULL DEFAULT '0',
-  `subindustry_id` int(11) NOT NULL DEFAULT '0',
-  `profession_id` int(11) NOT NULL DEFAULT '0',
-  `subprofession_id` int(11) NOT NULL DEFAULT '0',
-  `update_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`candidate_id`),
-  UNIQUE KEY `id_UNIQUE` (`candidate_id`),
-  UNIQUE KEY `UC_user_name` (`account_name`),
-  UNIQUE KEY `UC_email` (`email`),
-  KEY `users-industry_id` (`industry_id`),
-  KEY `users-profession_id` (`profession_id`),
-  KEY `users-subindustry_id` (`subindustry_id`),
-  KEY `users-subprofession_id` (`subprofession_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `categories`
---
-
-DROP TABLE IF EXISTS `categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categories` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) DEFAULT NULL,
-  `description` varchar(50) NOT NULL DEFAULT '',
-  `industry_id` int(11) DEFAULT NULL,
-  `profession_id` int(11) DEFAULT NULL,
-  `is_system` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_id` (`category_id`),
-  KEY `categories-industry` (`industry_id`),
-  KEY `categories-profession` (`profession_id`),
-  KEY `categories-parent_id` (`parent_id`),
-  CONSTRAINT `categories-industry` FOREIGN KEY (`industry_id`) REFERENCES `industries` (`industry_id`),
-  CONSTRAINT `categories-parent_id` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`category_id`),
-  CONSTRAINT `categories-profession` FOREIGN KEY (`profession_id`) REFERENCES `professions` (`profession_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `industries`
---
-
-DROP TABLE IF EXISTS `industries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `industries` (
-  `industry_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL,
-  `description` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`industry_id`),
-  UNIQUE KEY `UC_industries` (`parent_id`,`description`),
-  CONSTRAINT `industries-subindustry_id` FOREIGN KEY (`parent_id`) REFERENCES `industries` (`industry_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `professions`
---
-
-DROP TABLE IF EXISTS `professions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `professions` (
-  `profession_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL,
-  `description` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`profession_id`),
-  UNIQUE KEY `UC_professions` (`parent_id`,`description`),
-  CONSTRAINT `professions-subprofession_id` FOREIGN KEY (`parent_id`) REFERENCES `professions` (`profession_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `questionnaires`
---
-
-DROP TABLE IF EXISTS `questionnaires`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questionnaires` (
-  `response_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `response` json DEFAULT NULL,
-  `response_text` varchar(4096) DEFAULT NULL,
-  `response_datetime` datetime DEFAULT NULL,
-  `response_double` double DEFAULT NULL,
-  PRIMARY KEY (`response_id`),
-  UNIQUE KEY `id_UNIQUE` (`response_id`),
-  UNIQUE KEY `UC_questionnaires` (`user_id`,`question_id`),
-  KEY `responses-question_id` (`question_id`),
-  CONSTRAINT `questionnaires_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `candidates` (`candidate_id`),
-  CONSTRAINT `responses-question_id` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `questions`
---
-
-DROP TABLE IF EXISTS `questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questions` (
-  `question_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `seq` int(11) NOT NULL,
-  `question` varchar(100) DEFAULT NULL,
-  `datatype_id` int(11) NOT NULL,
-  `choices` json DEFAULT NULL,
-  `is_descriptor` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`question_id`),
-  UNIQUE KEY `id_UNIQUE` (`question_id`),
-  UNIQUE KEY `UC_questions` (`category_id`,`question`),
-  CONSTRAINT `questions-category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping events for database 'cea'
 --
 
 --
 -- Dumping routines for database 'cea'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certifications_get` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certifications_get`(account_name varchar(30)
+)
+BEGIN
+
+
+SELECT	cert.id,
+		cert.candidate_id,
+		cert.institution_name,
+		cert.certification_name,
+		cert.date_received,
+		cert.expire_date,
+        cert.create_date
+FROM 	cea.candidate_certifications cert
+		JOIN cea.candidates c ON (c.candidate_id = cert.candidate_id)
+WHERE	c.account_name = account_name
+ORDER BY cert.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certification_add` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certification_add`(account_name varchar(30),
+institution_name varchar(255),
+certification_name varchar(255),
+date_received varchar(255),
+expire_date varchar(255)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+INSERT cea.candidate_certifications (candidate_id, institution_name, certification_name, date_received, expire_date)
+	SELECT	c.candidate_id,
+			institution_name, 
+            certification_name, 
+            date_received, 
+            expire_date
+	FROM	cea.candidates c
+    WHERE	(c.account_name = account_name);
+
+COMMIT;
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_add` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_add`(account_name varchar(30),
+institution_name varchar(255),
+degree varchar(255),
+start_date varchar(255),
+end_date varchar(255),
+graduated tinyint(1)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+INSERT cea.candidate_education (candidate_id, institution_name, degree, start_date, end_date, graduated)
+	SELECT	c.candidate_id,
+			institution_name, 
+			degree, 
+            start_date, 
+            end_date, 
+            graduated
+	FROM	cea.candidates c
+    WHERE	(c.account_name = account_name);
+
+COMMIT;
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_get` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_get`(account_name varchar(30)
+)
+BEGIN
+
+
+SELECT	e.id,
+		e.candidate_id,
+		e.institution_name,
+		e.degree,
+		e.start_date,
+		e.end_date,
+        e.graduated,
+        e.create_date
+FROM 	cea.candidate_education e
+		JOIN cea.candidates c ON (c.candidate_id = e.candidate_id)
+WHERE	c.account_name = account_name
+ORDER BY e.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_job_history_add` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -478,4 +444,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-01 12:35:50
+-- Dump completed on 2017-08-01 14:25:52
