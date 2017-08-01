@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-07-30T19:51:19Z",
+    "version": "2017-08-01T00:46:38Z",
     "title": "Candidate Engagement App"
   },
   "host": "hqctqkd7xc.execute-api.us-east-1.amazonaws.com",
@@ -36,7 +36,7 @@
                 "method.response.header.Content-Type": "'text/html'"
               },
               "responseTemplates": {
-                "text/html": "<html>\n    <head>\n        <style>\n        body {\n            color: #333;\n            font-family: Sans-serif;\n            max-width: 800px;\n            margin: auto;\n        }\n        </style>\n    </head>\n    <body>\n        <h1>Welcome to your Pet Store API</h1>\n        <p>\n            You have succesfully deployed your first API. You are seeing this HTML page because the <code>GET</code> method to the root resource of your API returns this content as a Mock integration.\n        </p>\n        <p>\n            The Pet Store API contains the <code>/pets</code> and <code>/pets/{petId}</code> resources. By making a <a href=\"/$context.stage/pets/\" target=\"_blank\"><code>GET</code> request</a> to <code>/pets</code> you can retrieve a list of Pets in your API. If you are looking for a specific pet, for example the pet with ID 1, you can make a <a href=\"/$context.stage/pets/1\" target=\"_blank\"><code>GET</code> request</a> to <code>/pets/1</code>.\n        </p>\n        <p>\n            You can use a REST client such as <a href=\"https://www.getpostman.com/\" target=\"_blank\">Postman</a> to test the <code>POST</code> methods in your API to create a new pet. Use the sample body below to send the <code>POST</code> request:\n        </p>\n        <pre>\n{\n    \"type\" : \"cat\",\n    \"price\" : 123.11\n}\n        </pre>\n    </body>\n</html>"
+                "text/html": "<html>\n    <head>\n        <style>\n        body {\n            color: #333;\n            font-family: Sans-serif;\n            max-width: 800px;\n            margin: auto;\n        }\n        </style>\n    </head>\n    <body>\n        <h1>Agility360 Candidate Engagement App REST API</h1>\n        <p>As a matter of convenience this api will be publicly accessible during development. Afterwards I will setup security credentials that will be stored locally in the mobile app.</p>\n        <p>Please note that per your request this api uses https 128-bit encryption.</p>\n        <p>This API contains the <code>/candidates/{candidateId}</code> resource. By making a <a href=\"/$context.stage/candidate/{candidateId}\" target=\"_blank\"><code>GET</code> request</a> to <code>/candidates/{candidateId}</code> you can retrieve the master account profile record of a candidate in your MySQL database. If you are looking for a specific candidate, for example the candidate with ID 1000, you can make a <a href=\"/$context.stage/pets/1000\" target=\"_blank\"><code>GET</code> request</a> to <code>/candidates/1</code>.\n        </p>\n        <p>You can use a standard web browser like Chrome to view this api. Alternatively, you can also use something more sophisticated, like a REST client such as <a href=\"https://www.getpostman.com/\" target=\"_blank\">Postman</a> to test the <code>POST</code> methods in your API to create a new candidate account. Use the sample body below to send the <code>POST</code> request:\n        </p>\n        <pre>\n{\n    \"first_name\" : \"Mickey\",\n    \"middle_name\": null,\n    \"last_name\" : \"Mouse\",\n    \"email\": \"mickey@disney.com\"\n}\n        </pre>\n    </body>\n</html>"
               }
             }
           },
@@ -50,14 +50,28 @@
     },
     "/candidates": {
       "post": {
+        "operationId": "CreateCandidate",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "NewCandidate",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewCandidate"
+            }
+          }
         ],
         "responses": {
           "200": {
             "description": "200 response",
             "schema": {
-              "$ref": "#/definitions/Empty"
+              "$ref": "#/definitions/Candidate"
             }
           }
         },
@@ -67,7 +81,7 @@
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateCreate/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
@@ -314,6 +328,82 @@
         }
       }
     },
+    "/candidates/{candidateId}/questionnaires": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "candidateId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      }
+    },
+    "/candidates/{candidateId}/questionnaires/{categoryId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "candidateId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      }
+    },
     "/candidates/{candidateId}/resume": {
       "get": {
         "produces": [
@@ -414,11 +504,154 @@
           "type": "aws"
         }
       }
+    },
+    "/questions": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      }
+    },
+    "/questions/{categoryId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      }
     }
   },
   "definitions": {
+    "Candidate": {
+      "type": "object",
+      "properties": {
+        "candidate_id": {
+          "type": "number"
+        },
+        "account_name": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "industry_id": {
+          "type": "number"
+        },
+        "subindustry_id": {
+          "type": "number"
+        },
+        "profession_id": {
+          "type": "number"
+        },
+        "subprofession_id": {
+          "type": "number"
+        }
+      }
+    },
+    "NewCandidate": {
+      "type": "object",
+      "properties": {
+        "account_name": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "industry_id": {
+          "type": "number"
+        },
+        "subindustry_id": {
+          "type": "number"
+        },
+        "profession_id": {
+          "type": "number"
+        },
+        "subprofession_id": {
+          "type": "number"
+        }
+      }
+    },
     "Empty": {
       "type": "object"
+    }
+  },
+  "x-amazon-apigateway-gateway-responses": {
+    "ACCESS_DENIED": {
+      "statusCode": 403,
+      "responseTemplates": {
+        "application/json": "{\"message\":$context.error.messageString}"
+      }
     }
   }
 }

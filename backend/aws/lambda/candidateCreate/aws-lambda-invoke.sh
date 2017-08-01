@@ -1,5 +1,5 @@
 #!/bin/sh
-lambda_name="cea-sql"
+lambda_name="candidateCreate"
 
 aws lambda invoke \
     --function-name "${lambda_name}" \
