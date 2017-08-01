@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-08-01T00:46:38Z",
+    "version": "2017-08-01T17:32:21Z",
     "title": "Candidate Engagement App"
   },
   "host": "hqctqkd7xc.execute-api.us-east-1.amazonaws.com",
@@ -89,14 +89,17 @@
         }
       }
     },
-    "/candidates/{candidateId}": {
+    "/candidates/{accountName}": {
       "get": {
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "candidateId",
+            "name": "accountName",
             "in": "path",
             "required": true,
             "type": "string"
@@ -116,22 +119,72 @@
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateGet/invocations",
+          "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
       }
     },
-    "/candidates/{candidateId}/certifications": {
+    "/candidates/{accountName}/jobhistory": {
       "get": {
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "candidateId",
+            "name": "accountName",
             "in": "path",
             "required": true,
             "type": "string"
@@ -151,23 +204,37 @@
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateJobHistoryGet/invocations",
+          "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
       },
       "post": {
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "candidateId",
+            "name": "accountName",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "NewCandidateJobHistory",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewCandidateJobHistory"
+            }
           }
         ],
         "responses": {
@@ -184,7 +251,7 @@
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateJobHistoryCreate/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
@@ -192,18 +259,10 @@
         }
       }
     },
-    "/candidates/{candidateId}/education": {
+    "/industries": {
       "get": {
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
         ],
         "responses": {
           "200": {
@@ -219,60 +278,63 @@
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:industriesGet/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
       },
-      "post": {
-        "produces": [
+      "options": {
+        "consumes": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+        "produces": [
+          "application/json"
         ],
         "responses": {
           "200": {
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
           "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
+          "type": "mock"
         }
       }
     },
-    "/candidates/{candidateId}/job-history": {
+    "/professions": {
       "get": {
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "responses": {
           "200": {
             "description": "200 response",
@@ -287,221 +349,55 @@
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:professionsGet/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
       },
-      "post": {
-        "produces": [
+      "options": {
+        "consumes": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+        "produces": [
+          "application/json"
         ],
         "responses": {
           "200": {
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
           "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      }
-    },
-    "/candidates/{candidateId}/questionnaires": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      }
-    },
-    "/candidates/{candidateId}/questionnaires/{categoryId}": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "categoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      }
-    },
-    "/candidates/{candidateId}/resume": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      },
-      "post": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      },
-      "delete": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "candidateId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:cea-sql/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
+          "type": "mock"
         }
       }
     },
@@ -638,6 +534,29 @@
           "type": "number"
         },
         "subprofession_id": {
+          "type": "number"
+        }
+      }
+    },
+    "NewCandidateJobHistory": {
+      "type": "object",
+      "properties": {
+        "account_name": {
+          "type": "string"
+        },
+        "company_name": {
+          "type": "string"
+        },
+        "job_title": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string"
+        },
+        "end_date": {
+          "type": "string"
+        },
+        "final_salary": {
           "type": "number"
         }
       }

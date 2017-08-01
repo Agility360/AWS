@@ -53,30 +53,16 @@ def lambda_handler(event, context):
 # 2. parse the input parameters from the https request body
 #    which is passed to this Lambda function from a AWS API Gateway method object
 #
-    account_name = event['account_name']
-    first_name = event['first_name']
-    middle_name = event['middle_name']
-    last_name = event['last_name']
-    email = event['email']
-    phone_number = event['phone_number']
-    industry_id = event['industry_id']
-    subindustry_id = event['subindustry_id']
-    profession_id = event['profession_id']
-    subprofession_id = event['subprofession_id']
+
+
 
 #
 # 3. create the SQL string
 #
-    sql = "CALL sp_users_add('" + account_name + "', "
-    sql = sql + "'" + str(first_name) + "', "
-    sql = sql + "'" + str(middle_name) + "', "
-    sql = sql + "'" + str(last_name) + "', "
-    sql = sql + "'" + str(email) + "', "
-    sql = sql + "'" + str(phone_number) + "', "
-    sql = sql + "'" + str(industry_id) + "', "
-    sql = sql + "'" + str(subindustry_id) + "', "
-    sql = sql + "'" + str(profession_id) + "', "
-    sql = sql + "'" + str(subprofession_id) + "')"
+
+    sql = "CALL sp_candidate_job_history_add('%s', '%s', '%s', '%s', '%s', %d)" % (event['account_name'], event['company_name'],
+                                            event['job_title'], event['start_date'], event['end_date'], event['final_salary'])
+    logger.info("SQL statement: " + sql)
 
 #
 # 4. execute the SQL string
