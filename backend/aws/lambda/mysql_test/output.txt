@@ -1,1 +1,0 @@
-"Added 3 items to RDS MySQL table"

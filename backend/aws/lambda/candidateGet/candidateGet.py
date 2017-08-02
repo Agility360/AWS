@@ -28,7 +28,7 @@ password = rds_config.db_password
 db_name = rds_config.db_name
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.ERROR)
 
 def lambda_handler(event, context):
     """
@@ -36,41 +36,51 @@ def lambda_handler(event, context):
     """
     logger.info('JSON received: ' + str(event))
 
-#
-# 1. connect to the MySQL database
-#
+    #
+    # 1. connect to the MySQL database
+    #
     try:
         conn = pymysql.connect(rds_host, user=name,
                                passwd=password, db=db_name, connect_timeout=2)
-    except:
+    except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
-        sys.exit()
+        logger.error(e)
+        #sys.exit()
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
 
     logger.info("Connected to RDS mysql instance.")
 
 
-#
-# 2. parse the input parameters from the https request body
-#    which is passed to this Lambda function from a AWS API Gateway method object
-#
+    #
+    # 2. parse the input parameters from the https request body
+    #    which is passed to this Lambda function from a AWS API Gateway method object
+    #
     account_name = event['path']['accountName']
 
-#
-# 3. create the SQL string
-#
-    sql = "CALL cea.sp_users_get('" + account_name + "')"
+    #
+    # 3. create the SQL string
+    #
+    sql = "CALL cea.sp_candidate_get('" + account_name + "')"
 
-#
-# 4. execute the SQL string
-#
-    logger.info('SQL statement: ' + sql)
-    cursor =  conn.cursor()
-    cursor.execute(sql)
-    #logger.info('SQL response: ' + str(cursor.description))
+    #
+    # 4. execute the SQL string
+    #
+    try:
+        logger.info("Executing SQL statement: " + sql)
+        cursor =  conn.cursor()
+        cursor.execute(sql)
+    except Exception as e:
+        logger.error("ERROR: MySQL returned an error.")
+        logger.error(e)
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
 
-#
-# 5a. format the recordset returned as a JSON string
-#
+    #
+    # 5a. format the recordset returned as a JSON string
+    #
 
     #note: there will only be one record in this recorset.
     rs = cursor.fetchall()
@@ -88,15 +98,18 @@ def lambda_handler(event, context):
             "profession_id" : str(record[9]),
             "subprofession_id" : str(record[10]),
             "create_date" : str(record[11]),
-            "update_date" : str(record[12])
+            "update_date" : str(record[12]),
+            "job_hunting": str(record[13]),
+            "city":  str(record[14]),
+            "state":  str(record[15])
         }
 
     cursor.close ()
     conn.close ()
 
-#
-# 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
-#     the API Gateway method will push this JSON string in the http response body
-#
+    #
+    # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
+    #     the API Gateway method will push this JSON string in the http response body
+    #
     logger.info('JSON returned is: ' + json.dumps(candidate))
     return candidate

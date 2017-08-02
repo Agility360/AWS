@@ -22,6 +22,67 @@
 --
 -- Dumping routines for database 'cea'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_add` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_add`(account_name varchar(30),
+first_name varchar(30),
+middle_name varchar(30),
+last_name varchar(30),
+email varchar(30),
+phone_number varchar(30),
+industry_id int(11),
+subindustry_id int(11),
+profession_id int(11),
+subprofession_id int(11),
+job_hunting tinyint(1),
+city varchar(30),
+state varchar(2)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+INSERT cea.candidates (account_name, first_name, middle_name, last_name, email, phone_number, industry_id, subindustry_id, profession_id, subprofession_id, job_hunting, city, state)
+	SELECT	account_name,
+			first_name,
+			middle_name,
+			last_name,
+			email,
+			phone_number,
+			industry_id,
+			subindustry_id,
+			profession_id,
+			subprofession_id,
+			job_hunting,
+            city,
+            state;
+
+COMMIT;
+
+#CALL cea.sp_candidate_get(account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certifications_get` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -94,6 +155,161 @@ INSERT cea.candidate_certifications (candidate_id, institution_name, certificati
 
 COMMIT;
 
+#CALL cea.sp_candidate_certifications_get(account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certification_delete` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certification_delete`(delete_id int(11))
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+DELETE 
+FROM	candidate_certifications
+WHERE	(id = delete_id);
+
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_delete` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_delete`(delete_account varchar(30))
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+DELETE	
+FROM	cea.candidate_certifications
+WHERE	candidate_id = 	(
+						SELECT	c.candidate_id
+						FROM	candidates c
+                        WHERE	(c.account_name = delete_account)
+						);
+
+DELETE	
+FROM	cea.candidate_education
+WHERE	candidate_id = 	(
+						SELECT	c.candidate_id
+						FROM	candidates c
+                        WHERE	(c.account_name = delete_account)
+						);
+
+DELETE	
+FROM	cea.candidate_job_history
+WHERE	candidate_id = 	(
+						SELECT	c.candidate_id
+						FROM	candidates c
+                        WHERE	(c.account_name = delete_account)
+						);
+
+
+DELETE
+FROM	cea.candidates
+WHERE	(account_name = delete_account);
+
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_edit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_edit`(account_name varchar(30),
+first_name varchar(30),
+middle_name varchar(30),
+last_name varchar(30),
+email varchar(30),
+phone_number varchar(30),
+industry_id int(11),
+subindustry_id int(11),
+profession_id int(11),
+subprofession_id int(11),
+job_hunting tinyint(1),
+city varchar(30),
+state varchar(2)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+UPDATE	cea.candidates
+SET		first_name = first_name, 
+        middle_name = middle_name, 
+        last_name = last_name, 
+        email = email, 
+        phone_number = phone_number, 
+        industry_id = industry_id, 
+        subindustry_id = subindustry_id, 
+        profession_id = profession_id, 
+        subprofession_id = subprofession_id, 
+        job_hunting =job_hunting, 
+        city = city, 
+        state = state
+WHERE	(account_name = account_name);
+
+COMMIT;
+
+#CALL cea.sp_candidate_get(account_name);
 
 END ;;
 DELIMITER ;
@@ -142,6 +358,41 @@ INSERT cea.candidate_education (candidate_id, institution_name, degree, start_da
 
 COMMIT;
 
+#CALL cea.sp_candidate_education_get(account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_delete` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_delete`(delete_id int(11))
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+DELETE 
+FROM	candidate_education
+WHERE	(id = delete_id);
+
+COMMIT;
 
 END ;;
 DELIMITER ;
@@ -183,6 +434,47 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_get` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_get`(account_name varchar(30)
+)
+BEGIN
+
+
+SELECT	c.candidate_id,
+		c.account_name,
+		c.first_name,
+		c.middle_name,
+		c.last_name,
+		c.email,
+		c.phone_number,
+		c.industry_id,
+		c.subindustry_id,
+		c.profession_id,
+		c.subprofession_id,
+		c.create_date,
+        c.update_date,
+        c.job_hunting,
+        c.city,
+        c.state
+FROM	cea.candidates c
+WHERE	c.account_name = account_name;
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_job_history_add` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -198,7 +490,8 @@ company_name varchar(255),
 job_title varchar(255),
 start_date varchar(255),
 end_date varchar(255),
-final_salary double
+final_salary double,
+department varchar(50)
 )
 BEGIN
 
@@ -212,18 +505,59 @@ END;
 
 START TRANSACTION;
 
-INSERT cea.candidate_job_history (candidate_id, company_name, job_title, start_date, end_date, final_salary)
+INSERT cea.candidate_job_history (candidate_id, company_name, job_title, start_date, end_date, final_salary, department)
 	SELECT	c.candidate_id,
 			company_name, 
             job_title, 
             start_date, 
             end_date, 
-            final_salary
+            final_salary,
+            department
 	FROM	cea.candidates c
     WHERE	(c.account_name = account_name);
 
 COMMIT;
 
+#CALL cea.sp_candidate_job_history_get(account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_job_history_delete` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_job_history_delete`(delete_account varchar(30)
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+DELETE	
+FROM	cea.candidate_job_history
+WHERE	candidate_id = 	(
+						SELECT	c.candidate_id
+						FROM	candidates c
+                        WHERE	(c.account_name = delete_account)
+						);
+
+COMMIT;
 
 END ;;
 DELIMITER ;
@@ -253,7 +587,8 @@ SELECT	ch.id,
 		ch.start_date,
 		ch.end_date,
         ch.final_salary,
-        ch.create_date
+        ch.create_date,
+        ch.department
 FROM 	cea.candidate_job_history ch
 		JOIN candidates c ON (c.candidate_id = ch.candidate_id)
 WHERE	c.account_name = account_name
@@ -315,125 +650,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_users_add` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_users_add`(account_name varchar(30),
-first_name varchar(30),
-middle_name varchar(30),
-last_name varchar(30),
-email varchar(30),
-phone_number varchar(30),
-industry_id int(11),
-subindustry_id int(11),
-profession_id int(11),
-subprofession_id int(11)
-)
-BEGIN
-
-/*
-set account_name = JSON_UNQUOTE(JSON_EXTRACT(params,'$.user_name'));
-set first_name = JSON_UNQUOTE(JSON_EXTRACT(params,'$.first_name'));
-set middle_name = JSON_UNQUOTE(JSON_EXTRACT(params,'$.middle_name'));
-set last_name = JSON_UNQUOTE(JSON_EXTRACT(params,'$.last_name'));
-set email = JSON_UNQUOTE(JSON_EXTRACT(params,'$.email'));
-set phone_number = JSON_UNQUOTE(JSON_EXTRACT(params,'$.phone_number'));
-
-set industry_id = JSON_EXTRACT(params,'$.industry_id');
-set subindustry_id = JSON_EXTRACT(params,'$.subindustry_id');
-set profession_id = JSON_EXTRACT(params,'$.profession_id');
-set subprofession_id = JSON_EXTRACT(params,'$.subprofession_id');
-*/
-
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-	ROLLBACK;  -- rollback any changes made in the transaction
-	RESIGNAL;  -- raise again the sql exception to the caller
-END;
-
-
-START TRANSACTION;
-
-INSERT cea.candidates (account_name, first_name, middle_name, last_name, email, phone_number, industry_id, subindustry_id, profession_id, subprofession_id)
-	SELECT	account_name,
-			first_name,
-			middle_name,
-			last_name,
-			email,
-			phone_number,
-			industry_id,
-			subindustry_id,
-			profession_id,
-			subprofession_id;
-
-COMMIT;
-
-SELECT	c.candidate_id,
-		c.account_name,
-		c.first_name,
-		c.middle_name,
-		c.last_name,
-		c.email,
-		c.phone_number,
-		c.industry_id,
-		c.subindustry_id,
-		c.profession_id,
-		c.subprofession_id
-FROM	cea.candidates c
-WHERE	c.account_name = account_name;
-
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_users_get` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_users_get`(account_name varchar(30)
-)
-BEGIN
-
-
-SELECT	c.candidate_id,
-		c.account_name,
-		c.first_name,
-		c.middle_name,
-		c.last_name,
-		c.email,
-		c.phone_number,
-		c.industry_id,
-		c.subindustry_id,
-		c.profession_id,
-		c.subprofession_id,
-		c.create_date,
-        c.update_date
-FROM	cea.candidates c
-WHERE	c.account_name = account_name;
-
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -444,4 +660,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-01 14:25:52
+-- Dump completed on 2017-08-02 17:43:49

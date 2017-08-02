@@ -8,6 +8,7 @@
 #           2. parses input parameters from the http request body,
 #           3. formats and SQL string of the stored procedure call,
 #           4. executes the stored procedure
+#           5. return response object
 #=============================================================
 import sys
 import logging
@@ -30,6 +31,8 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+retval = {}
+
 def lambda_handler(event, context):
     """
     This function inserts content into mysql RDS instance
@@ -41,9 +44,13 @@ def lambda_handler(event, context):
     try:
         conn = pymysql.connect(rds_host, user=name,
                                passwd=password, db=db_name, connect_timeout=2)
-    except:
+    except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
-        sys.exit()
+        logger.error(e)
+        #sys.exit()
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
 
     logger.info("Connected to RDS mysql instance.")
 
@@ -62,12 +69,28 @@ def lambda_handler(event, context):
 
     sql = "CALL cea.sp_candidate_education_add('%s', '%s', '%s', '%s', '%s', %d)" % (event['account_name'], event['institution_name'],
                                             event['degree'], event['start_date'], event['end_date'], event['graduated'])
-    logger.info("SQL statement: " + sql)
 
-#
-# 4. execute the SQL string
-#
-    cursor =  conn.cursor()
-    cursor.execute(sql)
-    cursor.close ()
-    conn.close ()
+    #
+    # 4. execute the SQL string
+    #
+
+    try:
+        logger.info("Executing SQL statement: " + sql)
+        cursor =  conn.cursor()
+        cursor.execute(sql)
+        cursor.close ()
+        conn.close ()
+    except Exception as e:
+        logger.error("ERROR: MySQL returned an error.")
+        logger.error(e)
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
+
+
+    #
+    # 5. Generate return object
+    #
+    retval["response"] = "success"
+    return retval
+    

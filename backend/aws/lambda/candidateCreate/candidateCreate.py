@@ -1,13 +1,14 @@
 #=============================================================
 # written by: lawrence mcdaniel
 # date: 31-july-2017
-# 
+#
 # purpose:  connection handler for Candidate Engagement App (CEA)
 #           REST api. this function does the following:
 #           1. connects to MySQL,
 #           2. parses input parameters from the http request body,
 #           3. formats and SQL string of the stored procedure call,
 #           4. executes the stored procedure
+#           5. return response object.
 #=============================================================
 import sys
 import logging
@@ -28,7 +29,7 @@ password = rds_config.db_password
 db_name = rds_config.db_name
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.ERROR)
 
 
 def lambda_handler(event, context):
@@ -38,7 +39,7 @@ def lambda_handler(event, context):
     logger.info('JSON received is:' + str(event))
 
     retval = {}
-    
+
     #
     # 1. connect to the MySQL database
     #
@@ -50,7 +51,7 @@ def lambda_handler(event, context):
         logger.error(e)
         #sys.exit()
         retval["response"] = "failure"
-        retval["err"] = e
+        retval["err"] = str(e)
         return retval
 
     logger.info("Connected to RDS mysql instance.")
@@ -66,9 +67,10 @@ def lambda_handler(event, context):
     #
     # 3. create the SQL string
     #
-    sql = "CALL sp_candidate_add('%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, %d)" % (event['account_name'], event['first_name'],
-                                            event['middle_name'], event['last_name'], event['email'], event['phone_number'], 
-                                            event['industry_id'], event['subindustry_id'], event['profession_id'], event['subprofession_id'])
+    sql = "CALL sp_candidate_add('%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, %d, %d, '%s', '%s')" % (event['account_name'], event['first_name'],
+                                            event['middle_name'], event['last_name'], event['email'], event['phone_number'],
+                                            event['industry_id'], event['subindustry_id'], event['profession_id'], event['subprofession_id'],
+                                            event['job_hunting'], event['city'], event['state'])
 
     #
     # 4. execute the SQL string
@@ -84,15 +86,13 @@ def lambda_handler(event, context):
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
         retval["response"] = "failure"
-        retval["err"] = e
+        retval["err"] = str(e)
         return retval
 
 
-
     #
-    # 5. invoke Lambda candidateGet to retreive new recordset.
+    # 5. Generate return object
     #
-
     retval["response"] = "success"
     return retval
     

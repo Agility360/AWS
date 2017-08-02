@@ -36,6 +36,9 @@ CREATE TABLE `candidates` (
   `subprofession_id` int(11) NOT NULL DEFAULT '0',
   `update_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `job_hunting` tinyint(1) NOT NULL DEFAULT '1',
+  `city` varchar(30) NOT NULL,
+  `state` varchar(2) NOT NULL,
   PRIMARY KEY (`candidate_id`),
   UNIQUE KEY `id_UNIQUE` (`candidate_id`),
   UNIQUE KEY `UC_user_name` (`account_name`),
@@ -44,7 +47,7 @@ CREATE TABLE `candidates` (
   KEY `users-profession_id` (`profession_id`),
   KEY `users-subindustry_id` (`subindustry_id`),
   KEY `users-subprofession_id` (`subprofession_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +59,4 @@ CREATE TABLE `candidates` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-01 14:25:28
+-- Dump completed on 2017-08-02 17:43:24

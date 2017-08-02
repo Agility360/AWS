@@ -31,10 +31,11 @@ CREATE TABLE `candidate_job_history` (
   `end_date` datetime DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `final_salary` double DEFAULT NULL,
+  `department` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `job_history_candidate_id_idx` (`candidate_id`),
   CONSTRAINT `job_history_candidate_id` FOREIGN KEY (`candidate_id`) REFERENCES `candidates` (`candidate_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -46,4 +47,4 @@ CREATE TABLE `candidate_job_history` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-01 14:25:19
+-- Dump completed on 2017-08-02 17:43:14
