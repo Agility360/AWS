@@ -1,7 +1,7 @@
 #=============================================================
 # written by: lawrence mcdaniel
 # date: 31-july-2017
-#
+# 
 # purpose:  connection handler for Candidate Engagement App (CEA)
 #           REST api. this function does the following:
 #           1. connects to MySQL,
@@ -30,58 +30,69 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def lambda_handler(event, context):
     """
     This function inserts content into mysql RDS instance
     """
     logger.info('JSON received is:' + str(event))
-#
-# 1. connect to the MySQL database
-#
+
+    retval = {}
+    
+    #
+    # 1. connect to the MySQL database
+    #
     try:
         conn = pymysql.connect(rds_host, user=name,
                                passwd=password, db=db_name, connect_timeout=2)
-    except:
+    except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
-        sys.exit()
+        logger.error(e)
+        #sys.exit()
+        retval["response"] = "failure"
+        retval["err"] = e
+        return retval
 
     logger.info("Connected to RDS mysql instance.")
 
 
 
-#
-# 2. parse the input parameters from the https request body
-#    which is passed to this Lambda function from a AWS API Gateway method object
-#
-    account_name = event['account_name']
-    first_name = event['first_name']
-    middle_name = event['middle_name']
-    last_name = event['last_name']
-    email = event['email']
-    phone_number = event['phone_number']
-    industry_id = event['industry_id']
-    subindustry_id = event['subindustry_id']
-    profession_id = event['profession_id']
-    subprofession_id = event['subprofession_id']
+    #
+    # 2. parse the input parameters from the https request body
+    #    which is passed to this Lambda function from a AWS API Gateway method object
+    #
 
-#
-# 3. create the SQL string
-#
-    sql = "CALL sp_users_add('" + account_name + "', "
-    sql = sql + "'" + str(first_name) + "', "
-    sql = sql + "'" + str(middle_name) + "', "
-    sql = sql + "'" + str(last_name) + "', "
-    sql = sql + "'" + str(email) + "', "
-    sql = sql + "'" + str(phone_number) + "', "
-    sql = sql + "'" + str(industry_id) + "', "
-    sql = sql + "'" + str(subindustry_id) + "', "
-    sql = sql + "'" + str(profession_id) + "', "
-    sql = sql + "'" + str(subprofession_id) + "')"
 
-#
-# 4. execute the SQL string
-#
-    cursor =  conn.cursor()
-    cursor.execute(sql)
-    cursor.close ()
-    conn.close ()
+    #
+    # 3. create the SQL string
+    #
+    sql = "CALL sp_candidate_add('%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, %d)" % (event['account_name'], event['first_name'],
+                                            event['middle_name'], event['last_name'], event['email'], event['phone_number'], 
+                                            event['industry_id'], event['subindustry_id'], event['profession_id'], event['subprofession_id'])
+
+    #
+    # 4. execute the SQL string
+    #
+
+    try:
+        logger.info("Executing SQL statement: " + sql)
+        cursor =  conn.cursor()
+        cursor.execute(sql)
+        cursor.close ()
+        conn.close ()
+    except Exception as e:
+        logger.error("ERROR: MySQL returned an error.")
+        logger.error(e)
+        retval["response"] = "failure"
+        retval["err"] = e
+        return retval
+
+
+
+    #
+    # 5. invoke Lambda candidateGet to retreive new recordset.
+    #
+
+    retval["response"] = "success"
+    return retval
+    
