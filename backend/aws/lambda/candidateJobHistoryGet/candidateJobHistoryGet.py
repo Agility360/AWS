@@ -35,6 +35,7 @@ def lambda_handler(event, context):
     This function inserts content into mysql RDS instance
     """
     logger.info('JSON received: ' + str(event))
+    retval = {}
 
     #
     # 1. connect to the MySQL database

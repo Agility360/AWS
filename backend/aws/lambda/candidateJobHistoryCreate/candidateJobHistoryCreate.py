@@ -31,16 +31,18 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 
-retval = {}
 
 def lambda_handler(event, context):
     """
     This function inserts content into mysql RDS instance
     """
     logger.info('JSON received is:' + str(event))
-#
-# 1. connect to the MySQL database
-#
+    retval = {}
+
+
+    #
+    # 1. connect to the MySQL database
+    #
     try:
         conn = pymysql.connect(rds_host, user=name,
                                passwd=password, db=db_name, connect_timeout=2)

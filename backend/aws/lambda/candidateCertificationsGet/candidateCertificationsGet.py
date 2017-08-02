@@ -30,11 +30,13 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 
+
 def lambda_handler(event, context):
     """
     This function inserts content into mysql RDS instance
     """
     logger.info('JSON received: ' + str(event))
+    retval = {}
 
     #
     # 1. connect to the MySQL database
@@ -64,9 +66,9 @@ def lambda_handler(event, context):
     #
     sql = "CALL cea.sp_candidate_certifications_get('%s')" % (account_name)
 
-#
-# 4. execute the SQL string
-#
+    #
+    # 4. execute the SQL string
+    #
     try:
         logger.info("Executing SQL statement: " + sql)
         cursor =  conn.cursor()
@@ -101,9 +103,9 @@ def lambda_handler(event, context):
     cursor.close ()
     conn.close ()
 
-#
-# 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
-#     the API Gateway method will push this JSON string in the http response body
-#
+    #
+    # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
+    #     the API Gateway method will push this JSON string in the http response body
+    #
     logger.info('JSON returned is: ' + json.dumps(job_history))
     return job_history

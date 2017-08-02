@@ -32,6 +32,8 @@ logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
 
+    retval = {}
+
     #
     # 1. connect to the MySQL database
     #
