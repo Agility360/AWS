@@ -93,7 +93,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certifications_get`(account_name varchar(30)
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certifications_get`(get_account_name varchar(30)
 )
 BEGIN
 
@@ -107,7 +107,8 @@ SELECT	cert.id,
         cert.create_date
 FROM 	cea.candidate_certifications cert
 		JOIN cea.candidates c ON (c.candidate_id = cert.candidate_id)
-WHERE	c.account_name = account_name
+WHERE	(c.account_name = get_account_name) AND
+		(c.active = 1)
 ORDER BY cert.id;
 
 END ;;
@@ -197,6 +198,58 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certification_edit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certification_edit`(
+edit_id int(11),
+edit_account_name varchar(30),
+edit_institution_name varchar(255),
+edit_certification_name varchar(255),
+edit_date_received varchar(255),
+edit_expire_date varchar(255)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+# 1. deactivate the current record, identified by the parameter "edit_id"
+UPDATE	cea.candidate_certifications
+SET		active = 0
+WHERE	(id = edit_id) AND
+		(edit_id IS NOT NULL);
+        
+
+# 2. create a new record with the updated values. the new record self-activate.
+
+CALL cea.sp_candidate_certification_add(edit_account_name, edit_institution_name, edit_certification_name, edit_date_received, edit_expire_date);
+
+
+COMMIT;
+
+#CALL cea.sp_candidate_certifications_get(account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_delete` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -266,19 +319,19 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_edit`(account_name varchar(30),
-first_name varchar(30),
-middle_name varchar(30),
-last_name varchar(30),
-email varchar(30),
-phone_number varchar(30),
-industry_id int(11),
-subindustry_id int(11),
-profession_id int(11),
-subprofession_id int(11),
-job_hunting tinyint(1),
-city varchar(30),
-state varchar(2)
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_edit`(update_name varchar(30),
+update_first_name varchar(30),
+update_middle_name varchar(30),
+update_last_name varchar(30),
+update_email varchar(30),
+update_phone_number varchar(30),
+update_industry_id int(11),
+update_subindustry_id int(11),
+update_profession_id int(11),
+update_subprofession_id int(11),
+update_job_hunting tinyint(1),
+update_city varchar(30),
+update_state varchar(2)
 )
 BEGIN
 
@@ -293,19 +346,19 @@ END;
 START TRANSACTION;
 
 UPDATE	cea.candidates
-SET		first_name = first_name, 
-        middle_name = middle_name, 
-        last_name = last_name, 
-        email = email, 
-        phone_number = phone_number, 
-        industry_id = industry_id, 
-        subindustry_id = subindustry_id, 
-        profession_id = profession_id, 
-        subprofession_id = subprofession_id, 
-        job_hunting =job_hunting, 
-        city = city, 
-        state = state
-WHERE	(account_name = account_name);
+SET		first_name = update_first_name, 
+        middle_name = update_middle_name, 
+        last_name = update_last_name, 
+        email = update_email, 
+        phone_number = update_phone_number, 
+        industry_id = update_industry_id, 
+        subindustry_id = update_subindustry_id, 
+        profession_id = update_profession_id, 
+        subprofession_id = update_subprofession_id, 
+        job_hunting =update_job_hunting, 
+        city = update_city, 
+        state = update_state
+WHERE	(account_name = update_name);
 
 COMMIT;
 
@@ -400,6 +453,59 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_edit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_edit`(
+edit_id int(11),
+edit_account_name varchar(30),
+edit_institution_name varchar(255),
+edit_degree varchar(255),
+edit_start_date varchar(255),
+edit_end_date varchar(255),
+edit_graduated tinyint(1)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+# 1. deactivate the current record, identified by the parameter "edit_id"
+UPDATE	cea.candidate_education
+SET		active = 0
+WHERE	(id = edit_id) AND
+		(edit_id IS NOT NULL);
+        
+
+# 2. create a new record with the updated values. the new record self-activate.
+
+CALL cea.sp_candidate_education_add(edit_account_name, edit_institution_name, edit_degree, edit_start_date, edit_end_date, edit_graduated);
+
+
+COMMIT;
+
+#CALL cea.sp_candidate_education_get(account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_get` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -410,7 +516,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_get`(account_name varchar(30)
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_get`(get_account_name varchar(30)
 )
 BEGIN
 
@@ -425,7 +531,8 @@ SELECT	e.id,
         e.create_date
 FROM 	cea.candidate_education e
 		JOIN cea.candidates c ON (c.candidate_id = e.candidate_id)
-WHERE	c.account_name = account_name
+WHERE	(c.account_name = get_account_name) AND
+		(c.active = 1)
 ORDER BY e.id;
 
 END ;;
@@ -565,6 +672,60 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_job_history_edit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_job_history_edit`(
+edit_id int(11),
+edit_account_name varchar(30),
+edit_company_name varchar(255),
+edit_job_title varchar(255),
+edit_start_date varchar(255),
+edit_end_date varchar(255),
+edit_final_salary double,
+edit_department varchar(50)
+)
+BEGIN
+
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;  -- rollback any changes made in the transaction
+	RESIGNAL;  -- raise again the sql exception to the caller
+END;
+
+
+START TRANSACTION;
+
+# 1. deactivate the current record, identified by the parameter "edit_id"
+UPDATE	cea.candidate_job_history
+SET		active = 0
+WHERE	(id = edit_id) AND
+		(edit_id IS NOT NULL);
+        
+
+# 2. create a new record with the updated values. the new record self-activate.
+
+CALL cea.sp_candidate_job_history_add(edit_account_name, edit_company_name, edit_job_title, edit_start_date, edit_end_date, edit_final_salary, edit_department);
+
+
+
+COMMIT;
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_job_history_get` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -575,8 +736,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_job_history_get`(account_name varchar(30)
-)
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_job_history_get`(get_account_name varchar(30))
 BEGIN
 
 
@@ -591,7 +751,8 @@ SELECT	ch.id,
         ch.department
 FROM 	cea.candidate_job_history ch
 		JOIN candidates c ON (c.candidate_id = ch.candidate_id)
-WHERE	c.account_name = account_name
+WHERE	(c.account_name = get_account_name) AND
+		(c.active = 1)
 ORDER BY ch.id;
 
 END ;;
@@ -660,4 +821,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-02 17:43:49
+-- Dump completed on 2017-08-03 10:14:45
