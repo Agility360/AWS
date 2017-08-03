@@ -31,13 +31,14 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 
-retval = {}
 
 def lambda_handler(event, context):
     """
     This function inserts content into mysql RDS instance
     """
     logger.info('JSON received is:' + str(event))
+    retval = {}
+
     #
     # 1. connect to the MySQL database
     #
@@ -65,7 +66,7 @@ def lambda_handler(event, context):
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_certification_edit(%d '%s', '%s', '%s', '%s', '%s')" % (
+    sql = "CALL cea.sp_candidate_certification_edit(%d, '%s', '%s', '%s', '%s', '%s')" % (
                                             event['id'], event['account_name'], event['institution_name'],
                                             event['certification_name'], event['date_received'], event['expire_date'])
     logger.info("SQL statement: " + sql)

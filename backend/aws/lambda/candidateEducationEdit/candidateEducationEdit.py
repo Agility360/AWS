@@ -31,16 +31,14 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-retval = {}
 
 def lambda_handler(event, context):
-    """
-    This function inserts content into mysql RDS instance
-    """
     logger.info('JSON received is:' + str(event))
-#
-# 1. connect to the MySQL database
-#
+    retval = {}
+
+    #
+    # 1. connect to the MySQL database
+    #
     try:
         conn = pymysql.connect(rds_host, user=name,
                                passwd=password, db=db_name, connect_timeout=2)
@@ -56,16 +54,16 @@ def lambda_handler(event, context):
 
 
 
-#
-# 2. parse the input parameters from the https request body
-#    which is passed to this Lambda function from a AWS API Gateway method object
-#
+    #
+    # 2. parse the input parameters from the https request body
+    #    which is passed to this Lambda function from a AWS API Gateway method object
+    #
 
 
 
-#
-# 3. create the SQL string
-#
+    #
+    # 3. create the SQL string
+    #
 
     sql = "CALL cea.sp_candidate_education_edit(%d, '%s', '%s', '%s', '%s', '%s', %d)" % (
                                             event['id'], event['account_name'], event['institution_name'],
