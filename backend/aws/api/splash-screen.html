@@ -3,15 +3,35 @@
         <style>
         body {
             color: #333;
+            background-color: #f1f1f1;
             font-family: Sans-serif;
             max-width: 1200px;
-            margin: auto;
+            margin: 10px;
         }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+        h2 {
+
+        }
+        .resource {
+          background-color: #f9f9f9;
+          margin: 10px;
+          padding: 10px;
+        }
+        .method {
+          background-color: #fff;
+          border-radius: 15px;
+          margin: 25px;
+          padding: 25px;
+        }
+
         </style>
     </head>
     <body>
-        <h1 style="">Agility360 Candidate Engagement App</h1>
-        <h2 style="margin-bottom: 25px;">REST API documentation</h2>
+        <h1>Agility360 Candidate Engagement App</h1>
+        <h2>REST API documentation</h2>
         <div style="padding: 15px;">
           <hr />
           <p>As a matter of convenience this api will be publicly accessible during development. Afterwards I will setup security credentials that will be stored locally in the mobile app.</p>
@@ -20,44 +40,69 @@
           <p>You can use a standard web browser like Chrome to view this api. Alternatively, you can also use something more sophisticated, like a REST client such as <a href="https://www.getpostman.com/" target="_blank">Postman</a> to test the <code>POST</code> methods in your API to create a new candidate account.</p>
           <hr />
         </div>
-        <h3>Candidates</h3>
-          <div style="margin-left: 25px;">
-            <div>
-              <p>
-                URL end point: <a href="/$context.stage/candidates/{accountName}" target="_blank">/$context.stage/candidates/{accountName}</a>
-              </p>
-            </div>
-          <h4>GET</h3>
-            <div>
-              <p>This API contains the <code>/candidates/{accountName}</code> resource. By making a <a href="/$context.stage/candidates/{accountName}" target="_blank"><code>GET</code> request</a> to <code>/candidates/{accountName}</code> you can retrieve the master account profile record of a candidate in your MySQL database. If you are looking for a specific candidate, for example the candidate with accountName "mcdaniel", you can make a <a href="/$context.stage/candidates/mcdaniel" target="_blank"><code>GET</code> request</a> to <code>/candidates/mcdaniel</code>.
-              </p>
-              <p>
-                Sample body response object:
-                <pre>
-                  {
-                    "candidate_id": 6,
-                    "account_name": "mcdaniel"
-                    "first_name": "Lawrence",
-                    "middle_name": "Philip",
-                    "last_name": "McDaniel",
-                    "job_hunting": 0,
-                    "phone_number": "(415) 766-9012",
-                    "email": "lpm0073@gmail.com",
-                    "city": "Plano",
-                    "state": "TX",
-                    "industry_id": 0,
-                    "subindustry_id": 0,
-                    "profession_id": 0,
-                    "subprofession_id": 0,
-                    "create_date": 2017-07-31 20:57:32,
-                    "update_date": 2017-07-31 20:57:32
-                  }
-                </pre>
-              </p>
-            </div>
+        <div class="resource">
+          <h3>Candidates</h3>
+          <div>
+            <p>
+              URL end point: <a href="/$context.stage/candidates/{accountName}" target="_blank">/$context.stage/candidates/{accountName}</a>
+            </p>
+          </div>
+          <div class="method">
+            <h4>GET</h3>
+            <p>This API contains the <code>/candidates/{accountName}</code> resource. By making a <a href="/$context.stage/candidates/{accountName}" target="_blank"><code>GET</code> request</a> to <code>/candidates/{accountName}</code> you can retrieve the master account profile record of a candidate in your MySQL database. If you are looking for a specific candidate, for example the candidate with accountName "mcdaniel", you can make a <a href="/$context.stage/candidates/mcdaniel" target="_blank"><code>GET</code> request</a> to <code>/candidates/mcdaniel</code>.
+            </p>
+            <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel</a></p>
+            <p>
+              Sample body response object:
+              <pre>
+                {
+                  "candidate_id": 6,
+                  "account_name": "mcdaniel"
+                  "first_name": "Lawrence",
+                  "middle_name": "Philip",
+                  "last_name": "McDaniel",
+                  "job_hunting": 0,
+                  "phone_number": "(415) 766-9012",
+                  "email": "lpm0073@gmail.com",
+                  "city": "Plano",
+                  "state": "TX",
+                  "industry_id": 0,
+                  "subindustry_id": 0,
+                  "profession_id": 0,
+                  "subprofession_id": 0,
+                  "create_date": 2017-07-31 20:57:32,
+                  "update_date": 2017-07-31 20:57:32
+                }
+              </pre>
+            </p>
+          </div>
 
-          <h4>POST</h3>
-            <div>
+          <div class="method">
+            <h4>POST</h3>
+            <p>
+              Sample body request object:
+              <pre>
+                {
+                  "account_name": "mcdaniel",
+                  "first_name": "Lawrence",
+                  "middle_name": "Philip",
+                  "last_name": "McDaniel",
+                  "job_hunting": "0",
+                  "phone_number": "(415) 766-9012",
+                  "email": "lpm0073@gmail.com",
+                  "city": "Plano",
+                  "state": "TX",
+                  "subprofession_id": "0",
+                  "industry_id": "0",
+                  "profession_id": "0",
+                  "subindustry_id": "0"
+                }
+              </pre>
+            </p>
+          </div>
+
+            <div class="method">
+              <h4>PATCH</h3>
               <p>
                 Sample body request object:
                 <pre>
@@ -78,53 +123,114 @@
                   }
                 </pre>
               </p>
+              <p>
+                Sample body response object if successful:
+                <pre>
+                  {
+                    "response": "success"
+                  }
+                </pre>
+              </p>
+              <p>
+                Sample body response object if failure:
+                <pre>
+                  {
+                    "reponse": "failure",
+                    "err": "JSON string of error message from source system"
+                  }
+                </pre>
+              </p>
+
             </div>
 
-            <h4>PATCH</h3>
-              <div>
-                <p>
-                  Sample body request object:
-                  <pre>
-                    {
-                      "account_name": "mcdaniel",
-                      "first_name": "Lawrence",
-                      "middle_name": "Philip",
-                      "last_name": "McDaniel",
-                      "job_hunting": "0",
-                      "phone_number": "(415) 766-9012",
-                      "email": "lpm0073@gmail.com",
-                      "city": "Plano",
-                      "state": "TX",
-                      "subprofession_id": "0",
-                      "industry_id": "0",
-                      "profession_id": "0",
-                      "subindustry_id": "0"
-                    }
-                  </pre>
-                </p>
-                <p>
-                  Sample body response object if successful:
-                  <pre>
-                    {
-                      "response": "success"
-                    }
-                  </pre>
-                </p>
-                <p>
-                  Sample body response object if failure:
-                  <pre>
-                    {
-                      "reponse": "failure",
-                      "err": "JSON string of error message from source system"
-                    }
-                  </pre>
-                </p>
 
-              </div>
+            <div class="method">
+              <h4>DELETE</h3>
+              <p>
+                Query parameter: ID
+              </p>
+              <p>
+                Sample body response object if successful:
+                <pre>
+                  {
+                    "response": "success"
+                  }
+                </pre>
+              </p>
+              <p>
+                Sample body response object if failure:
+                <pre>
+                  {
+                    "reponse": "failure",
+                    "err": "JSON string of error message from source system"
+                  }
+                </pre>
+              </p>
+            </div>
 
+        </div>
 
-            <h4>DELETE</h3>
-              <div>
+          <div class="resource">
+            <h3>Candidates - Job History</h3>
+            <div>
+              <p>
+                URL end point: <a href="/$context.stage/candidates/{accountName}/jobhistory" target="_blank">/$context.stage/candidates/{accountName}/jobhistory</a>
+              </p>
+            </div>
+            <div class="method">
+              <h4>GET</h3>
+                <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/jobhistory" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/jobhistory</a></p>
+              <p>
+                Sample body response object:
+                <pre>
+                  [
+                    {
+                      "department": "None",
+                      "create_date": "2017-08-01 16:55:55",
+                      "candidate_id": "6",
+                      "end_date": "2017-06-30 15:55:10",
+                      "final_salary": "35000.0",
+                      "start_date": "1979-08-01 15:55:10",
+                      "job_title": "Fry Chef",
+                      "id": 1,
+                      "company_name": "Burger Shack"
+                    },
+                    {
+                      "department": "None",
+                      "create_date": "2017-08-01 17:03:37",
+                      "candidate_id": "6",
+                      "end_date": "1981-03-31 15:55:10",
+                      "final_salary": "12000.0",
+                      "start_date": "1981-01-01 15:55:10",
+                      "job_title": "Medical research volunteer",
+                      "id": 2,
+                      "company_name": "Nuclear Fission Research Center"
+                    }
+                  ]
+                </pre>
+              </p>
+
+            </div>
+
+            <div class="method">
+              <h4>POST</h3>
+              <p>
+                Sample body request object:
+                <pre>
+                  {
+                    "account_name": "mcdaniel",
+                    "company_name": "CIA",
+                    "job_title": "Secret Spy",
+                    "start_date": "1985-02-01 15:55:10",
+                    "end_date": "1987-10-12 15:55:10",
+                    "final_salary": 180000
+                  }
+                </pre>
+              </p>
+            </div>
+
+              <div class="method">
+                <h4>DELETE</h3>
                 <p>
                   Query parameter: ID
                 </p>
@@ -147,46 +253,66 @@
                 </p>
               </div>
 
-          </div>
+                <div class="method">
+                  <h4>PATCH</h3>
+                  <p>
+                    Sample body request object:
+                    <pre>
+                      {
+                        "id": 13,
+                        "account_name": "mcdaniel",
+                        "company_name": "Chipendales",
+                        "job_title": "Manchild wannabe dancer",
+                        "start_date": "1979-08-01 15:55:10",
+                        "end_date": "2017-06-30 15:55:10",
+                        "final_salary": 0,
+                        "department": "the C team"
+                      }
+                    </pre>
+                  </p>
+                  <p>
+                    Sample body response object if successful:
+                    <pre>
+                      {
+                        "response": "success"
+                      }
+                    </pre>
+                  </p>
+                  <p>
+                    Sample body response object if failure:
+                    <pre>
+                      {
+                        "reponse": "failure",
+                        "err": "JSON string of error message from source system"
+                      }
+                    </pre>
+                  </p>
+                </div>
+              </div>
 
-
-          </div>
-
-
-          <h3>Candidates - Job History</h3>
-            <div style="margin-left: 25px;">
+            <div class="resource">
+              <h3>Candidates - Education</h3>
               <div>
                 <p>
-                  URL end point: <a href="/$context.stage/candidates/{accountName}/jobhistory" target="_blank">/$context.stage/candidates/{accountName}/jobhistory</a>
+                  URL end point: <a href="/$context.stage/candidates/{accountName}/education" target="_blank">/$context.stage/candidates/{accountName}/education</a>
                 </p>
               </div>
-            <h4>GET</h3>
-              <div>
+              <div class="method">
+                <h4>GET</h3>
+                <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/education" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/education</a></p>
                 <p>
                   Sample body response object:
                   <pre>
                     [
                       {
-                        "department": "None",
-                        "create_date": "2017-08-01 16:55:55",
+                        "id": 10,
                         "candidate_id": "6",
-                        "end_date": "2017-06-30 15:55:10",
-                        "final_salary": "35000.0",
-                        "start_date": "1979-08-01 15:55:10",
-                        "job_title": "Fry Chef",
-                        "id": 1,
-                        "company_name": "Burger Shack"
-                      },
-                      {
-                        "department": "None",
-                        "create_date": "2017-08-01 17:03:37",
-                        "candidate_id": "6",
-                        "end_date": "1981-03-31 15:55:10",
-                        "final_salary": "12000.0",
-                        "start_date": "1981-01-01 15:55:10",
-                        "job_title": "Medical research volunteer",
-                        "id": 2,
-                        "company_name": "Nuclear Fission Research Center"
+                        "institution_name": "Trump University",
+                        "degree": "Certified Sucker",
+                        "graduated": "1",
+                        "start_date": "2015-01-03 00:00:00",
+                        "end_date": "2017-06-30 00:00:00",
+                        "create_date": "2017-08-03 14:39:42"
                       }
                     ]
                   </pre>
@@ -194,25 +320,25 @@
 
               </div>
 
-            <h4>POST</h3>
-              <div>
+              <div class="method">
+                <h4>POST</h3>
                 <p>
                   Sample body request object:
                   <pre>
                     {
                       "account_name": "mcdaniel",
-                      "company_name": "CIA",
-                      "job_title": "Secret Spy",
-                      "start_date": "1985-02-01 15:55:10",
-                      "end_date": "1987-10-12 15:55:10",
-                      "final_salary": 180000
+                      "institution_name": "Tommy Wu School",
+                      "degree": "Big Money Real Estate",
+                      "start_date": "1979-08-01 15:55:10",
+                      "end_date": "2017-06-30 15:55:10",
+                      "graduated": 1
                     }
                   </pre>
                 </p>
               </div>
 
-              <h4>DELETE</h3>
-                <div>
+                <div class="method">
+                  <h4>DELETE</h3>
                   <p>
                     Query parameter: ID
                   </p>
@@ -235,20 +361,19 @@
                   </p>
                 </div>
 
-                <h4>PATCH</h3>
-                  <div>
+                  <div class="method">
+                    <h4>PATCH</h3>
                     <p>
                       Sample body request object:
                       <pre>
                         {
-                          "id": 13,
+                          "id": 10,
                           "account_name": "mcdaniel",
-                          "company_name": "Chipendales",
-                          "job_title": "Manchild wannabe dancer",
+                          "institution_name": "Tommy Wu School",
+                          "degree": "Big Money Real Estate",
                           "start_date": "1979-08-01 15:55:10",
                           "end_date": "2017-06-30 15:55:10",
-                          "final_salary": 0,
-                          "department": "the C team"
+                          "graduated": 1
                         }
                       </pre>
                     </p>
@@ -270,46 +395,47 @@
                       </pre>
                     </p>
                   </div>
-                </div>
+            </div>
 
-            <h3>Candidates - Education</h3>
-              <div style="margin-left: 25px;">
+              <div class="resource">
+                <h3>Candidates - Certifications</h3>
                 <div>
                   <p>
-                    URL end point: <a href="/$context.stage/candidates/{accountName}/education" target="_blank">/$context.stage/candidates/{accountName}/education</a>
+                    URL end point: <a href="/$context.stage/candidates/{accountName}/certifications" target="_blank">/$context.stage/candidates/{accountName}/certifications/</a>
                   </p>
                 </div>
-              <h4>GET</h3>
-                <div>
+                <div class="method">
+                  <h4>GET</h3>
+                  <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/certifications" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/certifications</a></p>
                   <p>
                     Sample body response object:
                     <pre>
                       {
+[{"create_date": "2017-08-03 14:24:17", "certification_name": "Certified looney tunes", "institution_name": "Terrel State Hospital", "date_received": "1995-04-01 00:00:00", "candidate_id": "6", "expire_date": "None", "id": 8}, {"create_date": "2017-08-03 14:24:51", "certification_name": "Certified looney tunes", "institution_name": "Terrel State Hospital", "date_received": "1995-04-01 00:00:00", "candidate_id": "6", "expire_date": "None", "id": 9}, {"create_date": "2017-08-03 14:46:32", "certification_name": "Certified Angus", "institution_name": "Internet School of halfwits", "date_received": "2017-02-15 00:00:00", "candidate_id": "6", "expire_date": "None", "id": 13}]
                       }
                     </pre>
                   </p>
 
                 </div>
 
-              <h4>POST</h3>
-                <div>
+                <div class="method">
+                  <h4>POST</h3>
                   <p>
                     Sample body request object:
                     <pre>
                       {
                         "account_name": "mcdaniel",
-                        "institution_name": "Tommy Wu School",
-                        "degree": "Big Money Real Estate",
-                        "start_date": "1979-08-01 15:55:10",
-                        "end_date": "2017-06-30 15:55:10",
-                        "graduated": 1
+                        "institution_name": "Terrel State Hospital",
+                        "certification_name": "Certified looney tunes",
+                        "date_received": "1995-4-01 0:0:0",
+                        "expire_date": null
                       }
                     </pre>
                   </p>
                 </div>
 
-                <h4>DELETE</h3>
-                  <div>
+                  <div class="method">
+                    <h4>DELETE</h3>
                     <p>
                       Query parameter: ID
                     </p>
@@ -332,8 +458,8 @@
                     </p>
                   </div>
 
-                  <h4>PATCH</h3>
-                    <div>
+                    <div class="method">
+                      <h4>PATCH</h3>
                       <p>
                         Sample body request object:
                         <pre>
@@ -341,10 +467,9 @@
                             "id": 10,
                             "account_name": "mcdaniel",
                             "institution_name": "Tommy Wu School",
-                            "degree": "Big Money Real Estate",
-                            "start_date": "1979-08-01 15:55:10",
-                            "end_date": "2017-06-30 15:55:10",
-                            "graduated": 1
+                            "certification_name": "Big Money Real Estate",
+                            "date_received": "1979-08-01 15:55:10",
+                            "expire_date": "2017-06-30 15:55:10"
                           }
                         </pre>
                       </p>
@@ -366,131 +491,59 @@
                         </pre>
                       </p>
                     </div>
-              </div>
-
-              <h3>Candidates - Certifications</h3>
-                <div style="margin-left: 25px;">
-                  <div>
-                    <p>
-                      URL end point: <a href="/$context.stage/candidates/{accountName}/certifications" target="_blank">/$context.stage/candidates/{accountName}/certifications/</a>
-                    </p>
-                  </div>
-                <h4>GET</h3>
-                  <div>
-                    <p>
-                      Sample body response object:
-                      <pre>
-                        {
-                        }
-                      </pre>
-                    </p>
-
-                  </div>
-
-                <h4>POST</h3>
-                  <div>
-                    <p>
-                      Sample body request object:
-                      <pre>
-                        {
-                          "account_name": "mcdaniel",
-                          "institution_name": "Terrel State Hospital",
-                          "certification_name": "Certified looney tunes",
-                          "date_received": "1995-4-01 0:0:0",
-                          "expire_date": null
-                        }
-                      </pre>
-                    </p>
-                  </div>
-
-                  <h4>DELETE</h3>
-                    <div>
-                      <p>
-                        Query parameter: ID
-                      </p>
-                      <p>
-                        Sample body response object if successful:
-                        <pre>
-                          {
-                            "response": "success"
-                          }
-                        </pre>
-                      </p>
-                      <p>
-                        Sample body response object if failure:
-                        <pre>
-                          {
-                            "reponse": "failure",
-                            "err": "JSON string of error message from source system"
-                          }
-                        </pre>
-                      </p>
-                    </div>
-
-                    <h4>PATCH</h3>
-                      <div>
-                        <p>
-                          Sample body request object:
-                          <pre>
-                            {
-                              "id": 10,
-                              "account_name": "mcdaniel",
-                              "institution_name": "Tommy Wu School",
-                              "certification_name": "Big Money Real Estate",
-                              "date_received": "1979-08-01 15:55:10",
-                              "expire_date": "2017-06-30 15:55:10"
-                            }
-                          </pre>
-                        </p>
-                        <p>
-                          Sample body response object if successful:
-                          <pre>
-                            {
-                              "response": "success"
-                            }
-                          </pre>
-                        </p>
-                        <p>
-                          Sample body response object if failure:
-                          <pre>
-                            {
-                              "reponse": "failure",
-                              "err": "JSON string of error message from source system"
-                            }
-                          </pre>
-                        </p>
-                      </div>
-
-                </div>
+              </div>      <!-- Resource candidates/certifications -->
 
 
-                <h3>Industries</h3>
-                  <div style="margin-left: 25px;">
+                  <div class="resource">
+                    <h3>Industries</h3>
                     <div>
                       <p>
                         URL end point: <a href="/$context.stage/industries/" target="_blank">/$context.stage/industries/</a>
                       </p>
                     </div>
-                  <h4>GET</h3>
-                    <div>
-                      <p></p>
-                    </div>
 
-                  </div>
-
-                  <h3>Professions</h3>
-                    <div style="margin-left: 25px;">
-                      <div>
+                    <div class="method">
+                      <h4>GET</h3>
+                        <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries</a></p>
                         <p>
-                          URL end point: <a href="/$context.stage/professions/" target="_blank">/$context.stage/professions/</a>
+                          Sample body response object:
+                          <pre>
+                            {
+                              "Undefined": 1,
+                              "Mortgage": 2,
+                              "Banking": 3,
+                              "Energy": 4,
+                              "Fast Food": 5,
+                              "Extreme Sports": 6,
+                              "Reality Television": 7
+                            }
+                          </pre>
                         </p>
-                      </div>
-                    <h4>GET</h3>
-                      <div>
-                        <p></p>
-                      </div>
-
                     </div>
+                  </div>  <!-- Resource Industries -->
+
+                    <div class="resource">
+                      <h3>Professions</h3>
+
+                      <div class="method">
+                        <h4>GET</h3>
+                          <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions</a></p>
+                          <p>
+                            Sample body response object:
+                            <pre>
+                                {
+                                  "Undefined": 1,
+                                  "Toaster Repairman": 2
+                                  "Basket Weaving Expert": 3,
+                                  "Senior Gamer": 4,
+                                  "Pastry Taster": 5,
+                                  "Thought Police": 6
+                                }
+                            </pre>
+                          </p>
+
+                      </div>
+                    </div>  <!-- Resource Professions -->
 
 
     </body>
