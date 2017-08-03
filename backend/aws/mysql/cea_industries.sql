@@ -16,21 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `industries`
+-- Dumping data for table `industries`
 --
 
-DROP TABLE IF EXISTS `industries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `industries` (
-  `industry_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL,
-  `description` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`industry_id`),
-  UNIQUE KEY `UC_industries` (`parent_id`,`description`),
-  CONSTRAINT `industries-subindustry_id` FOREIGN KEY (`parent_id`) REFERENCES `industries` (`industry_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `industries` WRITE;
+/*!40000 ALTER TABLE `industries` DISABLE KEYS */;
+INSERT INTO `industries` VALUES (3,NULL,'Banking'),(4,NULL,'Energy'),(6,NULL,'Extreme Sports'),(5,NULL,'Fast Food'),(2,NULL,'Mortgage'),(7,NULL,'Reality Television'),(1,NULL,'Undefined');
+/*!40000 ALTER TABLE `industries` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -41,4 +34,4 @@ CREATE TABLE `industries` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-03 10:14:01
+-- Dump completed on 2017-08-03 15:30:26

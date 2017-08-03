@@ -495,56 +495,151 @@
               </div>      <!-- Resource candidates/certifications -->
 
 
-                  <div class="resource">
-                    <h3>Industries</h3>
-                    <div>
-                      <p>
-                        URL end point: <a href="/$context.stage/industries/" target="_blank">/$context.stage/industries/</a>
-                      </p>
-                    </div>
+              <div class="resource">
+                <h3>Candidate - Questionnaires</h3>
+                <div>
+                  <p>
+                  </p>
+                </div>
 
-                    <div class="method">
-                      <h4>GET</h3>
-                        <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries</a></p>
-                        <p>
-                          Sample body response object:
-                          <pre>
+                <div class="method">
+                  <h4>GET</h3>
+                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires</a></p>
+                    <p>
+                      Sample body response object:
+                      <pre>
+                          [
                             {
-                              "Undefined": 1,
-                              "Mortgage": 2,
-                              "Banking": 3,
-                              "Energy": 4,
-                              "Fast Food": 5,
-                              "Extreme Sports": 6,
-                              "Reality Television": 7
+                              "questionnaire_id": 1,
+                              "questionnaire": "Larry's custom questionnaire"
                             }
-                          </pre>
-                        </p>
-                    </div>
-                  </div>  <!-- Resource Industries -->
+                          ]
+                      </pre>
+                    </p>
+                </div>
+              </div>  <!-- Resource Candidate Questionnaires -->
 
-                    <div class="resource">
-                      <h3>Professions</h3>
+              <div class="resource">
+                <h3>Candidate - Questionnaire Questions</h3>
+                <div>
+                  <p>
+                  </p>
+                </div>
 
-                      <div class="method">
-                        <h4>GET</h3>
-                          <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions</a></p>
-                          <p>
-                            Sample body response object:
-                            <pre>
-                                {
-                                  "Undefined": 1,
-                                  "Toaster Repairman": 2
-                                  "Basket Weaving Expert": 3,
-                                  "Senior Gamer": 4,
-                                  "Pastry Taster": 5,
-                                  "Thought Police": 6
-                                }
-                            </pre>
-                          </p>
+                <div class="method">
+                  <h4>GET</h3>
+                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires/1" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires/1</a></p>
+                    <p>
+                      Sample body response object:
+                      <pre>
+                        [
+                          {
+                            "question_id": 74,
+                            "seq": 1,
+                            "question": "Why didn't you choose a better career?",
+                            "response": "I lakc durrexun in my life.",
+                            "response_text": "I lakc durrexun in my life.",
+                            "response_double": null,
+                            "datatype_id": 0,
+                            "response_datetime": "None"
+                          },
+                          {
+                            "question_id": 75,
+                            "seq": 2,
+                            "question": "Are you willing to work on christmas?",
+                            "response": "I have plans that day.",
+                            "response_text": "I have plans that day.",
+                            "response_double": null,
+                            "datatype_id": 0,
+                            "response_datetime": "None"
+                          },
+                          {
+                            "question_id": 76,
+                            "seq": 3,
+                            "question": "What is the meaning of life?",
+                            "response": "43",
+                            "response_text": "43",
+                            "response_double": null,
+                            "datatype_id": 0,
+                            "response_datetime": "None"
+                          },
+                          {
+                            "question_id": 77,
+                            "seq": 4,
+                            "question": "Calculate the poisson distribution of the surface area of your apartment.",
+                            "response": "say whau?",
+                            "response_text": "say whau?",
+                            "response_double": null,
+                            "datatype_id": 0,
+                            "response_datetime": "None"
+                          },
+                          {
+                            "question_id": 78,
+                            "seq": 5,
+                            "question": "Name two mathematicians who live in non-uclydean N-space.",
+                            "response": "Reimann and Klandenschtorck",
+                            "response_text": "Reimann and Klandenschtorck", 
+                            "response_double": null,
+                            "datatype_id": 0,
+                            "response_datetime": "None"
+                          }
+                        ]
+                      </pre>
+                    </p>
+                </div>
+              </div>  <!-- Resource Candidate Questionnaire Questions -->
 
-                      </div>
-                    </div>  <!-- Resource Professions -->
+
+              <div class="resource">
+                <h3>Industries</h3>
+                <div>
+                  <p>
+                    URL end point: <a href="/$context.stage/industries/" target="_blank">/$context.stage/industries/</a>
+                  </p>
+                </div>
+
+                <div class="method">
+                  <h4>GET</h3>
+                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries</a></p>
+                    <p>
+                      Sample body response object:
+                      <pre>
+                        {
+                          "Undefined": 1,
+                          "Mortgage": 2,
+                          "Banking": 3,
+                          "Energy": 4,
+                          "Fast Food": 5,
+                          "Extreme Sports": 6,
+                          "Reality Television": 7
+                        }
+                      </pre>
+                    </p>
+                </div>
+              </div>  <!-- Resource Industries -->
+
+              <div class="resource">
+                <h3>Professions</h3>
+
+                <div class="method">
+                  <h4>GET</h3>
+                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions</a></p>
+                    <p>
+                      Sample body response object:
+                      <pre>
+                          {
+                            "Undefined": 1,
+                            "Toaster Repairman": 2
+                            "Basket Weaving Expert": 3,
+                            "Senior Gamer": 4,
+                            "Pastry Taster": 5,
+                            "Thought Police": 6
+                          }
+                      </pre>
+                    </p>
+
+                </div>
+              </div>  <!-- Resource Professions -->
 
 
     </body>

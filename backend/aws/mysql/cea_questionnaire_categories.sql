@@ -16,19 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `batches`
+-- Dumping data for table `questionnaire_categories`
 --
 
-DROP TABLE IF EXISTS `batches`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `batches` (
-  `batch_id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) NOT NULL DEFAULT '',
-  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`batch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `questionnaire_categories` WRITE;
+/*!40000 ALTER TABLE `questionnaire_categories` DISABLE KEYS */;
+INSERT INTO `questionnaire_categories` VALUES (1,NULL,'Larry\'s custom questionnaire',3,6,0);
+/*!40000 ALTER TABLE `questionnaire_categories` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -39,4 +34,4 @@ CREATE TABLE `batches` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-03 10:14:14
+-- Dump completed on 2017-08-03 15:30:38

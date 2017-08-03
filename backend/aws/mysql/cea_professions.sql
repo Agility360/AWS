@@ -16,21 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `professions`
+-- Dumping data for table `professions`
 --
 
-DROP TABLE IF EXISTS `professions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `professions` (
-  `profession_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL,
-  `description` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`profession_id`),
-  UNIQUE KEY `UC_professions` (`parent_id`,`description`),
-  CONSTRAINT `professions-subprofession_id` FOREIGN KEY (`parent_id`) REFERENCES `professions` (`profession_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `professions` WRITE;
+/*!40000 ALTER TABLE `professions` DISABLE KEYS */;
+INSERT INTO `professions` VALUES (3,NULL,'Basket Weaving Expert'),(5,NULL,'Pastry Taster'),(4,NULL,'Senior Gamer'),(6,NULL,'Thought Police'),(2,NULL,'Toaster Repairman'),(1,NULL,'Undefined');
+/*!40000 ALTER TABLE `professions` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -41,4 +34,4 @@ CREATE TABLE `professions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-03 10:14:10
+-- Dump completed on 2017-08-03 15:30:35

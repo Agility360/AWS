@@ -16,26 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `questions`
+-- Dumping data for table `questions`
 --
 
-DROP TABLE IF EXISTS `questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questions` (
-  `question_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `seq` int(11) NOT NULL,
-  `question` varchar(100) DEFAULT NULL,
-  `datatype_id` int(11) NOT NULL,
-  `choices` json DEFAULT NULL,
-  `is_descriptor` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`question_id`),
-  UNIQUE KEY `id_UNIQUE` (`question_id`),
-  UNIQUE KEY `UC_questions` (`category_id`,`question`),
-  CONSTRAINT `questions-category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `questions` WRITE;
+/*!40000 ALTER TABLE `questions` DISABLE KEYS */;
+INSERT INTO `questions` VALUES (1,1,1,'Why didn\'t you choose a better career?',0,NULL),(2,1,2,'Are you willing to work on christmas?',0,NULL),(3,1,3,'What is the meaning of life?',0,NULL),(4,1,4,'Calculate the poisson distribution of the surface area of your apartment?',0,NULL),(5,1,5,'Name two mathematicians who live in non-uclydean N-space',0,NULL);
+/*!40000 ALTER TABLE `questions` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -46,4 +34,4 @@ CREATE TABLE `questions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-03 10:14:20
+-- Dump completed on 2017-08-03 15:30:44

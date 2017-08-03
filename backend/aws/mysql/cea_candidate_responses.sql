@@ -16,29 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `categories`
+-- Dumping data for table `candidate_responses`
 --
 
-DROP TABLE IF EXISTS `categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categories` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) DEFAULT NULL,
-  `description` varchar(50) NOT NULL DEFAULT '',
-  `industry_id` int(11) DEFAULT NULL,
-  `profession_id` int(11) DEFAULT NULL,
-  `is_system` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_id` (`category_id`),
-  KEY `categories-industry` (`industry_id`),
-  KEY `categories-profession` (`profession_id`),
-  KEY `categories-parent_id` (`parent_id`),
-  CONSTRAINT `categories-industry` FOREIGN KEY (`industry_id`) REFERENCES `industries` (`industry_id`),
-  CONSTRAINT `categories-parent_id` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`category_id`),
-  CONSTRAINT `categories-profession` FOREIGN KEY (`profession_id`) REFERENCES `professions` (`profession_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `candidate_responses` WRITE;
+/*!40000 ALTER TABLE `candidate_responses` DISABLE KEYS */;
+INSERT INTO `candidate_responses` VALUES (6,6,1,'2017-08-03 19:14:25','2017-08-03 19:14:25',NULL,NULL,NULL,NULL),(7,6,2,'2017-08-03 19:14:25','2017-08-03 19:14:25',NULL,NULL,NULL,NULL),(8,6,3,'2017-08-03 19:14:26','2017-08-03 19:14:26',NULL,NULL,NULL,NULL),(9,6,4,'2017-08-03 19:14:26','2017-08-03 19:14:26',NULL,NULL,NULL,NULL),(10,6,5,'2017-08-03 19:14:26','2017-08-03 19:14:26',NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `candidate_responses` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -49,4 +34,4 @@ CREATE TABLE `categories` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-03 10:14:30
+-- Dump completed on 2017-08-03 15:30:47

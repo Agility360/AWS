@@ -16,6 +16,78 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary view structure for view `vw_candidate_questions`
+--
+
+DROP TABLE IF EXISTS `vw_candidate_questions`;
+/*!50001 DROP VIEW IF EXISTS `vw_candidate_questions`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_candidate_questions` AS SELECT 
+ 1 AS `account_name`,
+ 1 AS `questionnaire_id`,
+ 1 AS `seq`,
+ 1 AS `question`,
+ 1 AS `datatype_id`,
+ 1 AS `question_id`,
+ 1 AS `response`,
+ 1 AS `response_text`,
+ 1 AS `response_datetime`,
+ 1 AS `response_double`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `vw_candidate_questionnaires`
+--
+
+DROP TABLE IF EXISTS `vw_candidate_questionnaires`;
+/*!50001 DROP VIEW IF EXISTS `vw_candidate_questionnaires`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_candidate_questionnaires` AS SELECT 
+ 1 AS `account_name`,
+ 1 AS `candidate_id`,
+ 1 AS `category_id`,
+ 1 AS `questionnaire`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `vw_candidate_questions`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_candidate_questions`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_candidate_questions` AS select `c`.`account_name` AS `account_name`,`q`.`category_id` AS `questionnaire_id`,`q`.`seq` AS `seq`,`q`.`question` AS `question`,`q`.`datatype_id` AS `datatype_id`,`cr`.`question_id` AS `question_id`,`cr`.`response` AS `response`,`cr`.`response_text` AS `response_text`,`cr`.`response_datetime` AS `response_datetime`,`cr`.`response_double` AS `response_double` from ((`candidates` `c` join `candidate_responses` `cr` on((`c`.`candidate_id` = `cr`.`candidate_id`))) join `questions` `q` on((`cr`.`question_id` = `q`.`question_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_candidate_questionnaires`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_candidate_questionnaires`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_candidate_questionnaires` AS select distinct `c`.`account_name` AS `account_name`,`cr`.`candidate_id` AS `candidate_id`,`qc`.`category_id` AS `category_id`,`qc`.`description` AS `questionnaire` from (((`candidates` `c` join `candidate_responses` `cr` on((`c`.`candidate_id` = `cr`.`candidate_id`))) join `questions` `q` on((`cr`.`question_id` = `q`.`question_id`))) join `questionnaire_categories` `qc` on((`qc`.`category_id` = `q`.`category_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Dumping events for database 'cea'
 --
 
@@ -108,7 +180,7 @@ SELECT	cert.id,
 FROM 	cea.candidate_certifications cert
 		JOIN cea.candidates c ON (c.candidate_id = cert.candidate_id)
 WHERE	(c.account_name = get_account_name) AND
-		(c.active = 1)
+		(cert.active = 1)
 ORDER BY cert.id;
 
 END ;;
@@ -532,7 +604,7 @@ SELECT	e.id,
 FROM 	cea.candidate_education e
 		JOIN cea.candidates c ON (c.candidate_id = e.candidate_id)
 WHERE	(c.account_name = get_account_name) AND
-		(c.active = 1)
+		(e.active = 1)
 ORDER BY e.id;
 
 END ;;
@@ -752,8 +824,68 @@ SELECT	ch.id,
 FROM 	cea.candidate_job_history ch
 		JOIN candidates c ON (c.candidate_id = ch.candidate_id)
 WHERE	(c.account_name = get_account_name) AND
-		(c.active = 1)
+		(ch.active = 1)
 ORDER BY ch.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_questionnaires_get` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_questionnaires_get`(get_account_name varchar(30))
+BEGIN
+
+
+SELECT	category_id as questionnaire_id,
+		questionnaire
+FROM 	cea.vw_candidate_questionnaires vw
+WHERE	(vw.account_name = get_account_name);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_responses_get` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_responses_get`(
+get_account_name varchar(30),
+get_questionnaire_id int(11)
+)
+BEGIN
+
+
+SELECT	question_id,
+		seq,
+		question,
+		datatype_id,
+        response,
+		response_text,
+        response_datetime,
+		response_double
+FROM	vw_candidate_questions vw
+WHERE	(vw.account_name = get_account_name) AND
+		(vw.questionnaire_id = get_questionnaire_id);
 
 END ;;
 DELIMITER ;
@@ -821,4 +953,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-03 10:14:45
+-- Dump completed on 2017-08-03 15:30:58
