@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-08-01T19:23:03Z",
+    "version": "2017-08-03T00:03:23Z",
     "title": "Candidate Engagement App"
   },
   "host": "hqctqkd7xc.execute-api.us-east-1.amazonaws.com",
@@ -40,7 +40,7 @@
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               },
               "responseTemplates": {
-                "text/html": "<html>\n    <head>\n        <style>\n        body {\n            color: #333;\n            font-family: Sans-serif;\n            max-width: 800px;\n            margin: auto;\n        }\n        </style>\n    </head>\n    <body>\n        <h1>Agility360 Candidate Engagement App REST API</h1>\n        <p>As a matter of convenience this api will be publicly accessible during development. Afterwards I will setup security credentials that will be stored locally in the mobile app.</p>\n        <p>Please note that per your request this api uses https 128-bit encryption.</p>\n        <p>This API contains the <code>/candidates/{candidateId}</code> resource. By making a <a href=\"/$context.stage/candidate/{candidateId}\" target=\"_blank\"><code>GET</code> request</a> to <code>/candidates/{candidateId}</code> you can retrieve the master account profile record of a candidate in your MySQL database. If you are looking for a specific candidate, for example the candidate with ID 1000, you can make a <a href=\"/$context.stage/pets/1000\" target=\"_blank\"><code>GET</code> request</a> to <code>/candidates/1</code>.\n        </p>\n        <p>You can use a standard web browser like Chrome to view this api. Alternatively, you can also use something more sophisticated, like a REST client such as <a href=\"https://www.getpostman.com/\" target=\"_blank\">Postman</a> to test the <code>POST</code> methods in your API to create a new candidate account. Use the sample body below to send the <code>POST</code> request:\n        </p>\n        <pre>\n{\n    \"first_name\" : \"Mickey\",\n    \"middle_name\": null,\n    \"last_name\" : \"Mouse\",\n    \"email\": \"mickey@disney.com\"\n}\n        </pre>\n    </body>\n</html>"
+                "text/html": "<html>\n    <head>\n        <style>\n        body {\n            color: #333;\n            font-family: Sans-serif;\n            max-width: 1200px;\n            margin: auto;\n        }\n        </style>\n    </head>\n    <body>\n        <h1 style=\"\">Agility360 Candidate Engagement App</h1>\n        <h2 style=\"margin-bottom: 25px;\">REST API documentation</h2>\n        <div style=\"padding: 15px;\">\n          <hr />\n          <p>As a matter of convenience this api will be publicly accessible during development. Afterwards I will setup security credentials that will be stored locally in the mobile app.</p>\n          <p>Please note that per your request this api uses 128-bit SSL encryption.</p>\n          <p>This API provides all of the data resources for the Candidate Engagement mobile app. </p>\n          <p>You can use a standard web browser like Chrome to view this api. Alternatively, you can also use something more sophisticated, like a REST client such as <a href=\"https://www.getpostman.com/\" target=\"_blank\">Postman</a> to test the <code>POST</code> methods in your API to create a new candidate account.</p>\n          <hr />\n        </div>\n        <h3>Candidates</h3>\n          <div style=\"margin-left: 25px;\">\n            <div>\n              <p>\n                URL end point: <a href=\"/$context.stage/candidates/{accountName}\" target=\"_blank\">/$context.stage/candidates/{accountName}</a>\n              </p>\n            </div>\n          <h4>GET</h3>\n            <div>\n              <p>This API contains the <code>/candidates/{accountName}</code> resource. By making a <a href=\"/$context.stage/candidates/{accountName}\" target=\"_blank\"><code>GET</code> request</a> to <code>/candidates/{accountName}</code> you can retrieve the master account profile record of a candidate in your MySQL database. If you are looking for a specific candidate, for example the candidate with ID 1000, you can make a <a href=\"/$context.stage/candidates/1000\" target=\"_blank\"><code>GET</code> request</a> to <code>/candidates/1000</code>.\n              </p>\n              <p>\n                Sample body response object:\n                <pre>\n                  {\n                    \"candidate_id\": 6,\n                    \"account_name\": \"mcdaniel\"\n                    \"first_name\": \"Lawrence\",\n                    \"middle_name\": \"Philip\",\n                    \"last_name\": \"McDaniel\",\n                    \"job_hunting\": 0,\n                    \"phone_number\": \"(415) 766-9012\",\n                    \"email\": \"lpm0073@gmail.com\",\n                    \"city\": \"Plano\",\n                    \"state\": \"TX\",\n                    \"industry_id\": 0,\n                    \"subindustry_id\": 0,\n                    \"profession_id\": 0,\n                    \"subprofession_id\": 0,\n                    \"create_date\": 2017-07-31 20:57:32,\n                    \"update_date\": 2017-07-31 20:57:32\n                  }\n                </pre>\n              </p>\n            </div>\n\n          <h4>POST</h3>\n            <div>\n              <p>\n                Sample body request object:\n                <pre>\n                  {\n                    \"account_name\": \"mcdaniel\",\n                    \"first_name\": \"Lawrence\",\n                    \"middle_name\": \"Philip\",\n                    \"last_name\": \"McDaniel\",\n                    \"job_hunting\": \"0\",\n                    \"phone_number\": \"(415) 766-9012\",\n                    \"email\": \"lpm0073@gmail.com\",\n                    \"city\": \"Plano\",\n                    \"state\": \"TX\",\n                    \"subprofession_id\": \"0\",\n                    \"industry_id\": \"0\",\n                    \"profession_id\": \"0\",\n                    \"subindustry_id\": \"0\"\n                  }\n                </pre>\n              </p>\n            </div>\n\n            <h4>DELETE</h3>\n              <div>\n                <p>\n                  Query parameter: ID\n                </p>\n                <p>\n                  Sample body response object if successful:\n                  <pre>\n                    {\n                      \"response\": \"success\"\n                    }\n                  </pre>\n                </p>\n                <p>\n                  Sample body response object if failure:\n                  <pre>\n                    {\n                      \"reponse\": \"failure\",\n                      \"err\": \"JSON string of error message from source system\"\n                    }\n                  </pre>\n                </p>\n              </div>\n\n          </div>\n\n\n          </div>\n\n\n          <h3>Candidates - Job History</h3>\n            <div style=\"margin-left: 25px;\">\n              <div>\n                <p>\n                  URL end point: <a href=\"/$context.stage/candidates/{accountName}/jobhistory\" target=\"_blank\">/$context.stage/candidates/{accountName}/jobhistory</a>\n                </p>\n              </div>\n            <h4>GET</h3>\n              <div>\n                <p>\n                  Sample body response object:\n                  <pre>\n                    [\n                      {\n                        \"department\": \"None\",\n                        \"create_date\": \"2017-08-01 16:55:55\",\n                        \"candidate_id\": \"6\",\n                        \"end_date\": \"2017-06-30 15:55:10\",\n                        \"final_salary\": \"35000.0\",\n                        \"start_date\": \"1979-08-01 15:55:10\",\n                        \"job_title\": \"Fry Chef\",\n                        \"id\": 1,\n                        \"company_name\": \"Burger Shack\"\n                      },\n                      {\n                        \"department\": \"None\",\n                        \"create_date\": \"2017-08-01 17:03:37\",\n                        \"candidate_id\": \"6\",\n                        \"end_date\": \"1981-03-31 15:55:10\",\n                        \"final_salary\": \"12000.0\",\n                        \"start_date\": \"1981-01-01 15:55:10\",\n                        \"job_title\": \"Medical research volunteer\",\n                        \"id\": 2,\n                        \"company_name\": \"Nuclear Fission Research Center\"\n                      }\n                    ]\n                  </pre>\n                </p>\n\n              </div>\n\n            <h4>POST</h3>\n              <div>\n                <p>\n                  Sample body request object:\n                  <pre>\n                    {\n                      \"account_name\": \"mcdaniel\",\n                      \"company_name\": \"CIA\",\n                      \"job_title\": \"Secret Spy\",\n                      \"start_date\": \"1985-02-01 15:55:10\",\n                      \"end_date\": \"1987-10-12 15:55:10\",\n                      \"final_salary\": 180000\n                    }\n                  </pre>\n                </p>\n              </div>\n\n              <h4>DELETE</h3>\n                <div>\n                  <p>\n                    Query parameter: ID\n                  </p>\n                  <p>\n                    Sample body response object if successful:\n                    <pre>\n                      {\n                        \"response\": \"success\"\n                      }\n                    </pre>\n                  </p>\n                  <p>\n                    Sample body response object if failure:\n                    <pre>\n                      {\n                        \"reponse\": \"failure\",\n                        \"err\": \"JSON string of error message from source system\"\n                      }\n                    </pre>\n                  </p>\n                </div>\n\n            </div>\n\n            <h3>Candidates - Education</h3>\n              <div style=\"margin-left: 25px;\">\n                <div>\n                  <p>\n                    URL end point: <a href=\"/$context.stage/candidates/{accountName}/education\" target=\"_blank\">/$context.stage/candidates/{accountName}/education</a>\n                  </p>\n                </div>\n              <h4>GET</h3>\n                <div>\n                  <p>\n                    Sample body response object:\n                    <pre>\n                      {\n                      }\n                    </pre>\n                  </p>\n\n                </div>\n\n              <h4>POST</h3>\n                <div>\n                  <p>\n                    Sample body request object:\n                    <pre>\n                      {\n                        \"account_name\": \"mcdaniel\",\n                        \"institution_name\": \"Tommy Wu School\",\n                        \"degree\": \"Big Money Real Estate\",\n                        \"start_date\": \"1979-08-01 15:55:10\",\n                        \"end_date\": \"2017-06-30 15:55:10\",\n                        \"graduated\": 1\n                      }\n                    </pre>\n                  </p>\n                </div>\n\n                <h4>DELETE</h3>\n                  <div>\n                    <p>\n                      Query parameter: ID\n                    </p>\n                    <p>\n                      Sample body response object if successful:\n                      <pre>\n                        {\n                          \"response\": \"success\"\n                        }\n                      </pre>\n                    </p>\n                    <p>\n                      Sample body response object if failure:\n                      <pre>\n                        {\n                          \"reponse\": \"failure\",\n                          \"err\": \"JSON string of error message from source system\"\n                        }\n                      </pre>\n                    </p>\n                  </div>\n\n              </div>\n\n              <h3>Candidates - Certifications</h3>\n                <div style=\"margin-left: 25px;\">\n                  <div>\n                    <p>\n                      URL end point: <a href=\"/$context.stage/candidates/{accountName}/certifications\" target=\"_blank\">/$context.stage/candidates/{accountName}/certifications/</a>\n                    </p>\n                  </div>\n                <h4>GET</h3>\n                  <div>\n                    <p>\n                      Sample body response object:\n                      <pre>\n                        {\n                        }\n                      </pre>\n                    </p>\n\n                  </div>\n\n                <h4>POST</h3>\n                  <div>\n                    <p>\n                      Sample body request object:\n                      <pre>\n                        {\n                          \"account_name\": \"mcdaniel\",\n                          \"institution_name\": \"Terrel State Hospital\",\n                          \"certification_name\": \"Certified looney tunes\",\n                          \"date_received\": \"1995-4-01 0:0:0\",\n                          \"expire_date\": null\n                        }\n                      </pre>\n                    </p>\n                  </div>\n\n                  <h4>DELETE</h3>\n                    <div>\n                      <p>\n                        Query parameter: ID\n                      </p>\n                      <p>\n                        Sample body response object if successful:\n                        <pre>\n                          {\n                            \"response\": \"success\"\n                          }\n                        </pre>\n                      </p>\n                      <p>\n                        Sample body response object if failure:\n                        <pre>\n                          {\n                            \"reponse\": \"failure\",\n                            \"err\": \"JSON string of error message from source system\"\n                          }\n                        </pre>\n                      </p>\n                    </div>\n\n                </div>\n\n\n                <h3>Industries</h3>\n                  <div style=\"margin-left: 25px;\">\n                    <div>\n                      <p>\n                        URL end point: <a href=\"/$context.stage/industries/\" target=\"_blank\">/$context.stage/industries/</a>\n                      </p>\n                    </div>\n                  <h4>GET</h3>\n                    <div>\n                      <p></p>\n                    </div>\n\n                  </div>\n\n                  <h3>Professions</h3>\n                    <div style=\"margin-left: 25px;\">\n                      <div>\n                        <p>\n                          URL end point: <a href=\"/$context.stage/professions/\" target=\"_blank\">/$context.stage/professions/</a>\n                        </p>\n                      </div>\n                    <h4>GET</h3>\n                      <div>\n                        <p></p>\n                      </div>\n\n                    </div>\n\n\n    </body>\n</html>\n"
               }
             }
           },
@@ -177,6 +177,45 @@
           "type": "aws"
         }
       },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateDelete/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
       "options": {
         "consumes": [
           "application/json"
@@ -305,6 +344,51 @@
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateCertificationDelete/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
       }
     },
     "/candidates/{accountName}/education": {
@@ -386,6 +470,51 @@
           },
           "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationCreate/invocations",
           "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationDelete/invocations",
+          "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
@@ -515,6 +644,51 @@
           },
           "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateJobHistoryCreate/invocations",
           "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateJobHistoryDelete/invocations",
+          "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
@@ -797,6 +971,15 @@
         },
         "subprofession_id": {
           "type": "number"
+        },
+        "job_hunting": {
+          "type": "number"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
         }
       }
     },
