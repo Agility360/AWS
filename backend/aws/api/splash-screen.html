@@ -80,6 +80,49 @@
               </p>
             </div>
 
+            <h4>PATCH</h3>
+              <div>
+                <p>
+                  Sample body request object:
+                  <pre>
+                    {
+                      "account_name": "mcdaniel",
+                      "first_name": "Lawrence",
+                      "middle_name": "Philip",
+                      "last_name": "McDaniel",
+                      "job_hunting": "0",
+                      "phone_number": "(415) 766-9012",
+                      "email": "lpm0073@gmail.com",
+                      "city": "Plano",
+                      "state": "TX",
+                      "subprofession_id": "0",
+                      "industry_id": "0",
+                      "profession_id": "0",
+                      "subindustry_id": "0"
+                    }
+                  </pre>
+                </p>
+                <p>
+                  Sample body response object if successful:
+                  <pre>
+                    {
+                      "response": "success"
+                    }
+                  </pre>
+                </p>
+                <p>
+                  Sample body response object if failure:
+                  <pre>
+                    {
+                      "reponse": "failure",
+                      "err": "JSON string of error message from source system"
+                    }
+                  </pre>
+                </p>
+                
+              </div>
+
+
             <h4>DELETE</h3>
               <div>
                 <p>

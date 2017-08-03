@@ -8,5 +8,8 @@
   "industry_id": 1,
   "subindustry_id": 1,
   "profession_id": 1,
-  "subprofession_id": 1
-}
+  "subprofession_id": 1,
+  "job_hunting": 1,
+  "city": "New York",
+  "state": "NY"
+}}

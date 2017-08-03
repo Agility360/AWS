@@ -1,0 +1,15 @@
+{
+  "account_name": "phelps14",
+  "first_name": "Mike",
+  "middle_name": null,
+  "last_name": "Phelps",
+  "email": "manster14@hotmail.com",
+  "phone_number": "(212) 123-4567",
+  "industry_id": 1,
+  "subindustry_id": 1,
+  "profession_id": 1,
+  "subprofession_id": 1,
+  "job_hunting": 1,
+  "city": "New York",
+  "state": "NY"
+}
