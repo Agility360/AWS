@@ -24,7 +24,7 @@ You'll find a Swagger json dump of the complete REST api in the backend/aws/api 
 * One note: the Swagger json in the repository contains AWS extensions which are not guaranteed to be importable to other platforms.
 
 ### AWS RDS - MySQL
-MySQL is being provided by the AWS RDS service. It presently operated on a t2.micro single instance in the AWS free usage tier.
+MySQL is hosted by the AWS RDS service. It is currently implemented on a t2.micro single instance in the AWS free usage tier.
 
 Host: cea.cjbv7rlz4hsg.us-east-1.rds.amazonaws.com
 Port: 3306
@@ -32,7 +32,7 @@ Allowed protocols: TCP/IP and/or SSH
 
 The MySQL server is publicly accessible so that the Agility business support and administrative teams can connect using standard client software tools like MS Access.
 
-Note that IAM is not currently setup for the MySQL server.
+Note that the MySQL server does not currently use IAM.
 
 ![MySQL cea database](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/mysql/er-diagram.png "MySQL cea database")
 
