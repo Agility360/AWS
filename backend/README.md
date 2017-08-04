@@ -15,6 +15,9 @@ The REST api is implemented as as set of serverless microservices. The basic des
               AWS API Gateway <--> AWS Lambda <--> MySQL
 Service and resource permissions are managed using IAM roles.
 
+![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-design.png "REST api desing")
+
+
 #### API end point:  [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
 
 ### AWS API Gateway
