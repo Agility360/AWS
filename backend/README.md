@@ -13,7 +13,7 @@ The REST api is implemented as as set of serverless microservices. The basic des
               AWS API Gateway <--> AWS Lambda <--> MySQL
 Service and resource permissions are managed using IAM roles.
 
-Reference documentation for the REST api is available at [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
+#### API end point:  [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
 
 ### AWS API Gateway
 You'll find a Swagger json dump of the complete REST api in the backend/aws/api folder of this repository. While we haven't actually tried, we assume that (if you feel so compelled) you can edit the api from Swagger or another API development tool of your choosing.
@@ -52,5 +52,5 @@ Each Lambda function was originally created using the AWS CLI (command line inte
 * A design note: the code design of these functions defies nearly every principal of DRY. We know that, but we did it anyway. Refactor this code with caution! A few things to consider:
   - AWS bills for execution of the function, in increments of 100ms.
   - If your Lambda calls another Lambda then you'll effectively be paying 2x as the calling function will still get billed while it waits for the callee to return its results.
-  - if your Lambda executes a MySQL query and is waiting for results, then you'll be paying for the Lambda times while the MySQL server is executing the query.
+  - if your Lambda executes a MySQL query and is waiting for results, then you'll be paying for Lambda as it waits while the MySQL server is executing the query.
 Thus, if you feel compelled to refactor any code for performance sake then MySQL is likely your venue of choice; assuming that "performance" means minimizing your monthly AWS bill.
