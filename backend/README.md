@@ -11,9 +11,7 @@ The entire backend is developed with Amazon Web Services. All IT infrastructure 
 
 
 ### REST api
-The REST api is implemented as as set of serverless microservices. The basic design framework is
-              AWS API Gateway <--> AWS Lambda <--> MySQL
-Service and resource permissions are managed using IAM roles.
+The REST api is implemented as as set of serverless microservices. Service and resource permissions are managed using IAM roles. The following diagram nearly accurately describes our design, with the one caveat that we are using MySQL rather than DynamoDB for persistent storage.
 
 ![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-design.png "REST api desing")
 
