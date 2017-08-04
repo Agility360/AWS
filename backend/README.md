@@ -4,7 +4,7 @@ The entire backend is developed with Amazon Web Services. All IT infrastructure 
 
 ### Resources
 * [Getting started with AWS Lambda](http://docs.aws.amazon.com/lambda/latest/dg/getting-started.html)
-* [Getting started with AWS Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-intro.html)
+* [Getting started with AWS API Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-intro.html)
 * [Getting started with AWS RDS](https://aws.amazon.com/rds/)
 * [Accessing MySQL databases from an AWS Python Lambda function](https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function)
 * [Create a serverless RESTful API with API Gateway, Swagger, Lambda, and DynamoDB](https://cloudonaut.io/create-a-serverless-restful-api-with-api-gateway-swagger-lambda-and-dynamodb/)
