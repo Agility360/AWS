@@ -33,6 +33,8 @@ The MySQL server is publicly accessible so that the Agility business support and
 
 Note that IAM is not currently setup for the MySQL server.
 
+![MySQL cea database](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/mysql/er-diagram.png "MySQL cea database")
+
 ### AWS Lambda
 The REST api uses Lambda functions as middleware to handle stuff like
   - unpacking and transforming URL body requests
