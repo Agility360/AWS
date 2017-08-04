@@ -13,7 +13,7 @@ The entire backend is developed with Amazon Web Services. All IT infrastructure 
 ### REST api
 The REST api is implemented as a set of serverless microservices. Service and resource permissions are managed using IAM roles.
 
-![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-design.png "REST api design")
+![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-architecture.png "REST api design")
 
 
 #### API end point:  [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
