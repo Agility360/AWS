@@ -7,6 +7,8 @@ The entire backend is developed with Amazon Web Services. All IT infrastructure 
 * [Accessing MySQL databases from an AWS Python Lambda function](https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function)
 * [Getting started with AWS Lambda](http://docs.aws.amazon.com/lambda/latest/dg/getting-started.html)
 * [Getting started with AWS Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-intro.html)
+* [Create a serverless RESTful API with API Gateway, Swagger, Lambda, and DynamoDB](https://cloudonaut.io/create-a-serverless-restful-api-with-api-gateway-swagger-lambda-and-dynamodb/)
+
 
 ### REST api
 The REST api is implemented as as set of serverless microservices. The basic design framework is
