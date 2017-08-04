@@ -1,4 +1,4 @@
-![Agility360 Logo](https://raw.githubusercontent.com/Agility360/CEA/master/assets/logo/logo7868398md.png "Agility360 Logo")
+![Agility360 Logo](https://raw.githubusercontent.com/Agility360/CEA/master/assets/logo/logo7868398_sm.png "Agility360 Logo")
 ## Client Engagement App
 
 
