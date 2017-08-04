@@ -3,9 +3,9 @@
 ### For iOS and Android
 
 ### Resources
- - [Download the iOS app]()
- - [Download the Android app]()
- - [Front end repository and documentation]()
+ - Pending: Download the iOS app
+ - Pending: Download the Android app
+ - Pending: Front end repository and documentation
  - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
  - [REST api](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
 
