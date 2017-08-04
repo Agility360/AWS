@@ -7,7 +7,7 @@
  - [Download the Android app](#)
  - [Front end repository and documentation](#)
  - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
- - [REST api](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta#professions)
+ - [REST api](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
 
 
  ![Application Architecture](https://raw.githubusercontent.com/Agility360/CEA/master/application-architecture2.png "Application Architecture")
