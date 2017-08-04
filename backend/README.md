@@ -3,11 +3,11 @@
 The entire backend is developed with Amazon Web Services. All IT infrastructure resources are exposed with a REST API that is created using the AWS API Gateway service. Note however that the MySQL database is publicly accessible. Note more details below.
 
 ### Resources
-* [MySQL Documentation on JSON Data Type](https://dev.mysql.com/doc/refman/5.7/en/json.html)
-* [Accessing MySQL databases from an AWS Python Lambda function](https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function)
 * [Getting started with AWS Lambda](http://docs.aws.amazon.com/lambda/latest/dg/getting-started.html)
 * [Getting started with AWS Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-intro.html)
+* [Accessing MySQL databases from an AWS Python Lambda function](https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function)
 * [Create a serverless RESTful API with API Gateway, Swagger, Lambda, and DynamoDB](https://cloudonaut.io/create-a-serverless-restful-api-with-api-gateway-swagger-lambda-and-dynamodb/)
+* [MySQL Documentation on JSON Data Type](https://dev.mysql.com/doc/refman/5.7/en/json.html)
 
 
 ### REST api
