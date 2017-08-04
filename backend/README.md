@@ -11,9 +11,9 @@ The entire backend is developed with Amazon Web Services. All IT infrastructure 
 
 
 ### REST api
-The REST api is implemented as as set of serverless microservices. Service and resource permissions are managed using IAM roles. The following diagram nearly accurately describes our design, with the one caveat that we are using MySQL rather than DynamoDB for persistent storage.
+The REST api is implemented as a set of serverless microservices. Service and resource permissions are managed using IAM roles. The following diagram nearly accurately describes our design, with the one caveat that we are using MySQL rather than DynamoDB for persistent storage.
 
-![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-design.png "REST api desing")
+![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-design2.png "REST api design")
 
 
 #### API end point:  [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
