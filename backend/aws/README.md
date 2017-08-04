@@ -1,22 +1,28 @@
-# Candidate Engagement App -- Back End
+## Candidate Engagement App -- Back End
 
 
 
 The entire backend is developed with Amazon Web Services. All IT infrastructure resources are exposed with a REST API that is created using the AWS API Gateway service. Note however that the MySQL database is publicly accessible. Note more details below.
 
-##REST api
+### Resources
+* [MySQL Documentation on JSON Data Type](https://dev.mysql.com/doc/refman/5.7/en/json.html)
+* [Accessing MySQL databases from an AWS Python Lambda function](https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function)
+* [Getting started with AWS Lambda](http://docs.aws.amazon.com/lambda/latest/dg/getting-started.html)
+* [Getting started with AWS Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-intro.html)
+
+### REST api
 The REST api is implemented as as set of serverless microservices. The basic design framework is
               AWS API Gateway <--> AWS Lambda <--> MySQL
 Service and resource permissions are managed using IAM roles.
 
 Reference documentation for the REST api is available at [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
 
-##AWS API Gateway
+### AWS API Gateway
 You'll find a Swagger json dump of the complete REST api in the backend/aws/api folder of this repository. While we haven't actually tried, we assume that (if you feel so compelled) you can edit the api from Swagger or another API development tool of your choosing.
 
-* One note: the Swagger json in the repository contains AWS extensions which are not guaranteed to be importable to other platforms. 
+* One note: the Swagger json in the repository contains AWS extensions which are not guaranteed to be importable to other platforms.
 
-##AWS RDS - MySQL
+### AWS RDS - MySQL
 MySQL is being provided by the AWS RDS service. It presently operated on a t2.micro single instance in the AWS free usage tier.
 
 Host: cea.cjbv7rlz4hsg.us-east-1.rds.amazonaws.com
@@ -27,7 +33,7 @@ The MySQL server is publicly accessible so that the Agility business support and
 
 Note that IAM is not currently setup for the MySQL server.
 
-##AWS Lambda
+### AWS Lambda
 The REST api uses Lambda functions as middleware to handle stuff like
   - unpacking and transforming URL body requests
   - connecting to the database
