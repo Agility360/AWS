@@ -1,7 +1,5 @@
 ## Candidate Engagement App -- Back End
 
-
-
 The entire backend is developed with Amazon Web Services. All IT infrastructure resources are exposed with a REST API that is created using the AWS API Gateway service. Note however that the MySQL database is publicly accessible. Note more details below.
 
 ### Resources
