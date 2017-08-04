@@ -3,4 +3,4 @@
 ### For iOS and Android
 
 
-![Application Architecture](https://raw.githubusercontent.com/Agility360/CEA/master/application-architecture.png "Application Architecture")
+![Application Architecture](https://raw.githubusercontent.com/Agility360/CEA/master/application-architecture2.png "Application Architecture")
