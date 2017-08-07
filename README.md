@@ -10,13 +10,16 @@
  - [REST api](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
 
 ### Cloud Infrastructure URLs
-- REST api: api.agility360app.net/beta
-- SQL Server: sql.agility360app.net
-- Content Delivery Network: cdn.agility360app.net
-- Email Server: mail.agility360app.net
-- Source Code Repository: project.agility360app.net
-- Federated login: oauth-deauthorized.agility360app.net
-- Federated login: oauth-logged-in.agility360app.net
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| REST api  | api.agility360app.net/beta |
+| SQL Server  | sql.agility360app.net  |
+| Content Delivery Network  | cdn.agility360app.net  |
+| Email Server  | mail.agility360app.net  |
+| Source Code Repository  | project.agility360app.net  |
+| Federated login  | oauth-deauthorized.agility360app.net  |
+| Federated login  | oauth-logged-in.agility360app.net  |
 
 
 ### High level application architecture
