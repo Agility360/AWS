@@ -11,7 +11,7 @@
 
 ### Cloud Infrastructure URLs
 
-| First Header  | Second Header |
+| Resource  | URL |
 | ------------- | ------------- |
 | REST api  | api.agility360app.net/beta |
 | SQL Server  | sql.agility360app.net  |
