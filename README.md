@@ -11,3 +11,5 @@
 
 
  ![Application Architecture](https://raw.githubusercontent.com/Agility360/CEA/master/application-architecture2.png "Application Architecture")
+
+![AWS Mobile Application Architecture]("https://raw.githubusercontent.com/Agility360/CEA/master/enterprise-mobile-hub_serverless-compute-app.png" "AWS Mobile app architecture")
