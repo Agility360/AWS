@@ -15,7 +15,7 @@
 | ------------- | ------------- |
 | REST api  | https://api.agility360app.net/beta |
 | SQL Server  | sql.agility360app.net  |
-| Content Delivery Network  | http://cdn.agility360app.net  |
+| Content Delivery Network  | https://cdn.agility360app.net  |
 | Email Server  | http://mail.agility360app.net  |
 | Source Code Repository  | http://project.agility360app.net  |
 | Federated login  | http://oauth-deauthorized.agility360app.net  |
