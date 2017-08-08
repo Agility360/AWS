@@ -35,6 +35,7 @@
           <hr />
           <p>Technical contact: Lawrence McDaniel: (415) 766-9012 | lpm0073@gmail.com </p>
           <p>Business contact: Ryan Gibson: (903) 267-0300 | rgibson@agility360.net</p>
+          <p>Master Project Site: <a href="http://project.agility360app.net" target="_blank">project.agility360app.net</a></p>
           <p>Note: As a matter of convenience this api will be publicly accessible during development. Afterwards I will setup security credentials that will be stored locally in the mobile app.</p>
           <p>Note: This api uses 128-bit SSL encryption.</p>
           <p>Usage: This API provides all of the data resources for the Candidate Engagement mobile app. You can use a standard web browser like Chrome to view this api. Alternatively, you can also use something more sophisticated, like a REST client such as <a href="https://www.getpostman.com/" target="_blank">Postman</a> to test the <code>POST</code> methods in your API to create a new candidate account.</p>
@@ -63,7 +64,7 @@
             <h4>GET</h3>
             <p>This API contains the <code>/candidates/{accountName}</code> resource. By making a <a href="/$context.stage/candidates/{accountName}" target="_blank"><code>GET</code> request</a> to <code>/candidates/{accountName}</code> you can retrieve the master account profile record of a candidate in your MySQL database. If you are looking for a specific candidate, for example the candidate with accountName "mcdaniel", you can make a <a href="/$context.stage/candidates/mcdaniel" target="_blank"><code>GET</code> request</a> to <code>/candidates/mcdaniel</code>.
             </p>
-            <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel</a></p>
+            <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel</a></p>
             <p>
               Sample body response object:
               <pre>
@@ -191,7 +192,7 @@
             </div>
             <div class="method">
               <h4>GET</h3>
-                <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/jobhistory" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/jobhistory</a></p>
+                <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory</a></p>
               <p>
                 Sample body response object:
                 <pre>
@@ -311,7 +312,7 @@
               </div>
               <div class="method">
                 <h4>GET</h3>
-                <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/education" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/education</a></p>
+                <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel/education" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/education</a></p>
                 <p>
                   Sample body response object:
                   <pre>
@@ -418,7 +419,7 @@
                 </div>
                 <div class="method">
                   <h4>GET</h3>
-                  <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/certifications" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/certifications</a></p>
+                  <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel/certifications" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/certifications</a></p>
                   <p>
                     Sample body response object:
                     <pre>
@@ -515,7 +516,7 @@
 
                 <div class="method">
                   <h4>GET</h3>
-                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires</a></p>
+                    <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel/questionnaires" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/questionnaires</a></p>
                     <p>
                       Sample body response object:
                       <pre>
@@ -539,7 +540,7 @@
 
                 <div class="method">
                   <h4>GET</h3>
-                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires/1" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/candidates/mcdaniel/questionnaires/1</a></p>
+                    <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel/questionnaires/1" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/questionnaires/1</a></p>
                     <p>
                       Sample body response object:
                       <pre>
@@ -611,7 +612,7 @@
 
                 <div class="method">
                   <h4>GET</h3>
-                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/industries</a></p>
+                    <p>Example URI: <a href="https://api.agility360app.net/beta/industries" target="_blank">https://api.agility360app.net/beta/industries</a></p>
                     <p>
                       Sample body response object:
                       <pre>
@@ -634,7 +635,7 @@
 
                 <div class="method">
                   <h4>GET</h3>
-                    <p>Example URI: <a href="https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions" target="_blank">https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta/professions</a></p>
+                    <p>Example URI: <a href="https://api.agility360app.net/beta/professions" target="_blank">https://api.agility360app.net/beta/professions</a></p>
                     <p>
                       Sample body response object:
                       <pre>
