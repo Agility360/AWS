@@ -9,6 +9,26 @@
  - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
  - [REST api](https://api.agility360app.net/beta)
 
+### Android Resources
+| Resource  |  |
+| ------------- | ------------- |
+|  Project | Agility 360 CEA |
+|  Project ID | agility360-cea |
+|  Project Number | 710763737966 |
+|  Web API Key | AIzaSyAxbFHfR3nprk4LFJksX3Q7C4g0XOdYLGs |
+|  App ID | 1:710763737966:android:0575dc95d8de6448 |
+| Google Developer Console  | (https://console.cloud.google.com/home/dashboard?project=agility360-cea) |
+| Firebase Console  | (https://console.firebase.google.com/project/agility360-cea/overview) |
+| Play Store Console  | (https://play.google.com/apps/publish/?dev_acc=15872505976734819884) |
+
+
+#### Firebase Cloud Messaging (aka Google Push Notifications)
+| Resource  |  |
+| ------------- | ------------- |
+| Sender ID | 710763737966 |
+| Server key | AAAApXzR824:APA91bEd2MdzEWsRioQRmk_f7upChLrsyK7rvc5Dc-YHvNhHOIO3rcosuAiXUpU7LbsTED4ibJIKt1Egn2MOEPdU61CZVue0RoKKh0VNkVqfNej7UZAUyMwYs0OzctgIC4xgJrd3gn_2 |
+
+
 ### Serverless Infrastructure Resources
 
 | Resource  | URL |
