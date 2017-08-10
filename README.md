@@ -17,9 +17,9 @@
 |  Project Number | 710763737966 |
 |  Web API Key | AIzaSyAxbFHfR3nprk4LFJksX3Q7C4g0XOdYLGs |
 |  App ID | 1:710763737966:android:0575dc95d8de6448 |
-| Google Developer Console  | (https://console.cloud.google.com/home/dashboard?project=agility360-cea) |
-| Firebase Console  | (https://console.firebase.google.com/project/agility360-cea/overview) |
-| Play Store Console  | (https://play.google.com/apps/publish/?dev_acc=15872505976734819884) |
+| Google Developer Console  | https://console.cloud.google.com/home/dashboard?project=agility360-cea |
+| Firebase Console  | https://console.firebase.google.com/project/agility360-cea/overview |
+| Play Store Console  | https://play.google.com/apps/publish/?dev_acc=15872505976734819884 |
 
 
 #### Firebase Cloud Messaging (aka Google Push Notifications)
