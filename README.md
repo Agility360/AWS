@@ -3,7 +3,7 @@
 ### For iOS and Android
 
 ### Application Resources
- - Pending: Download the iOS app
+ - ![iOS Connect (App ID 1270138260)](https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/1270138260)
  - Pending: Download the Android app
  - Pending: Front end repository and documentation
  - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
