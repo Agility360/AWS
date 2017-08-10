@@ -9,6 +9,13 @@
  - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
  - [REST api](https://api.agility360app.net/beta)
 
+### Apple Developer Resources
+ | Resource  |  |
+ | ------------- | ------------- |
+ | App ID | 1270138260 |
+ | Team Name | lawrencemcdaniel.com |
+ | Team ID | YZ6K7R4QNJ |
+
 ### Android Resources
 | Resource  |  |
 | ------------- | ------------- |
