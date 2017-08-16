@@ -22,7 +22,7 @@
 |  Project | Agility 360 CEA |
 |  Project ID | agility360-cea |
 |  Project Number | 710763737966 |
-|  Web API Key (According to AWS Mobile Hub) | AAAApXzR824:APA91bEd2MdzEWsRioQRmk_f7upChLrsyK7rvc5Dc-YHvNhHOIO3rcosuAiXUpU7LbsTED4ibJIKt1Egn2MOEPdU61CZVue0RoKKh0VNkVqfNej7UZAUyMwYs0OzctgIC4xgJrd3gn_2 |
+|  API Key (According to AWS Mobile Hub) | AAAApXzR824:APA91bEd2MdzEWsRioQRmk_f7upChLrsyK7rvc5Dc-YHvNhHOIO3rcosuAiXUpU7LbsTED4ibJIKt1Egn2MOEPdU61CZVue0RoKKh0VNkVqfNej7UZAUyMwYs0OzctgIC4xgJrd3gn_2 |
 | Sender ID (According to AWS Mobile Hub) | 710763737966 |
 |  App ID | 1:710763737966:android:0575dc95d8de6448 |
 | Google Developer Console  | https://console.cloud.google.com/home/dashboard?project=agility360-cea |
