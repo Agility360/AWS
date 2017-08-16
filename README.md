@@ -22,7 +22,8 @@
 |  Project | Agility 360 CEA |
 |  Project ID | agility360-cea |
 |  Project Number | 710763737966 |
-|  Web API Key | AIzaSyAxbFHfR3nprk4LFJksX3Q7C4g0XOdYLGs |
+|  Web API Key (According to AWS Mobile Hub) | AAAApXzR824:APA91bEd2MdzEWsRioQRmk_f7upChLrsyK7rvc5Dc-YHvNhHOIO3rcosuAiXUpU7LbsTED4ibJIKt1Egn2MOEPdU61CZVue0RoKKh0VNkVqfNej7UZAUyMwYs0OzctgIC4xgJrd3gn_2 |
+| Sender ID (According to AWS Mobile Hub) | 710763737966 |
 |  App ID | 1:710763737966:android:0575dc95d8de6448 |
 | Google Developer Console  | https://console.cloud.google.com/home/dashboard?project=agility360-cea |
 | Firebase Console  | https://console.firebase.google.com/project/agility360-cea/overview |
@@ -45,6 +46,12 @@
 | Content Delivery Network  | [https://cdn.agility360app.net](https://cdn.agility360app.net)  |
 | Email Server  | [http://mail.agility360app.net](http://mail.agility360app.net)  |
 | Source Code Repository  | [http://project.agility360app.net](http://project.agility360app.net)  |
+
+### Federated ID providers
+| Resource  | URL |
+| ------------- | ------------- |
+| Facebook App Console | https://developers.facebook.com/apps/1982035528745707/dashboard/ |
+| Facebook App ID | 1982035528745707 |
 | Federated login  | [http://oauth-deauthorized.agility360app.net](http://oauth-deauthorized.agility360app.net)  |
 | Federated login  | [http://oauth-logged-in.agility360app.net](http://oauth-logged-in.agility360app.net)  |
 
