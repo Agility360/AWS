@@ -8,6 +8,7 @@ webpackJsonp([0],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__settings_settings__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tasks_tasks__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__jobs_jobs__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20,15 +21,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TabsPage = (function () {
     function TabsPage() {
-        this.tab1Root = __WEBPACK_IMPORTED_MODULE_2__tasks_tasks__["a" /* TasksPage */];
+        this.tab1Root = __WEBPACK_IMPORTED_MODULE_3__jobs_jobs__["a" /* JobsPage */];
         this.tab2Root = __WEBPACK_IMPORTED_MODULE_1__settings_settings__["a" /* SettingsPage */];
+        this.tab3Root = __WEBPACK_IMPORTED_MODULE_1__settings_settings__["a" /* SettingsPage */];
+        this.tab4Root = __WEBPACK_IMPORTED_MODULE_2__tasks_tasks__["a" /* TasksPage */];
+        this.tab5Root = __WEBPACK_IMPORTED_MODULE_1__settings_settings__["a" /* SettingsPage */];
     }
     return TabsPage;
 }());
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Tasks" tabIcon="list"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="Settings" tabIcon="cog"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tabs/tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Jobs" tabIcon="briefcase"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="News" tabIcon="globe"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Forum" tabIcon="paper"></ion-tab>\n  <ion-tab [root]="tab4Root" tabTitle="Notifications" tabIcon="information-circle"></ion-tab>\n  <ion-tab [root]="tab5Root" tabTitle="Profile" tabIcon="contact"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tabs/tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -81,7 +86,7 @@ ConfirmPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-confirm',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/confirm/confirm.html"*/'<ion-content>\n  <div padding>\n    <p>Please enter the confirmation code sent to your email to verify your account:</p>\n  </div>\n  <form (submit)="confirm()">\n    <ion-list>\n\n      <ion-item>\n        <ion-label floating>Confirmation Code</ion-label>\n        <ion-input type="text" [(ngModel)]="code" name="code"></ion-input>\n      </ion-item>\n\n      <div padding>\n        <button ion-button color="primary" block>Confirm Account</button>\n      </div>\n\n      <div padding>\n        <p>Haven\'t received the confirmation code email yet? <a (click)="resendCode()">Resend</a></p>\n      </div>\n\n    </ion-list>\n  </form>\n</ion-content>  \n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/confirm/confirm.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_user__["a" /* User */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_user__["a" /* User */]])
 ], ConfirmPage);
 
 //# sourceMappingURL=confirm.js.map
@@ -106,19 +111,27 @@ webpackEmptyAsyncContext.id = 112;
 /***/ }),
 
 /***/ 153:
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncatched exception popping up in devtools
-	return Promise.resolve().then(function() {
-		throw new Error("Cannot find module '" + req + "'.");
+var map = {
+	"../pages/jobs/jobs.module": [
+		274,
+		2
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids)
+		return Promise.reject(new Error("Cannot find module '" + req + "'."));
+	return __webpack_require__.e(ids[1]).then(function() {
+		return __webpack_require__(ids[0]);
 	});
-}
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 153;
+};
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = 153;
+module.exports = webpackAsyncContext;
 
 /***/ }),
 
@@ -235,9 +248,9 @@ SignupPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-signup',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/signup/signup.html"*/'<ion-content>\n  <div text-center class="logo">\n    <img src="assets/ionic-aws-logo.png" />\n  </div>\n  <form (submit)="signup()">\n    <p *ngIf="error" style="text-align: center">{{error.message}}</p>\n    <ion-list>\n\n      <ion-item>\n        <ion-label floating>Username</ion-label>\n        <ion-input type="text" [(ngModel)]="userDetails.username" autocorrect="off" autocapitalize="none" name="username"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Email</ion-label>\n        <ion-input type="email" [(ngModel)]="userDetails.email" name="email"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Password</ion-label>\n        <ion-input type="password" [(ngModel)]="userDetails.password" name="password"></ion-input>\n      </ion-item>\n\n      <div padding>\n        <button ion-button color="primary" block>Register</button>\n      </div>\n\n      <div padding text-center>\n        <p><a (click)="login()">Return to login</a>\n      </div>\n\n    </ion-list>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/signup/signup.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_4__providers_user__["a" /* User */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]])
 ], SignupPage);
 
 //# sourceMappingURL=signup.js.map
@@ -504,12 +517,12 @@ AccountPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-account',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/account/account.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Account\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <div padding text-center>\n    <div *ngIf="avatarPhoto" class="avatar" [style.background-image]="\'url(\'+ avatarPhoto +\')\'">\n    </div>\n\n    <button ion-button clear (click)="selectAvatar()">Change photo</button>\n\n    <input #avatar class="avatar-input" type="file" (change)="uploadFromFile($event)" />\n  </div>\n\n  <div>\n    <ion-list>\n      <ion-item>\n        <strong>username</strong> {{ user.getUser().getUsername() }}\n      </ion-item>\n      <ion-item *ngFor="let attr of attributes">\n        <strong>{{ attr.getName() }}</strong> {{ attr.getValue() }}\n      </ion-item>\n    </ion-list>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/account/account.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_3__providers_providers__["c" /* User */],
         __WEBPACK_IMPORTED_MODULE_3__providers_providers__["b" /* DynamoDB */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Config */],
         __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]])
 ], AccountPage);
 
 //# sourceMappingURL=account.js.map
@@ -626,8 +639,8 @@ TasksPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-tasks',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tasks/tasks.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Tasks \n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="addTask()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-refresher (ionRefresh)="refreshData($event)">\n    <ion-refresher-content\n                  pullingIcon="arrow-dropdown"\n                  pullingText="Pull to refresh"\n                  refreshingSpinner="circles"\n                  refreshingText="Refreshing...">\n    </ion-refresher-content>\n  </ion-refresher>\n\n    <ion-list>\n      <ion-item-sliding *ngFor="let item of items; let idx = index;">\n        <button ion-item>\n          <h2>{{item.category}}</h2>\n          <p>{{item.description}}</p>\n        </button>\n\n        <ion-item-options>\n          <button ion-button color="danger" (click)="deleteTask(item, idx)">DELETE</button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n</ion-content>\n\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tasks/tasks.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */],
         __WEBPACK_IMPORTED_MODULE_3__providers_providers__["c" /* User */],
         __WEBPACK_IMPORTED_MODULE_3__providers_providers__["b" /* DynamoDB */]])
 ], TasksPage);
@@ -681,10 +694,10 @@ TasksCreatePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-tasks-create',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tasks-create/tasks-create.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>New Task</ion-title>\n    <ion-buttons end>\n      <button ion-button [attr.icon-only]="!isAndroid ? null : \'\'" (click)="cancel()">\n        <span color="primary" showWhen="ios">\n          Cancel\n        </span>\n        <ion-icon name="md-close" showWhen="core,android,windows"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-list>\n    <ion-item>\n      <ion-label>Category</ion-label>\n      <ion-select [(ngModel)]="item.category" name="category">\n        <ion-option value="todo" selected="true">Todo</ion-option>\n        <ion-option value="errand">Errand</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <ion-item class="custom-item">\n      <ion-label>Task Description</ion-label>\n      <ion-textarea rows="5" [(ngModel)]="item.description" name="description"></ion-textarea>\n    </ion-item>\n\n    <div padding>\n      <button block icon-start ion-button color="primary" (click)="done()"><ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>Create task</button>\n    </div>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/tasks-create/tasks-create.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
 ], TasksCreatePage);
 
 //# sourceMappingURL=tasks-create.js.map
@@ -724,17 +737,19 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_tabs_tabs__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_tasks_tasks__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_tasks_create_tasks_create__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_status_bar__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_splash_screen__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_user__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_aws_cognito__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_aws_dynamodb__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_jobs_jobs__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_status_bar__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_splash_screen__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_user__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_aws_cognito__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_aws_dynamodb__ = __webpack_require__(200);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -771,11 +786,16 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__pages_account_account__["a" /* AccountPage */],
             __WEBPACK_IMPORTED_MODULE_11__pages_tabs_tabs__["a" /* TabsPage */],
             __WEBPACK_IMPORTED_MODULE_12__pages_tasks_tasks__["a" /* TasksPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_tasks_create_tasks_create__["a" /* TasksCreatePage */]
+            __WEBPACK_IMPORTED_MODULE_13__pages_tasks_create_tasks_create__["a" /* TasksCreatePage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_jobs_jobs__["a" /* JobsPage */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* MyApp */])
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* MyApp */], {}, {
+                links: [
+                    { loadChildren: '../pages/jobs/jobs.module#JobsPageModule', name: 'JobsPage', segment: 'jobs', priority: 'low', defaultHistory: [] }
+                ]
+            })
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicApp */]],
         entryComponents: [
@@ -788,16 +808,17 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__pages_account_account__["a" /* AccountPage */],
             __WEBPACK_IMPORTED_MODULE_11__pages_tabs_tabs__["a" /* TabsPage */],
             __WEBPACK_IMPORTED_MODULE_12__pages_tasks_tasks__["a" /* TasksPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_tasks_create_tasks_create__["a" /* TasksCreatePage */]
+            __WEBPACK_IMPORTED_MODULE_13__pages_tasks_create_tasks_create__["a" /* TasksCreatePage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_jobs_jobs__["a" /* JobsPage */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_14__ionic_native_status_bar__["a" /* StatusBar */],
-            __WEBPACK_IMPORTED_MODULE_15__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_15__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_16__ionic_native_splash_screen__["a" /* SplashScreen */],
             { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicErrorHandler */] },
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_16__providers_user__["a" /* User */],
-            __WEBPACK_IMPORTED_MODULE_17__providers_aws_cognito__["a" /* Cognito */],
-            __WEBPACK_IMPORTED_MODULE_18__providers_aws_dynamodb__["a" /* DynamoDB */]
+            __WEBPACK_IMPORTED_MODULE_17__providers_user__["a" /* User */],
+            __WEBPACK_IMPORTED_MODULE_18__providers_aws_cognito__["a" /* Cognito */],
+            __WEBPACK_IMPORTED_MODULE_19__providers_aws_dynamodb__["a" /* DynamoDB */]
         ]
     })
 ], AppModule);
@@ -863,10 +884,56 @@ var MyApp = (function () {
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_6__providers_user__["a" /* User */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Config */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_6__providers_user__["a" /* User */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Config */]])
 ], MyApp);
 
 //# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 275:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the JobsPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var JobsPage = (function () {
+    function JobsPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    JobsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad JobsPage');
+    };
+    return JobsPage;
+}());
+JobsPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-jobs',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/jobs/jobs.html"*/'<!--\n  Generated template for the JobsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>jobs</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  This is the Jobs page. This will generate a list view of the contents of the Applicant Stack API\n  \n\n</ion-content>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/jobs/jobs.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
+], JobsPage);
+
+//# sourceMappingURL=jobs.js.map
 
 /***/ }),
 
@@ -940,9 +1007,9 @@ LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-login',template:/*ion-inline-start:"/Users/lawrence/github/cea/frontend/agility360/src/pages/login/login.html"*/'<ion-content>\n  <div text-center class="logo">\n    <img src="assets/ionic-aws-logo.png" />\n  </div>\n  <form (submit)="login()">\n    <ion-list>\n\n      <ion-item>\n        <ion-label floating>Username</ion-label>\n        <ion-input [(ngModel)]="loginDetails.username" type="text" autocorrect="off" autocapitalize="none" name="username"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Password</ion-label>\n        <ion-input [(ngModel)]="loginDetails.password" type="password" name="password"></ion-input>\n      </ion-item>\n\n      <div padding>\n        <button ion-button color="primary" block>LOGIN</button>\n      </div>\n\n      <div padding text-center>\n        <p>Don\'t have an account yet? <a (click)="signup()">Create one.</a></p>\n      </div>\n\n    </ion-list>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/lawrence/github/cea/frontend/agility360/src/pages/login/login.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_5__providers_providers__["c" /* User */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]])
 ], LoginPage);
 
 //# sourceMappingURL=login.js.map

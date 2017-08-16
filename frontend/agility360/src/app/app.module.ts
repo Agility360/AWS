@@ -14,6 +14,7 @@ import { AccountPage } from '../pages/account/account';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TasksPage } from '../pages/tasks/tasks';
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
+import { JobsPage } from '../pages/jobs/jobs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,7 +35,8 @@ import { DynamoDB } from '../providers/aws.dynamodb';
     AccountPage,
     TabsPage,
     TasksPage,
-    TasksCreatePage
+    TasksCreatePage,
+    JobsPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { DynamoDB } from '../providers/aws.dynamodb';
     AccountPage,
     TabsPage,
     TasksPage,
-    TasksCreatePage
+    TasksCreatePage,
+    JobsPage
   ],
   providers: [
     StatusBar,
