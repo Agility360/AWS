@@ -15,6 +15,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { TasksPage } from '../pages/tasks/tasks';
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
 import { JobsPage } from '../pages/jobs/jobs';
+import { NewsPage } from '../pages/news/news';
+import { ForumPage } from '../pages/forum/forum';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +38,9 @@ import { DynamoDB } from '../providers/aws.dynamodb';
     TabsPage,
     TasksPage,
     TasksCreatePage,
-    JobsPage
+    JobsPage,
+    NewsPage,
+    ForumPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,9 @@ import { DynamoDB } from '../providers/aws.dynamodb';
     TabsPage,
     TasksPage,
     TasksCreatePage,
-    JobsPage
+    JobsPage,
+    NewsPage,
+    ForumPage
   ],
   providers: [
     StatusBar,
