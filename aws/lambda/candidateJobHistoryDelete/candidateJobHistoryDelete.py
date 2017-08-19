@@ -28,7 +28,7 @@ password = rds_config.db_password
 db_name = rds_config.db_name
 
 logger = logging.getLogger()
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.INFO)
 
 
 def lambda_handler(event, context):
@@ -59,12 +59,13 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
+    account_name = event['path']['account_name']
     id = int(event['querystring']['id'])
 
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_job_history_delete(%d)" % (id)
+    sql = "CALL cea.sp_candidate_job_history_delete('%s', %d)" % (account_name, id)
 
     #
     # 4. execute the SQL string
@@ -73,8 +74,27 @@ def lambda_handler(event, context):
         logger.info("Executing SQL statement: " + sql)
         cursor =  conn.cursor()
         cursor.execute(sql)
-        cursor.close ()
-        conn.close ()
+    except Exception as e:
+        logger.error("ERROR: MySQL returned an error.")
+        logger.error(e)
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
+
+    #============================================================================
+    # Return a refreshed recordset
+
+    #
+    # 3. create the SQL string
+    #
+    sql = "CALL cea.sp_candidate_job_history_get('%s')" % (account_name)
+
+    #
+    # 4. execute the SQL string
+    #
+    try:
+        logger.info("Executing SQL statement: " + sql)
+        cursor.execute(sql)
     except Exception as e:
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
@@ -83,7 +103,35 @@ def lambda_handler(event, context):
         return retval
 
     #
-    # 5. Generate return object
+    # 5a. format the recordset returned as a JSON string
     #
-    retval["response"] = "success"
-    return retval
+
+    #note: there will only be one record in this recorset.
+    rs = cursor.fetchall()
+
+    job_history = []
+    for record in rs:
+        job = {
+            "id" : record[0],
+            "candidate_id" : record[1],
+            "company_name" : str(record[2]),
+            "job_title" : str(record[3]),
+            "start_date" : str(record[4]),
+            "end_date" : str(record[5]),
+            "final_salary" : record[6],
+            "create_date" : str(record[7]),
+            "department" : str(record[8]),
+            "description": str(record[9])
+        }
+        job_history.append(job)
+
+    cursor.close ()
+    conn.close ()
+
+#
+# 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
+#     the API Gateway method will push this JSON string in the http response body
+#
+    logger.info('JSON returned is: ' + json.dumps(job_history))
+    return job_history
+    

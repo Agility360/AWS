@@ -79,8 +79,6 @@ def lambda_handler(event, context):
         logger.info("Executing SQL statement: " + sql)
         cursor =  conn.cursor()
         cursor.execute(sql)
-        cursor.close ()
-        conn.close ()
     except Exception as e:
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
@@ -88,9 +86,56 @@ def lambda_handler(event, context):
         retval["err"] = str(e)
         return retval
 
+    #============================================================================
+    # Return a refreshed recordset
 
     #
-    # 5. Generate return object
+    # 3. create the SQL string
     #
-    retval["response"] = "success"
-    return retval
+    sql = "CALL cea.sp_candidate_job_history_inserted('%s')" % (event['account_name'])
+
+    #
+    # 4. execute the SQL string
+    #
+    try:
+        logger.info("Executing SQL statement: " + sql)
+        cursor.execute(sql)
+    except Exception as e:
+        logger.error("ERROR: MySQL returned an error.")
+        logger.error(e)
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
+
+    #
+    # 5a. format the recordset returned as a JSON string
+    #
+
+    #note: there will only be one record in this recorset.
+    rs = cursor.fetchall()
+
+    job_history = []
+    for record in rs:
+        job = {
+            "id" : record[0],
+            "candidate_id" : record[1],
+            "company_name" : str(record[2]),
+            "job_title" : str(record[3]),
+            "start_date" : str(record[4]),
+            "end_date" : str(record[5]),
+            "final_salary" : record[6],
+            "create_date" : str(record[7]),
+            "department" : str(record[8]),
+            "description": str(record[9])
+        }
+        job_history.append(job)
+
+    cursor.close ()
+    conn.close ()
+
+#
+# 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
+#     the API Gateway method will push this JSON string in the http response body
+#
+    logger.info('JSON returned is: ' + json.dumps(job_history))
+    return job_history
