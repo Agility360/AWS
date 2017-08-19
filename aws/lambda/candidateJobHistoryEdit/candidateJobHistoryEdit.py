@@ -65,10 +65,10 @@ def lambda_handler(event, context):
     # 3. create the SQL string
     #
 
-    sql = "CALL sp_candidate_job_history_edit(%d, '%s', '%s', '%s', '%s', '%s', %d, '%s')" % (
+    sql = "CALL sp_candidate_job_history_edit(%d, '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s')" % (
                                             event['id'], event['account_name'], event['company_name'],
                                             event['job_title'], event['start_date'], event['end_date'],
-                                            event['final_salary'], event['department'])
+                                            event['final_salary'], event['department'], event['description'])
 
 
     #

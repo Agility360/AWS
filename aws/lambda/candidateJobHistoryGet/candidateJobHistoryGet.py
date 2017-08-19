@@ -89,14 +89,15 @@ def lambda_handler(event, context):
     for record in rs:
         job = {
             "id" : record[0],
-            "candidate_id" : str(record[1]),
+            "candidate_id" : record[1],
             "company_name" : str(record[2]),
             "job_title" : str(record[3]),
             "start_date" : str(record[4]),
             "end_date" : str(record[5]),
-            "final_salary" : str(record[6]),
+            "final_salary" : record[6],
             "create_date" : str(record[7]),
-            "department" : str(record[8])
+            "department" : str(record[8]),
+            "description": str(record[9])
         }
         job_history.append(job)
 
