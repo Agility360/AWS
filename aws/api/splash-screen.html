@@ -186,13 +186,26 @@
           <div id="jobhistory" class="resource">
             <h3>Candidates - Job History</h3>
             <div>
-              <p>
-                URL end point: <a href="/$context.stage/candidates/{accountName}/jobhistory" target="_blank">/$context.stage/candidates/{accountName}/jobhistory</a>
-              </p>
+              <ul>
+                <li>
+                  All job history records for one candidate: <a href="/$context.stage/candidates/{accountName}/jobhistory" target="_blank">/$context.stage/candidates/{accountName}/jobhistory</a>
+                </li>
+                <li>
+                  A specified job history record for the specified candidate: <a href="/$context.stage/candidates/{accountName}/jobhistory/{id}" target="_blank">/$context.stage/candidates/{accountName}/jobhistory/{id}</a>
+                </li>
+                <li>
+                  The most recenty inserted job history record for the specified candidate: <a href="/$context.stage/candidates/{accountName}/jobhistory/inserted" target="_blank">/$context.stage/candidates/{accountName}/jobhistory/inserted</a>
+                </li>
+              </ul>
             </div>
             <div class="method">
-              <h4>GET</h3>
-                <p>Example URI: <a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory</a></p>
+              Example URI's
+              <h4>GET</h4>
+                <ul>
+                  <li><a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory</a></li>
+                  <li><a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory/17" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory/17</a></li>
+                  <li><a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory/inserted" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobhistory/inserted</a></li>
+                </ul>
               <p>
                 Sample body response object:
                 <pre>
