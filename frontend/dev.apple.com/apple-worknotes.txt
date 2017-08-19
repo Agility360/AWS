@@ -1,5 +1,0 @@
-APN p12 cert pwd: Fattire$1
-
-
-iTunes Connect: https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/1270138260
-
