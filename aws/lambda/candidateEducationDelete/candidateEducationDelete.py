@@ -8,7 +8,7 @@
 #           2. parses input parameters from the http request body,
 #           3. formats and SQL string of the stored procedure call,
 #           4. executes the stored procedure
-#           5. generate return object
+#           5. formats and returns the recordset returned by the stored procedure as a JSON string
 #=============================================================
 import sys
 import logging
@@ -30,13 +30,11 @@ db_name = rds_config.db_name
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 
-
 def lambda_handler(event, context):
     """
     This function inserts content into mysql RDS instance
     """
     logger.info('JSON received: ' + str(event))
-    retval = {}
 
     #
     # 1. connect to the MySQL database
@@ -60,36 +58,12 @@ def lambda_handler(event, context):
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
     account_name = event['path']['accountName']
-    id = int(event['path']['id'])
-
-
-    #
-    # 3. create the SQL string
-    #
-    sql = "CALL cea.sp_candidate_education_delete('%s', %d)" % (account_name, id)
-
-    #
-    # 4. execute the SQL string
-    #
-    try:
-        logger.info("Executing SQL statement: " + sql)
-        cursor =  conn.cursor()
-        cursor.execute(sql)
-    except Exception as e:
-        logger.error("ERROR: MySQL returned an error.")
-        logger.error(e)
-        retval["response"] = "failure"
-        retval["err"] = str(e)
-        return retval
-
-
-    #============================================================================
-    # Return a refreshed recordset
+    certification_id = event['path']['id']
 
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_education_get('%s')" % (account_name)
+    sql = "CALL cea.sp_candidate_education_delete('%s', '%s')" % (account_name, certification_id)
 
     #
     # 4. execute the SQL string
@@ -112,7 +86,7 @@ def lambda_handler(event, context):
     #note: there will only be one record in this recorset.
     rs = cursor.fetchall()
 
-    education_history = []
+    arr = []
     for record in rs:
         job = {
             "account_name" : record[0],
@@ -125,15 +99,14 @@ def lambda_handler(event, context):
             "graduated" : str(record[7]),
             "create_date" : str(record[8])
         }
-        education_history.append(job)
+        arr.append(job)
 
     cursor.close ()
     conn.close ()
-
 
 #
 # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
 #     the API Gateway method will push this JSON string in the http response body
 #
-    logger.info('JSON returned is: ' + json.dumps(education_history))
-    return education_history
+    logger.info('JSON returned is: ' + json.dumps(arr))
+    return arr

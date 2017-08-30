@@ -8,7 +8,7 @@
 #           2. parses input parameters from the http request body,
 #           3. formats and SQL string of the stored procedure call,
 #           4. executes the stored procedure
-#           5. generate return object
+#           5. formats and returns the recordset returned by the stored procedure as a JSON string
 #=============================================================
 import sys
 import logging
@@ -28,8 +28,7 @@ password = rds_config.db_password
 db_name = rds_config.db_name
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
+logger.setLevel(logging.ERROR)
 
 def lambda_handler(event, context):
     """
@@ -47,7 +46,6 @@ def lambda_handler(event, context):
     except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
         logger.error(e)
-        #sys.exit()
         retval["response"] = "failure"
         retval["err"] = str(e)
         return retval
@@ -81,27 +79,6 @@ def lambda_handler(event, context):
         retval["err"] = str(e)
         return retval
 
-    #============================================================================
-    # Return a refreshed recordset
-
-    #
-    # 3. create the SQL string
-    #
-    sql = "CALL cea.sp_candidate_job_history_get('%s')" % (account_name)
-
-    #
-    # 4. execute the SQL string
-    #
-    try:
-        logger.info("Executing SQL statement: " + sql)
-        cursor.execute(sql)
-    except Exception as e:
-        logger.error("ERROR: MySQL returned an error.")
-        logger.error(e)
-        retval["response"] = "failure"
-        retval["err"] = str(e)
-        return retval
-
     #
     # 5a. format the recordset returned as a JSON string
     #
@@ -109,21 +86,22 @@ def lambda_handler(event, context):
     #note: there will only be one record in this recorset.
     rs = cursor.fetchall()
 
-    job_history = []
+    arr = []
     for record in rs:
         job = {
-            "id" : record[0],
-            "candidate_id" : record[1],
-            "company_name" : str(record[2]),
-            "job_title" : str(record[3]),
-            "start_date" : str(record[4]),
-            "end_date" : str(record[5]),
-            "final_salary" : record[6],
-            "create_date" : str(record[7]),
-            "department" : str(record[8]),
-            "description": str(record[9])
+            "account_name" : record[0],
+            "id" : record[1],
+            "candidate_id" : record[2],
+            "company_name" : str(record[3]),
+            "job_title" : str(record[4]),
+            "start_date" : str(record[5]),
+            "end_date" : str(record[6]),
+            "final_salary" : record[7],
+            "create_date" : str(record[8]),
+            "department" : str(record[9]),
+            "description": str(record[10])
         }
-        job_history.append(job)
+        arr.append(job)
 
     cursor.close ()
     conn.close ()
@@ -132,6 +110,5 @@ def lambda_handler(event, context):
 # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
 #     the API Gateway method will push this JSON string in the http response body
 #
-    logger.info('JSON returned is: ' + json.dumps(job_history))
-    return job_history
-    
+    logger.info('JSON returned is: ' + json.dumps(arr))
+    return arr

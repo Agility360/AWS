@@ -8,7 +8,7 @@
 #           2. parses input parameters from the http request body,
 #           3. formats and SQL string of the stored procedure call,
 #           4. executes the stored procedure
-#           5. generate return object
+#           5. formats and returns the recordset returned by the stored procedure as a JSON string
 #=============================================================
 import sys
 import logging
@@ -59,12 +59,13 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
-    id = int(event['querystring']['id'])
+    account_name = event['path']['accountName']
+    certification_id = event['path']['id']
 
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_certification_delete(%d)" % (id)
+    sql = "CALL cea.sp_candidate_certification_delete('%s', '%s')" % (account_name, certification_id)
 
     #
     # 4. execute the SQL string
@@ -73,8 +74,6 @@ def lambda_handler(event, context):
         logger.info("Executing SQL statement: " + sql)
         cursor =  conn.cursor()
         cursor.execute(sql)
-        cursor.close ()
-        conn.close ()
     except Exception as e:
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
@@ -83,7 +82,32 @@ def lambda_handler(event, context):
         return retval
 
     #
-    # 5. Generate return object
+    # 5a. format the recordset returned as a JSON string
     #
-    retval["response"] = "success"
-    return retval
+
+    #note: there will only be one record in this recorset.
+    rs = cursor.fetchall()
+
+    arr = []
+    for record in rs:
+        job = {
+            "account_name" : record[0],
+            "id" : record[1],
+            "candidate_id" : str(record[2]),
+            "institution_name" : str(record[3]),
+            "certification_name" : str(record[4]),
+            "date_received" : str(record[5]),
+            "expire_date" : str(record[6]),
+            "create_date" : str(record[7])
+        }
+        arr.append(job)
+
+    cursor.close ()
+    conn.close ()
+
+    #
+    # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
+    #     the API Gateway method will push this JSON string in the http response body
+    #
+    logger.info('JSON returned is: ' + json.dumps(arr))
+    return arr
