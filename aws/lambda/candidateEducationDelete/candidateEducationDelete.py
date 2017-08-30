@@ -59,12 +59,14 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
-    id = int(event['querystring']['id'])
+    account_name = event['path']['accountName']
+    id = int(event['path']['id'])
+
 
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_education_delete(%d)" % (id)
+    sql = "CALL cea.sp_candidate_education_delete('%s', %d)" % (account_name, id)
 
     #
     # 4. execute the SQL string
@@ -73,8 +75,6 @@ def lambda_handler(event, context):
         logger.info("Executing SQL statement: " + sql)
         cursor =  conn.cursor()
         cursor.execute(sql)
-        cursor.close ()
-        conn.close ()
     except Exception as e:
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
@@ -82,8 +82,58 @@ def lambda_handler(event, context):
         retval["err"] = str(e)
         return retval
 
+
+    #============================================================================
+    # Return a refreshed recordset
+
     #
-    # 5. Generate return object
+    # 3. create the SQL string
     #
-    retval["response"] = "success"
-    return retval
+    sql = "CALL cea.sp_candidate_education_get('%s')" % (account_name)
+
+    #
+    # 4. execute the SQL string
+    #
+    try:
+        logger.info("Executing SQL statement: " + sql)
+        cursor =  conn.cursor()
+        cursor.execute(sql)
+    except Exception as e:
+        logger.error("ERROR: MySQL returned an error.")
+        logger.error(e)
+        retval["response"] = "failure"
+        retval["err"] = str(e)
+        return retval
+
+#
+# 5a. format the recordset returned as a JSON string
+#
+
+    #note: there will only be one record in this recorset.
+    rs = cursor.fetchall()
+
+    education_history = []
+    for record in rs:
+        job = {
+            "account_name" : record[0],
+            "id" : record[1],
+            "candidate_id" : str(record[2]),
+            "institution_name" : str(record[3]),
+            "degree" : str(record[4]),
+            "start_date" : str(record[5]),
+            "end_date" : str(record[6]),
+            "graduated" : str(record[7]),
+            "create_date" : str(record[8])
+        }
+        education_history.append(job)
+
+    cursor.close ()
+    conn.close ()
+
+
+#
+# 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
+#     the API Gateway method will push this JSON string in the http response body
+#
+    logger.info('JSON returned is: ' + json.dumps(education_history))
+    return education_history
