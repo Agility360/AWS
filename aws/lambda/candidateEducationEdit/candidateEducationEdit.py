@@ -58,6 +58,8 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
+    account_name = event['account_name']
+    id = event['id']
 
 
 
@@ -65,8 +67,8 @@ def lambda_handler(event, context):
     # 3. create the SQL string
     #
 
-    sql = "CALL cea.sp_candidate_education_edit(%d, '%s', '%s', '%s', '%s', '%s', %d)" % (
-                                            event['id'], event['account_name'], event['institution_name'],
+    sql = "CALL cea.sp_candidate_education_edit(%s, '%s', '%s', '%s', '%s', '%s', %s)" % (
+                                            id, account_name, event['institution_name'],
                                             event['degree'], event['start_date'], event['end_date'], event['graduated'])
 
     #

@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-08-19T18:01:16Z",
+    "version": "2017-08-30T11:34:51Z",
     "title": "Candidate Engagement App"
   },
   "host": "api.agility360app.net",
@@ -259,50 +259,6 @@
           "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
-      },
-      "patch": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "accountName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "NewCandidate",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewCandidate"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEdit/invocations",
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
       }
     },
     "/candidates/{accountName}/certifications": {
@@ -405,6 +361,198 @@
           "type": "aws"
         }
       },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'POST,GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/candidates/{accountName}/certifications/inserted": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateCertificationsInserted/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/candidates/{accountName}/certifications/{id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateCertificationsGetId/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
       "delete": {
         "consumes": [
           "application/json"
@@ -421,8 +569,8 @@
           },
           {
             "name": "id",
-            "in": "query",
-            "required": false,
+            "in": "path",
+            "required": true,
             "type": "string"
           }
         ],
@@ -489,7 +637,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,POST,GET,PATCH,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,PATCH,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
@@ -517,12 +665,10 @@
             "type": "string"
           },
           {
-            "in": "body",
-            "name": "UpdateCandidateCertification",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/UpdateCandidateCertification"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -548,7 +694,7 @@
             }
           },
           "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateCertificationEdit/invocations",
-          "passthroughBehavior": "when_no_match",
+          "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
@@ -655,59 +801,6 @@
           "type": "aws"
         }
       },
-      "delete": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "accountName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationDelete/invocations",
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      },
       "options": {
         "consumes": [
           "application/json"
@@ -751,8 +844,10 @@
           "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
-      },
-      "patch": {
+      }
+    },
+    "/candidates/{accountName}/education/inserted": {
+      "get": {
         "consumes": [
           "application/json"
         ],
@@ -765,14 +860,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "UpdateCandidateEducation",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UpdateCandidateEducation"
-            }
           }
         ],
         "responses": {
@@ -797,8 +884,189 @@
               }
             }
           },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationEdit/invocations",
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationInserted/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
           "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/candidates/{accountName}/education/{id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationGetId/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html\n##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload\n#set($allParams = $input.params())\n{\n#foreach($type in $allParams.keySet())\n    #set($params = $allParams.get($type))\n\"$type\" : {\n    #foreach($paramName in $params.keySet())\n    \"$paramName\" : \"$util.escapeJavaScript($params.get($paramName))\"\n        #if($foreach.hasNext),#end\n    #end\n}\n    #if($foreach.hasNext),#end\n#end\n}\n"
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationDelete/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateEducationEdit/invocations",
+          "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
@@ -947,58 +1215,6 @@
           },
           "passthroughBehavior": "when_no_match",
           "type": "mock"
-        }
-      },
-      "patch": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "accountName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "UpdateCandidateJobHistory",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UpdateCandidateJobHistory"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateJobHistoryEdit/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
         }
       }
     },
@@ -1233,7 +1449,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,OPTIONS,PATCH'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
@@ -1244,6 +1460,56 @@
           },
           "passthroughBehavior": "when_no_match",
           "type": "mock"
+        }
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:788245146769:function:candidateJobHistoryEdit/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
         }
       }
     },
@@ -1709,84 +1975,6 @@
     },
     "Empty": {
       "type": "object"
-    },
-    "UpdateCandidateJobHistory": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "account_name": {
-          "type": "string"
-        },
-        "company_name": {
-          "type": "string"
-        },
-        "department": {
-          "type": "string"
-        },
-        "job_title": {
-          "type": "string"
-        },
-        "start_date": {
-          "type": "string"
-        },
-        "end_date": {
-          "type": "string"
-        },
-        "final_salary": {
-          "type": "number"
-        }
-      }
-    },
-    "UpdateCandidateCertification": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "account_name": {
-          "type": "string"
-        },
-        "institution_name": {
-          "type": "string"
-        },
-        "certification_name": {
-          "type": "string"
-        },
-        "date_received": {
-          "type": "string"
-        },
-        "expire_date": {
-          "type": "string"
-        }
-      }
-    },
-    "UpdateCandidateEducation": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "account_name": {
-          "type": "string"
-        },
-        "institution_name": {
-          "type": "string"
-        },
-        "degree": {
-          "type": "string"
-        },
-        "start_date": {
-          "type": "string"
-        },
-        "end_date": {
-          "type": "string"
-        },
-        "graduated": {
-          "type": "number"
-        }
-      }
     }
   },
   "x-amazon-apigateway-gateway-responses": {
