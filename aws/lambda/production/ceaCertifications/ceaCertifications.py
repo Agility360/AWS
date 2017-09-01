@@ -41,7 +41,15 @@ def lambda_handler(event, context):
     ===========================
     {
       "body": {
-      },
+              "account_name": "mcdaniel",
+              "id": 50,
+              "candidate_id": 6,
+              "institution_name": "Big School",
+              "certification_name": "Big Cert",
+              "date_received": "string",
+              "expire_date": "None",
+              "create_date": "2017-09-01 20:37:42"
+        },
       "params": {
         "path": {
           "accountName": "mcdaniel",

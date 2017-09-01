@@ -32,8 +32,36 @@ logger.setLevel(logging.ERROR)
 
 def lambda_handler(event, context):
     """
-    This function inserts content into mysql RDS instance
-    """
+    This function handles mySQL CRUD for CEA data element Education.
+    Receives a CRUD instruction from the event body "lambda" parameter value.
+    Returns a JobHistory recordset in all cases.
+
+    Sample REST api event body
+    ===========================
+    {
+      "body": {
+                "end_date": "1992-08-01 00:00:00",
+                "candidate_id": "6",
+                "degree": "BS Computer Science",
+                "graduated": "1",
+                "create_date": "2017-08-30 15:31:53",
+                "start_date": "1990-01-01 00:00:00",
+                "institution_name": "University of North Texas",
+                "account_name": "mcdaniel",
+                "id": 12
+        },
+      "params": {
+        "path": {
+          "accountName": "mcdaniel",
+          "id": 67
+        },
+        "querystring": {},
+        "header": {}
+      },
+      "lambda": "insert"
+    }
+
+    lambda parameter values: select, insert, inserted, update, delete    """
     logger.info('JSON received: ' + str(event))
 
     #
@@ -57,12 +85,55 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
-    account_name = event['path']['accountName']
+    command = event['lambda']
+    account_name = event['params']['path']['accountName']
+    try:
+        id = event['params']['path']['id']
+    except Exception as e:
+        logger.info("No path ID included")
+        id = -1
 
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_education_get('%s')" % (account_name)
+    if id < 0:
+        #Generic api calls. not specific to an element id.
+        if command == "select":
+            sql = "CALL cea.sp_candidate_education_get('%s')" % (account_name)
+
+        if command == "insert":
+            sql = "CALL cea.sp_candidate_education_add('%s', '%s', '%s', '%s', '%s', %d)" % (
+                                            event['body']['account_name'],
+                                            event['body']['institution_name'],
+                                            event['body']['degree'],
+                                            event['body']['start_date'],
+                                            event['body']['end_date'],
+                                            event['body']['graduated'])
+
+        if command == "inserted":
+            sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
+
+    else:
+        if command == "select":
+            sql = "CALL cea.sp_candidate_education_getid('%s', '%s')" % (account_name, id)
+
+        if command == "inserted":
+            sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
+
+        if command == "update":
+            sql = "CALL cea.sp_candidate_education_edit(%s, '%s', '%s', '%s', '%s', '%s', %s)" % (
+                                            id,
+                                            account_name,
+                                            event['body']['institution_name'],
+                                            event['body']['degree'],
+                                            event['body']['start_date'],
+                                            event['body']['end_date'],
+                                            event['body']['graduated'])
+
+        if command == "delete":
+            sql = "CALL cea.sp_candidate_education_delete('%s', '%s')" % (account_name, id)
+
+
 
     #
     # 4. execute the SQL string
