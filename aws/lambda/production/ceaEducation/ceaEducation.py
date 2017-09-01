@@ -42,13 +42,13 @@ def lambda_handler(event, context):
       "body": {
                 "end_date": "1992-08-01 00:00:00",
                 "candidate_id": "6",
-                "degree": "BS Computer Science",
-                "graduated": "1",
-                "create_date": "2017-08-30 15:31:53",
+                "degree": "BS Clownology",
+                "graduated": "0",
+                "create_date": "2017-09-01 22:09:58",
                 "start_date": "1990-01-01 00:00:00",
-                "institution_name": "University of North Texas",
+                "institution_name": "Clown School",
                 "account_name": "mcdaniel",
-                "id": 12
+                "id": 34
         },
       "params": {
         "path": {
@@ -61,7 +61,9 @@ def lambda_handler(event, context):
       "lambda": "insert"
     }
 
-    lambda parameter values: select, insert, inserted, update, delete    """
+    lambda parameter values: select, insert, inserted, update, delete
+    """
+    retval = {}
     logger.info('JSON received: ' + str(event))
 
     #
@@ -108,7 +110,7 @@ def lambda_handler(event, context):
                                             event['body']['degree'],
                                             event['body']['start_date'],
                                             event['body']['end_date'],
-                                            event['body']['graduated'])
+                                            int(event['body']['graduated']))
 
         if command == "inserted":
             sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
@@ -121,14 +123,14 @@ def lambda_handler(event, context):
             sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
 
         if command == "update":
-            sql = "CALL cea.sp_candidate_education_edit(%s, '%s', '%s', '%s', '%s', '%s', %s)" % (
+            sql = "CALL cea.sp_candidate_education_edit(%s, '%s', '%s', '%s', '%s', '%s', %d)" % (
                                             id,
                                             account_name,
                                             event['body']['institution_name'],
                                             event['body']['degree'],
                                             event['body']['start_date'],
                                             event['body']['end_date'],
-                                            event['body']['graduated'])
+                                            int(event['body']['graduated']))
 
         if command == "delete":
             sql = "CALL cea.sp_candidate_education_delete('%s', '%s')" % (account_name, id)
@@ -156,9 +158,9 @@ def lambda_handler(event, context):
     #note: there will only be one record in this recorset.
     rs = cursor.fetchall()
 
-    job_history = []
+    retval = []
     for record in rs:
-        job = {
+        obj = {
             "account_name" : record[0],
             "id" : record[1],
             "candidate_id" : str(record[2]),
@@ -169,7 +171,7 @@ def lambda_handler(event, context):
             "graduated" : str(record[7]),
             "create_date" : str(record[8])
         }
-        job_history.append(job)
+        retval.append(obj)
 
     cursor.close ()
     conn.close ()
@@ -178,5 +180,5 @@ def lambda_handler(event, context):
 # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
 #     the API Gateway method will push this JSON string in the http response body
 #
-    logger.info('JSON returned is: ' + json.dumps(job_history))
-    return job_history
+    logger.info('JSON returned is: ' + json.dumps(retval))
+    return retval

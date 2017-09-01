@@ -120,7 +120,7 @@ def lambda_handler(event, context):
 
     else:
         if command == "select":
-            sql = "CALL cea.sp_candidate_job_history_getid('%s', %d)" % (account_name, id)
+            sql = "CALL cea.sp_candidate_job_history_getid('%s', '%s')" % (account_name, id)
 
         if command == "inserted":
             sql = "CALL cea.sp_candidate_job_history_inserted('%s')" % (account_name),
@@ -136,7 +136,7 @@ def lambda_handler(event, context):
                                               event['body']['department'],
                                               event['body']['description'])
         if command == "delete":
-            sql = "CALL cea.sp_candidate_job_history_delete('%s', %d)" % (account_name, id)
+            sql = "CALL cea.sp_candidate_job_history_delete('%s', '%s')" % (account_name, id)
 
 
     #
@@ -160,9 +160,9 @@ def lambda_handler(event, context):
     #note: there will only be one record in this recorset.
     rs = cursor.fetchall()
 
-    job_history = []
+    retval = []
     for record in rs:
-        job = {
+        obj = {
             "account_name": record[0],
             "id" : record[1],
             "candidate_id" : record[2],
@@ -175,7 +175,7 @@ def lambda_handler(event, context):
             "department" : str(record[9]),
             "description": str(record[10])
         }
-        job_history.append(job)
+        retval.append(obj)
 
     cursor.close ()
     conn.close ()
@@ -184,5 +184,5 @@ def lambda_handler(event, context):
 # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
 #     the API Gateway method will push this JSON string in the http response body
 #
-    logger.info('JSON returned is: ' + json.dumps(job_history))
-    return job_history
+    logger.info('JSON returned is: ' + json.dumps(retval))
+    return retval
