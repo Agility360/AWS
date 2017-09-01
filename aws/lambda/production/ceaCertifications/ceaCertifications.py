@@ -33,7 +33,27 @@ logger.setLevel(logging.ERROR)
 
 def lambda_handler(event, context):
     """
-    This function inserts content into mysql RDS instance
+    This function handles mySQL CRUD for CEA data element Certifications.
+    Receives a CRUD instruction from the event body "lambda" parameter value.
+    Returns a JobHistory recordset in all cases.
+
+    Sample REST api event body
+    ===========================
+    {
+      "body": {
+      },
+      "params": {
+        "path": {
+          "accountName": "mcdaniel",
+          "id": 67
+        },
+        "querystring": {},
+        "header": {}
+      },
+      "lambda": "insert"
+    }
+
+    lambda parameter values: select, insert, inserted, update, delete
     """
     logger.info('JSON received: ' + str(event))
     retval = {}
@@ -59,12 +79,52 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
-    account_name = event['path']['accountName']
+    command = event['lambda']
+    account_name = event['params']['path']['accountName']
+    try:
+        id = event['params']['path']['id']
+    except Exception as e:
+        logger.info("No path ID included")
+        id = -1
 
     #
     # 3. create the SQL string
     #
-    sql = "CALL cea.sp_candidate_certifications_get('%s')" % (account_name)
+    if id < 0:
+        #Generic api calls. not specific to an element id.
+        if command == "select":
+            sql = "CALL cea.sp_candidate_certifications_get('%s')" % (account_name)
+
+        if command == "insert":
+            sql = "CALL cea.sp_candidate_certification_add('%s', '%s', '%s', '%s', '%s')" % (
+                                            event['body']['account_name'],
+                                            event['body']['institution_name'],
+                                            event['body']['certification_name'],
+                                            event['body']['date_received'],
+                                            event['body']['expire_date'])
+
+        if command == "inserted":
+            sql = "CALL cea.sp_candidate_certifications_inserted('%s')" % (account_name)
+
+    else:
+        if command == "select":
+            sql = "CALL cea.sp_candidate_certifications_getid('%s', '%s')" % (account_name, id)
+
+        if command == "inserted":
+            sql = "CALL cea.sp_candidate_certifications_inserted('%s')" % (account_name)
+
+        if command == "update":
+            sql = "CALL cea.sp_candidate_certification_edit(%d, '%s', '%s', '%s', '%s', '%s')" % (
+                                            int(event['body']['id']),
+                                            event['body']['account_name'],
+                                            event['body']['institution_name'],
+                                            event['body']['certification_name'],
+                                            event['body']['date_received'],
+                                            event['body']['expire_date'])
+        if command == "delete":
+            sql = "CALL cea.sp_candidate_certification_delete('%s', '%s')" % (account_name, id)
+
+
 
     #
     # 4. execute the SQL string
