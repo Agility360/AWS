@@ -32,8 +32,42 @@ logger.setLevel(logging.ERROR)
 
 def lambda_handler(event, context):
     """
-    This function inserts content into mysql RDS instance
-    """
+    This function handles mySQL CRUD for CEA data element Candidates.
+    Receives a CRUD instruction from the event body "lambda" parameter value.
+    Returns a JobHistory recordset in all cases.
+
+    Sample REST api event body
+    ===========================
+    {
+      "body": {
+              "phone_number": "(415) 766-9012",
+              "subprofession_id": "0",
+              "first_name": "Lawrence",
+              "last_name": "McDaniel",
+              "middle_name": "Philip",
+              "job_hunting": "0",
+              "update_date": "2017-07-31 20:57:32",
+              "industry_id": "0",
+              "email": "lpm0073@gmail.com",
+              "state": "",
+              "profession_id": "0",
+              "city": "",
+              "candidate_id": 6,
+              "create_date": "2017-07-31 20:57:32",
+              "subindustry_id": "0",
+              "account_name": "mcdaniel"
+        },
+      "params": {
+        "path": {
+          "accountName": "mcdaniel"
+        },
+        "querystring": {},
+        "header": {}
+      },
+      "lambda": "insert"
+    }
+
+    lambda parameter values: select, insert, inserted, update, delete    """
     logger.info('JSON received: ' + str(event))
     retval = {}
 
@@ -58,12 +92,57 @@ def lambda_handler(event, context):
     # 2. parse the input parameters from the https request body
     #    which is passed to this Lambda function from a AWS API Gateway method object
     #
-    account_name = event['path']['accountName']
+    command = event['lambda']
+    try:
+        account_name = event['params']['path']['accountName']
+    except Exception as e:
+        logger.info("No account name found.")
+        account_name = ''
+
 
     #
     # 3. create the SQL string
     #
     sql = "CALL cea.sp_candidate_get('" + account_name + "')"
+    if command == "select":
+        sql = "CALL cea.sp_candidate_get('%s')" % (account_name)
+
+    if command == "insert":
+        sql = "CALL cea.sp_candidate_add('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, '%s', '%s')" % (
+                    event['body']['account_name'],
+                    event['body']['first_name'],
+                    event['body']['middle_name'],
+                    event['body']['last_name'],
+                    event['body']['email'],
+                    event['body']['phone_number'],
+                    event['body']['industry_id'],
+                    event['body']['subindustry_id'],
+                    event['body']['profession_id'],
+                    event['body']['subprofession_id'],
+                    event['body']['job_hunting'],
+                    event['body']['city'],
+                    event['body']['state'])
+
+
+    if command == "update":
+        sql = "CALL cea.sp_candidate_edit('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
+                    account_name,
+                    event['body']['first_name'],
+                    event['body']['middle_name'],
+                    event['body']['last_name'],
+                    event['body']['email'],
+                    event['body']['phone_number'],
+                    event['body']['industry_id'],
+                    event['body']['subindustry_id'],
+                    event['body']['profession_id'],
+                    event['body']['subprofession_id'],
+                    event['body']['job_hunting'],
+                    event['body']['city'],
+                    event['body']['state'])
+
+    if command == "delete":
+        sql = "CALL cea.sp_candidate_delete('%s')" % (account_name)
+
 
     #
     # 4. execute the SQL string
@@ -86,7 +165,7 @@ def lambda_handler(event, context):
     #note: there will only be one record in this recorset.
     rs = cursor.fetchall()
     for record in rs:
-        candidate = {
+        retval = {
             "candidate_id" : record[0],
             "account_name" : record[1],
             "first_name" : record[2],
@@ -112,5 +191,5 @@ def lambda_handler(event, context):
     # 5b. return the JSON string to the AWS API Gateway method that called this lambda function.
     #     the API Gateway method will push this JSON string in the http response body
     #
-    logger.info('JSON returned is: ' + json.dumps(candidate))
-    return candidate
+    logger.info('JSON returned is: ' + json.dumps(retval))
+    return retval
