@@ -40,17 +40,17 @@ def lambda_handler(event, context):
     ===========================
     {
       "body": {
-              "account_name": "string";
-              "id": 0;
-              "candidate_id": 0;
-              "company_name": "string";
-              "department": "string";
-              "job_title": "string";
-              "start_date": "string";
-              "end_date": "string";
-              "description": "string";
-              "final_salary": 0.00;
-              "create_date": "string";
+                "account_name": "mcdaniel",
+                "candidate_id": 6,
+                "company_name": "Test company",
+                "create_date": "2017-09-01 20:37:42",
+                "department": "Biggest department",
+                "description": "",
+                "end_date": "None",
+                "final_salary": 12346,
+                "id": 67,
+                "job_title": "fancy title",
+                "start_date": "2017-01-09 00:00:00"
       },
       "params": {
         "path": {
@@ -101,34 +101,42 @@ def lambda_handler(event, context):
     #
     if id < 0:
         #Generic api calls. not specific to an element id.
-        sql = {
-          'select': "CALL cea.sp_candidate_job_history_get('%s')" % (account_name),
-          'insert': "CALL sp_candidate_job_history_add('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
-                                            event['body']['account_name'],
-                                            event['body']['company_name'],
-                                            event['body']['job_title'],
-                                            event['body']['start_date'],
-                                            event['body']['end_date'],
-                                            event['body']['final_salary'],
-                                            event['body']['department'],
-                                            event['body']['description']),
-          'inserted': "CALL cea.sp_candidate_job_history_inserted('%s')" % (account_name)
-        }[value](command)
+        if command == "select":
+            sql = "CALL cea.sp_candidate_job_history_get('%s')" % (account_name)
+
+        if command == "insert":
+            sql = "CALL sp_candidate_job_history_add('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
+                                              event['body']['account_name'],
+                                              event['body']['company_name'],
+                                              event['body']['job_title'],
+                                              event['body']['start_date'],
+                                              event['body']['end_date'],
+                                              event['body']['final_salary'],
+                                              event['body']['department'],
+                                              event['body']['description'])
+
+        if command == "inserted":
+            sql = "CALL cea.sp_candidate_job_history_inserted('%s')" % (account_name)
+
     else:
-        sql = {
-          'select': "CALL cea.sp_candidate_job_history_getid('%s', %d)" % (account_name, id),
-          'inserted': "CALL cea.sp_candidate_job_history_inserted('%s')" % (account_name),
-          'update': "CALL sp_candidate_job_history_edit(%d, '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s')" % (
-                                            id, account_name,
-                                            event['body']['company_name'],
-                                            event['body']['job_title'],
-                                            event['body']['start_date'],
-                                            event['body']['end_date'],
-                                            event['body']['final_salary'],
-                                            event['body']['department'],
-                                            event['body']['description']),
-          'delete': "CALL cea.sp_candidate_job_history_delete('%s', %d)" % (account_name, id)
-        }[value](command)
+        if command == "select":
+            sql = "CALL cea.sp_candidate_job_history_getid('%s', %d)" % (account_name, id)
+
+        if command == "inserted":
+            sql = "CALL cea.sp_candidate_job_history_inserted('%s')" % (account_name),
+
+        if command == "update":
+            sql = "CALL sp_candidate_job_history_edit('%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s')" % (
+                                              id, account_name,
+                                              event['body']['company_name'],
+                                              event['body']['job_title'],
+                                              event['body']['start_date'],
+                                              event['body']['end_date'],
+                                              event['body']['final_salary'],
+                                              event['body']['department'],
+                                              event['body']['description'])
+        if command == "delete":
+            sql = "CALL cea.sp_candidate_job_history_delete('%s', %d)" % (account_name, id)
 
 
     #
@@ -155,16 +163,17 @@ def lambda_handler(event, context):
     job_history = []
     for record in rs:
         job = {
-            "id" : record[0],
-            "candidate_id" : record[1],
-            "company_name" : str(record[2]),
-            "job_title" : str(record[3]),
-            "start_date" : str(record[4]),
-            "end_date" : str(record[5]),
-            "final_salary" : record[6],
-            "create_date" : str(record[7]),
-            "department" : str(record[8]),
-            "description": str(record[9])
+            "account_name": record[0],
+            "id" : record[1],
+            "candidate_id" : record[2],
+            "company_name" : str(record[3]),
+            "job_title" : str(record[4]),
+            "start_date" : str(record[5]),
+            "end_date" : str(record[6]),
+            "final_salary" : record[7],
+            "create_date" : str(record[8]),
+            "department" : str(record[9]),
+            "description": str(record[10])
         }
         job_history.append(job)
 
