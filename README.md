@@ -8,6 +8,7 @@
  - Pending: Front end repository and documentation
  - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
  - [REST api](https://api.agility360app.net/beta)
+ - Good reading on how to pass Lambda errors to AWS API Gateway: (https://mattandre.ws/2016/06/catching-all-errors-api-gateway-aws-lambda/)
 
 ### Apple Developer Resources
  | Resource  | Value |
