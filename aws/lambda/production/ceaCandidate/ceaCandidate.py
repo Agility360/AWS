@@ -154,9 +154,7 @@ def lambda_handler(event, context):
     except Exception as e:
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
-        retval["response"] = "failure"
-        retval["err"] = str(e)
-        return retval
+        return e
 
     #
     # 5a. format the recordset returned as a JSON string

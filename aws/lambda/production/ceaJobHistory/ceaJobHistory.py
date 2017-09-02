@@ -126,7 +126,7 @@ def lambda_handler(event, context):
             sql = "CALL cea.sp_candidate_job_history_inserted('%s')" % (account_name),
 
         if command == "update":
-            sql = "CALL sp_candidate_job_history_edit('%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s')" % (
+            sql = "CALL sp_candidate_job_history_edit('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
                                               id, account_name,
                                               event['body']['company_name'],
                                               event['body']['job_title'],
@@ -151,7 +151,7 @@ def lambda_handler(event, context):
         logger.error(e)
         retval["response"] = "failure"
         retval["err"] = str(e)
-        return retval
+        return e
 
     #
     # 5a. format the recordset returned as a JSON string
