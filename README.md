@@ -62,7 +62,7 @@
  [Read more about AWS Mobile app architecture](https://aws.amazon.com/mobile/)
 
 ### High level application development strategy
- ![Application Architecture](https://raw.githubusercontent.com/Agility360/CEA/master/application-architecture2.png "Application Architecture")
+ ![Application Architecture](https://cdn.agility360app.net/wp-content/uploads/2017/08/project-architecture.png "Application Architecture")
 
 
  ## Candidate Engagement App -- Back End
