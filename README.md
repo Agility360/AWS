@@ -81,10 +81,7 @@
  ### REST api
  The REST api is implemented as a set of serverless microservices. Service and resource permissions are managed using IAM roles.
 
- ![REST api design](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/rest-api-architecture.png "REST api design")
-
-
- #### API end point:  [https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta](https://hqctqkd7xc.execute-api.us-east-1.amazonaws.com/beta)
+ #### API end point:  [https://api.agility360app.net/beta](https://api.agility360app.net/beta)
 
  ### AWS API Gateway
  You'll find a Swagger json dump of the complete REST api in the backend/aws/api folder of this repository. While we haven't actually tried, we assume that (if you feel so compelled) you can edit the api from Swagger or another API development tool of your choosing.
