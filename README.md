@@ -58,7 +58,10 @@
 
 
 ### High level application architecture
- ![AWS Mobile Application Architecture](https://raw.githubusercontent.com/Agility360/CEA/master/enterprise-mobile-hub_serverless-compute-app.png "AWS Mobile app architecture")
+ ![AWS Mobile Application Architecture](https://cms.agility360app.net/wp-content/uploads/2017/09/enterprise-mobile-hub_serverless-compute-app.png "AWS Mobile app architecture")
+
+ Note that this project uses RDS (MySQL) and S3, but not DynamoDB and SNS (as pictured in the image above).
+
  [Read more about AWS Mobile app architecture](https://aws.amazon.com/mobile/)
 
 ### High level application development strategy
