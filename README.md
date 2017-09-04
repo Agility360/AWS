@@ -94,7 +94,7 @@
  ### AWS RDS - MySQL
  MySQL is hosted by the AWS RDS service. It is currently implemented on a t2.micro single instance in the AWS free usage tier.
 
- Host: cea.cjbv7rlz4hsg.us-east-1.rds.amazonaws.com
+ Host: sql.agility360app.net
  Port: 3306
  Allowed protocols: TCP/IP and/or SSH
 
