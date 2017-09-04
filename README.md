@@ -102,7 +102,7 @@
 
  Note that the MySQL server does not currently use IAM.
 
- ![MySQL cea database](https://raw.githubusercontent.com/Agility360/CEA/master/backend/aws/mysql/er-diagram.png "MySQL cea database")
+ ![MySQL cea database schema](https://cms.agility360app.net/wp-content/uploads/2017/09/cea-database-schema.png "MySQL cea database")
 
  ### AWS Lambda
  The REST api uses Lambda functions as middleware to handle stuff like
