@@ -102,12 +102,12 @@ def lambda_handler(event, context):
             sql = "CALL cea.sp_candidate_certifications_get('%s')" % (account_name)
 
         if command == "insert":
-            sql = "CALL cea.sp_candidate_certification_add('%s', '%s', '%s', '%s', '%s')" % (
+            sql = "CALL cea.sp_candidate_certification_add('%s', '%s', '%s', '%s', '%s', '%s')" % (
                                             event['body']['account_name'],
                                             event['body']['institution_name'],
                                             event['body']['certification_name'],
                                             event['body']['date_received'],
-                                            event['body']['expire_date']),
+                                            event['body']['expire_date'],
                                             event['body']['description'])
 
         if command == "inserted":
@@ -121,13 +121,13 @@ def lambda_handler(event, context):
             sql = "CALL cea.sp_candidate_certifications_inserted('%s')" % (account_name)
 
         if command == "update":
-            sql = "CALL cea.sp_candidate_certification_edit(%d, '%s', '%s', '%s', '%s', '%s')" % (
+            sql = "CALL cea.sp_candidate_certification_edit(%d, '%s', '%s', '%s', '%s', '%s', '%s')" % (
                                             int(event['body']['id']),
                                             event['body']['account_name'],
                                             event['body']['institution_name'],
                                             event['body']['certification_name'],
                                             event['body']['date_received'],
-                                            event['body']['expire_date'])
+                                            event['body']['expire_date'],
                                             event['body']['description'])
         if command == "delete":
             sql = "CALL cea.sp_candidate_certification_delete('%s', '%s')" % (account_name, id)

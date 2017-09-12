@@ -30,11 +30,12 @@ CREATE TABLE `candidate_certifications` (
   `date_received` datetime NOT NULL,
   `expire_date` datetime DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `description` varchar(1024) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `certifications_candidate_id_idx` (`candidate_id`),
   CONSTRAINT `certifications_candidate_id` FOREIGN KEY (`candidate_id`) REFERENCES `candidates` (`candidate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,11 +54,12 @@ CREATE TABLE `candidate_education` (
   `end_date` datetime DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `graduated` tinyint(1) NOT NULL,
+  `description` varchar(1024) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `education_candidate_id_idx` (`candidate_id`),
   CONSTRAINT `education_candidate_id` FOREIGN KEY (`candidate_id`) REFERENCES `candidates` (`candidate_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +84,7 @@ CREATE TABLE `candidate_job_history` (
   PRIMARY KEY (`id`),
   KEY `job_history_candidate_id_idx` (`candidate_id`),
   CONSTRAINT `job_history_candidate_id` FOREIGN KEY (`candidate_id`) REFERENCES `candidates` (`candidate_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +145,7 @@ CREATE TABLE `candidates` (
   KEY `users-profession_id` (`profession_id`),
   KEY `users-subindustry_id` (`subindustry_id`),
   KEY `users-subprofession_id` (`subprofession_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +319,7 @@ INSERT cea.candidates (account_name, first_name, middle_name, last_name, email, 
 
 COMMIT;
 
-#CALL cea.sp_candidate_get(account_name);
+CALL cea.sp_candidate_get(account_name);
 
 END ;;
 DELIMITER ;
@@ -340,17 +342,101 @@ CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certifications_get`(get_accoun
 BEGIN
 
 
-SELECT	cert.id,
+SELECT	c.account_name,
+		cert.id,
 		cert.candidate_id,
 		cert.institution_name,
 		cert.certification_name,
 		cert.date_received,
 		cert.expire_date,
-        cert.create_date
+        cert.create_date,
+        cert.description
 FROM 	cea.candidate_certifications cert
 		JOIN cea.candidates c ON (c.candidate_id = cert.candidate_id)
 WHERE	(c.account_name = get_account_name) AND
 		(cert.active = 1)
+ORDER BY cert.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certifications_getid` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certifications_getid`(
+get_account_name varchar(30),
+get_id int(11)
+)
+BEGIN
+
+
+SELECT	c.account_name,
+		cert.id,
+		cert.candidate_id,
+		cert.institution_name,
+		cert.certification_name,
+		cert.date_received,
+		cert.expire_date,
+        cert.create_date,
+        cert.description
+FROM 	cea.candidate_certifications cert
+		JOIN cea.candidates c ON (c.candidate_id = cert.candidate_id)
+WHERE	(c.account_name = get_account_name) AND
+		(cert.id = get_id) AND
+		(cert.active = 1)
+ORDER BY cert.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_certifications_inserted` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certifications_inserted`(get_account_name varchar(30)
+)
+BEGIN
+
+
+SELECT	c.account_name,
+		cert.id,
+		cert.candidate_id,
+		cert.institution_name,
+		cert.certification_name,
+		cert.date_received,
+		cert.expire_date,
+        cert.create_date,
+        cert.description
+FROM 	cea.candidate_certifications cert
+		JOIN cea.candidates c ON (c.candidate_id = cert.candidate_id)
+WHERE	(c.account_name = get_account_name) AND
+		(cert.active = 1) AND
+        (cert.id = (SELECT MAX(cert2.id) 
+					FROM cea.candidate_certifications cert2 
+                    WHERE (cert.candidate_id = cert2.candidate_id) AND
+						  (cert2.active = 1)
+                 )
+		)
+
 ORDER BY cert.id;
 
 END ;;
@@ -370,10 +456,11 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certification_add`(account_name varchar(30),
-institution_name varchar(255),
-certification_name varchar(255),
-date_received varchar(255),
-expire_date varchar(255)
+add_institution_name varchar(255),
+add_certification_name varchar(255),
+add_date_received varchar(255),
+add_expire_date varchar(255),
+add_description varchar(1024)
 )
 BEGIN
 
@@ -387,18 +474,19 @@ END;
 
 START TRANSACTION;
 
-INSERT cea.candidate_certifications (candidate_id, institution_name, certification_name, date_received, expire_date)
+INSERT cea.candidate_certifications (candidate_id, institution_name, certification_name, date_received, expire_date, description)
 	SELECT	c.candidate_id,
-			institution_name, 
-            certification_name, 
-            date_received, 
-            expire_date
+			add_institution_name, 
+            add_certification_name, 
+            add_date_received, 
+            add_expire_date,
+            add_description
 	FROM	cea.candidates c
     WHERE	(c.account_name = account_name);
 
 COMMIT;
 
-#CALL cea.sp_candidate_certifications_get(account_name);
+CALL cea.sp_candidate_certifications_inserted(account_name);
 
 END ;;
 DELIMITER ;
@@ -416,7 +504,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certification_delete`(delete_id int(11))
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_certification_delete`(delete_account_name varchar(30), delete_id int(11))
 BEGIN
 
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -430,9 +518,16 @@ START TRANSACTION;
 
 DELETE 
 FROM	candidate_certifications
-WHERE	(id = delete_id);
+WHERE	(id = delete_id) AND
+		(candidate_id =	(
+						SELECT	candidate_id
+						FROM	cea.candidates
+                        WHERE	(account_name = delete_account_name)
+						));
 
 COMMIT;
+
+CALL cea.sp_candidate_certifications_get(delete_account_name);
 
 END ;;
 DELIMITER ;
@@ -456,7 +551,8 @@ edit_account_name varchar(30),
 edit_institution_name varchar(255),
 edit_certification_name varchar(255),
 edit_date_received varchar(255),
-edit_expire_date varchar(255)
+edit_expire_date varchar(255),
+edit_description varchar(1024)
 )
 BEGIN
 
@@ -479,7 +575,7 @@ WHERE	(id = edit_id) AND
 
 # 2. create a new record with the updated values. the new record self-activate.
 
-CALL cea.sp_candidate_certification_add(edit_account_name, edit_institution_name, edit_certification_name, edit_date_received, edit_expire_date);
+CALL cea.sp_candidate_certification_add(edit_account_name, edit_institution_name, edit_certification_name, edit_date_received, edit_expire_date, edit_description);
 
 
 COMMIT;
@@ -545,6 +641,7 @@ WHERE	(account_name = delete_account);
 
 COMMIT;
 
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -604,7 +701,7 @@ WHERE	(account_name = update_name);
 
 COMMIT;
 
-#CALL cea.sp_candidate_get(account_name);
+CALL cea.sp_candidate_get(update_name);
 
 END ;;
 DELIMITER ;
@@ -623,11 +720,12 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_add`(account_name varchar(30),
-institution_name varchar(255),
-degree varchar(255),
-start_date varchar(255),
-end_date varchar(255),
-graduated tinyint(1)
+add_institution_name varchar(255),
+add_degree varchar(255),
+add_start_date varchar(255),
+add_end_date varchar(255),
+add_graduated tinyint(1),
+add_description varchar(1024)
 )
 BEGIN
 
@@ -641,19 +739,20 @@ END;
 
 START TRANSACTION;
 
-INSERT cea.candidate_education (candidate_id, institution_name, degree, start_date, end_date, graduated)
+INSERT cea.candidate_education (candidate_id, institution_name, degree, start_date, end_date, graduated, description)
 	SELECT	c.candidate_id,
-			institution_name, 
-			degree, 
-            start_date, 
-            end_date, 
-            graduated
+			add_institution_name, 
+			add_degree, 
+            add_start_date, 
+            add_end_date, 
+            add_graduated,
+			add_description
 	FROM	cea.candidates c
     WHERE	(c.account_name = account_name);
 
 COMMIT;
 
-#CALL cea.sp_candidate_education_get(account_name);
+CALL cea.sp_candidate_education_inserted(account_name);
 
 END ;;
 DELIMITER ;
@@ -671,7 +770,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_delete`(delete_id int(11))
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_delete`(delete_account_name varchar(30), delete_id int(11))
 BEGIN
 
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -688,6 +787,9 @@ FROM	candidate_education
 WHERE	(id = delete_id);
 
 COMMIT;
+
+CALL cea.sp_candidate_education_get(delete_account_name);
+
 
 END ;;
 DELIMITER ;
@@ -712,7 +814,8 @@ edit_institution_name varchar(255),
 edit_degree varchar(255),
 edit_start_date varchar(255),
 edit_end_date varchar(255),
-edit_graduated tinyint(1)
+edit_graduated tinyint(1),
+edit_description varchar(1024)
 )
 BEGIN
 
@@ -735,7 +838,7 @@ WHERE	(id = edit_id) AND
 
 # 2. create a new record with the updated values. the new record self-activate.
 
-CALL cea.sp_candidate_education_add(edit_account_name, edit_institution_name, edit_degree, edit_start_date, edit_end_date, edit_graduated);
+CALL cea.sp_candidate_education_add(edit_account_name, edit_institution_name, edit_degree, edit_start_date, edit_end_date, edit_graduated, edit_description);
 
 
 COMMIT;
@@ -763,18 +866,104 @@ CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_get`(get_account_nam
 BEGIN
 
 
-SELECT	e.id,
+SELECT	c.account_name,
+		e.id,
 		e.candidate_id,
 		e.institution_name,
 		e.degree,
 		e.start_date,
 		e.end_date,
         e.graduated,
-        e.create_date
+        e.create_date,
+        e.description
 FROM 	cea.candidate_education e
 		JOIN cea.candidates c ON (c.candidate_id = e.candidate_id)
 WHERE	(c.account_name = get_account_name) AND
 		(e.active = 1)
+ORDER BY e.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_getid` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_getid`(
+get_account_name varchar(30),
+get_id int(11)
+)
+BEGIN
+
+
+SELECT	c.account_name,
+		e.id,
+		e.candidate_id,
+		e.institution_name,
+		e.degree,
+		e.start_date,
+		e.end_date,
+        e.graduated,
+        e.create_date,
+        e.description
+FROM 	cea.candidate_education e
+		JOIN cea.candidates c ON (c.candidate_id = e.candidate_id)
+WHERE	(c.account_name = get_account_name) AND
+		(e.id = get_id) AND
+		(e.active = 1)
+ORDER BY e.id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_candidate_education_inserted` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_education_inserted`(get_account_name varchar(30)
+)
+BEGIN
+
+
+SELECT	c.account_name,
+		e.id,
+		e.candidate_id,
+		e.institution_name,
+		e.degree,
+		e.start_date,
+		e.end_date,
+        e.graduated,
+        e.create_date,
+        e.description
+FROM 	cea.candidate_education e
+		JOIN cea.candidates c ON (c.candidate_id = e.candidate_id)
+WHERE	(c.account_name = get_account_name) AND
+		(e.active = 1) AND
+        (e.id = (SELECT MAX(e2.id) 
+					FROM cea.candidate_education e2 
+                    WHERE (e.candidate_id = e2.candidate_id) AND
+						  (e2.active = 1)
+                 )
+		)
+
 ORDER BY e.id;
 
 END ;;
@@ -1000,7 +1189,6 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_job_history_get`(get_account_name varchar(30))
 BEGIN
 
-
 SELECT	c.account_name,
 		ch.id,
 		ch.candidate_id,
@@ -1076,7 +1264,8 @@ CREATE DEFINER=`root`@`%` PROCEDURE `sp_candidate_job_history_inserted`(get_acco
 BEGIN
 
 
-SELECT	ch.id,
+SELECT	c.account_name,
+		ch.id,
 		ch.candidate_id,
 		ch.company_name,
 		ch.job_title,
@@ -1260,4 +1449,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-20 16:54:29
+-- Dump completed on 2017-09-12 16:18:56

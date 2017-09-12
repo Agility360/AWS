@@ -103,14 +103,14 @@ def lambda_handler(event, context):
             sql = "CALL cea.sp_candidate_education_get('%s')" % (account_name)
 
         if command == "insert":
-            sql = "CALL cea.sp_candidate_education_add('%s', '%s', '%s', '%s', '%s', %d)" % (
+            sql = "CALL cea.sp_candidate_education_add('%s', '%s', '%s', '%s', '%s', %d, '%s')" % (
                                             event['body']['account_name'],
                                             event['body']['institution_name'],
                                             event['body']['degree'],
                                             event['body']['start_date'],
                                             event['body']['end_date'],
-                                            int(event['body']['graduated'])),
-                                            event['body']['description']
+                                            int(event['body']['graduated']),
+                                            event['body']['description'])
 
         if command == "inserted":
             sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
@@ -123,15 +123,15 @@ def lambda_handler(event, context):
             sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
 
         if command == "update":
-            sql = "CALL cea.sp_candidate_education_edit(%s, '%s', '%s', '%s', '%s', '%s', %d)" % (
+            sql = "CALL cea.sp_candidate_education_edit(%s, '%s', '%s', '%s', '%s', '%s', %d, '%s')" % (
                                             id,
                                             account_name,
                                             event['body']['institution_name'],
                                             event['body']['degree'],
                                             event['body']['start_date'],
                                             event['body']['end_date'],
-                                            int(event['body']['graduated'])),
-                                            event['body']['description']
+                                            int(event['body']['graduated']),
+                                            event['body']['description'])
 
         if command == "delete":
             sql = "CALL cea.sp_candidate_education_delete('%s', '%s')" % (account_name, id)
