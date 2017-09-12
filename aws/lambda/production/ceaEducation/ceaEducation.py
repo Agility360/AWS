@@ -48,7 +48,8 @@ def lambda_handler(event, context):
                 "start_date": "1990-01-01 00:00:00",
                 "institution_name": "Clown School",
                 "account_name": "mcdaniel",
-                "id": 34
+                "id": 34,
+                "description" : "a detailed description goes here."
         },
       "params": {
         "path": {
@@ -72,13 +73,11 @@ def lambda_handler(event, context):
     try:
         conn = pymysql.connect(rds_host, user=name,
                                passwd=password, db=db_name, connect_timeout=2)
+
     except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
         logger.error(e)
-        #sys.exit()
-        retval["response"] = "failure"
-        retval["err"] = str(e)
-        return retval
+        return e
 
     logger.info("Connected to RDS mysql instance.")
 
@@ -110,7 +109,8 @@ def lambda_handler(event, context):
                                             event['body']['degree'],
                                             event['body']['start_date'],
                                             event['body']['end_date'],
-                                            int(event['body']['graduated']))
+                                            int(event['body']['graduated'])),
+                                            event['body']['description']
 
         if command == "inserted":
             sql = "CALL cea.sp_candidate_education_inserted('%s')" % (account_name)
@@ -130,7 +130,8 @@ def lambda_handler(event, context):
                                             event['body']['degree'],
                                             event['body']['start_date'],
                                             event['body']['end_date'],
-                                            int(event['body']['graduated']))
+                                            int(event['body']['graduated'])),
+                                            event['body']['description']
 
         if command == "delete":
             sql = "CALL cea.sp_candidate_education_delete('%s', '%s')" % (account_name, id)
@@ -167,7 +168,8 @@ def lambda_handler(event, context):
             "start_date" : str(record[5]),
             "end_date" : str(record[6]),
             "graduated" : str(record[7]),
-            "create_date" : str(record[8])
+            "create_date" : str(record[8]),
+            "description" : str(record[9])
         }
         retval.append(obj)
 

@@ -48,7 +48,8 @@ def lambda_handler(event, context):
               "certification_name": "Big Cert",
               "date_received": "string",
               "expire_date": "None",
-              "create_date": "2017-09-01 20:37:42"
+              "create_date": "2017-09-01 20:37:42",
+              "description": "a detailed description goes here."
         },
       "params": {
         "path": {
@@ -75,10 +76,7 @@ def lambda_handler(event, context):
     except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
         logger.error(e)
-        #sys.exit()
-        retval["response"] = "failure"
-        retval["err"] = str(e)
-        return retval
+        return e
 
     logger.info("Connected to RDS mysql instance.")
 
@@ -109,7 +107,8 @@ def lambda_handler(event, context):
                                             event['body']['institution_name'],
                                             event['body']['certification_name'],
                                             event['body']['date_received'],
-                                            event['body']['expire_date'])
+                                            event['body']['expire_date']),
+                                            event['body']['description'])
 
         if command == "inserted":
             sql = "CALL cea.sp_candidate_certifications_inserted('%s')" % (account_name)
@@ -129,6 +128,7 @@ def lambda_handler(event, context):
                                             event['body']['certification_name'],
                                             event['body']['date_received'],
                                             event['body']['expire_date'])
+                                            event['body']['description'])
         if command == "delete":
             sql = "CALL cea.sp_candidate_certification_delete('%s', '%s')" % (account_name, id)
 
@@ -163,7 +163,8 @@ def lambda_handler(event, context):
             "certification_name" : str(record[4]),
             "date_received" : str(record[5]),
             "expire_date" : str(record[6]),
-            "create_date" : str(record[7])
+            "create_date" : str(record[7]),
+            "description" : str(record[8])
         }
         retval.append(obj)
 
