@@ -28,7 +28,7 @@ password = rds_config.db_password
 db_name = rds_config.db_name
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.ERROR)
 
 def lambda_handler(event, context):
     """
@@ -77,9 +77,7 @@ def lambda_handler(event, context):
     except Exception as e:
         logger.error("ERROR: Could not connect to MySql instance.")
         logger.error(e)
-        retval["response"] = "failure"
-        retval["err"] = str(e)
-        return retval
+        return e
 
     logger.info("Connected to RDS mysql instance.")
 
@@ -146,11 +144,10 @@ def lambda_handler(event, context):
         logger.info("Executing SQL statement: " + sql)
         cursor =  conn.cursor()
         cursor.execute(sql)
+
     except Exception as e:
         logger.error("ERROR: MySQL returned an error.")
         logger.error(e)
-        retval["response"] = "failure"
-        retval["err"] = str(e)
         return e
 
     #
@@ -168,10 +165,10 @@ def lambda_handler(event, context):
             "candidate_id" : record[2],
             "company_name" : str(record[3]),
             "job_title" : str(record[4]),
-            "start_date" : str(record[5]),
-            "end_date" : str(record[6]),
+            "start_date" : str(record[5]).replace("None","").replace(" ","T"),
+            "end_date" : str(record[6]).replace("None","").replace(" ","T"),
             "final_salary" : record[7],
-            "create_date" : str(record[8]),
+            "create_date" : str(record[8]).replace(" ","T"),
             "department" : str(record[9]),
             "description": str(record[10])
         }

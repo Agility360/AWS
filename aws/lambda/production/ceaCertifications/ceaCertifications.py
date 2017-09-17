@@ -161,9 +161,9 @@ def lambda_handler(event, context):
             "candidate_id" : str(record[2]),
             "institution_name" : str(record[3]),
             "certification_name" : str(record[4]),
-            "date_received" : str(record[5]),
-            "expire_date" : str(record[6]),
-            "create_date" : str(record[7]),
+            "date_received" : str(record[5]).replace("None","").replace(" ","T"),
+            "expire_date" : str(record[6]).replace("None","").replace(" ","T"),
+            "create_date" : str(record[7]).replace(" ","T"),
             "description" : str(record[8])
         }
         retval.append(obj)

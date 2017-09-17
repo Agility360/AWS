@@ -165,10 +165,10 @@ def lambda_handler(event, context):
             "candidate_id" : str(record[2]),
             "institution_name" : str(record[3]),
             "degree" : str(record[4]),
-            "start_date" : str(record[5]),
-            "end_date" : str(record[6]),
+            "start_date" : str(record[5]).replace("None","").replace(" ","T"),
+            "end_date" : str(record[6]).replace("None","").replace(" ","T"),
             "graduated" : str(record[7]),
-            "create_date" : str(record[8]),
+            "create_date" : str(record[8]).replace(" ","T"),
             "description" : str(record[9])
         }
         retval.append(obj)
