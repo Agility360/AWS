@@ -42,11 +42,12 @@
           <p>
             <ul>
               <li><a href="#candidates">Candidates</a></li>
-              <li><a href="#jobhistory">Candiates/candidateId/JobHistory</a></li>
-              <li><a href="#education">Candiates/candidateId/Education</a></li>
-              <li><a href="#certifications">Candiates/candidateId/Certfications</a></li>
-              <li><a href="#questionnaires">Candiates/candidateId/Questionnaires</a></li>
-              <li><a href="#questions">Candiates/candidateId/Questionnaires/Id</a></li>
+              <li><a href="#jobapplications">Candidates/candidateId/JobApplications</a></li>
+              <li><a href="#jobhistory">Candidates/candidateId/JobHistory</a></li>
+              <li><a href="#education">Candidates/candidateId/Education</a></li>
+              <li><a href="#certifications">Candidates/candidateId/Certfications</a></li>
+              <li><a href="#questionnaires">Candidates/candidateId/Questionnaires</a></li>
+              <li><a href="#questions">Candidates/candidateId/Questionnaires/Id</a></li>
               <li><a href="#industries">Industries</a></li>
               <li><a href="#professions">Professions</a></li>
             </ul>
@@ -182,6 +183,104 @@
             </div>
 
         </div>
+
+        <div id="jobapplications" class="resource">
+          <h3>Candidates - Job Applications</h3>
+          <div>
+            <ul>
+              <li>
+                All job applications records for one candidate: <a href="/$context.stage/candidates/{accountName}/jobapplications" target="_blank">/$context.stage/candidates/{accountName}/jobapplications</a>
+              </li>
+              <li>
+                A specified job applications record for the specified candidate: <a href="/$context.stage/candidates/{accountName}/jobapplications/{id}" target="_blank">/$context.stage/candidates/{accountName}/jobapplications/{id}</a>
+              </li>
+              <li>
+                The most recenty inserted job applications record for the specified candidate: <a href="/$context.stage/candidates/{accountName}/jobapplications/inserted" target="_blank">/$context.stage/candidates/{accountName}/jobapplications/inserted</a>
+              </li>
+            </ul>
+          </div>
+          <div class="method">
+            Example URI's
+            <h4>GET</h4>
+              <ul>
+                <li><a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobapplications" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobapplications</a></li>
+                <li><a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobapplications/17" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobapplications/2</a></li>
+                <li><a href="https://api.agility360app.net/beta/candidates/mcdaniel/jobapplications/inserted" target="_blank">https://api.agility360app.net/beta/candidates/mcdaniel/jobapplications/inserted</a></li>
+              </ul>
+            <p>
+              Sample body response object:
+              <pre>
+                [
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "test-123",
+                    "create_date": "2018-03-12 16:22:36",
+                    "account_name": "mcdaniel",
+                    "id": 1
+                  },
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "lambda-test-123",
+                    "create_date": "2018-03-12 16:36:00",
+                    "account_name": "mcdaniel",
+                    "id": 2
+                  },
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "lambda-test-123",
+                    "create_date": "2018-03-12 16:36:13",
+                    "account_name": "mcdaniel",
+                    "id": 3
+                  },
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "lambda-test-123",
+                    "create_date": "2018-03-12 16:40:08",
+                    "account_name": "mcdaniel",
+                    "id": 4
+                  },
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "lambda-test-123",
+                    "create_date": "2018-03-12 16:40:49",
+                    "account_name": "mcdaniel",
+                    "id": 5
+                  },
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "lambda-test-123",
+                    "create_date": "2018-03-12 16:41:07",
+                    "account_name": "mcdaniel",
+                    "id": 6
+                  },
+                  {
+                    "candidate_id": 63,
+                    "wordpress_post_id": "api-gateway-test-123456",
+                    "create_date": "2018-03-12 16:53:28",
+                    "account_name": "mcdaniel",
+                    "id": 7
+                  }
+                ]
+              </pre>
+            </p>
+
+          </div>
+
+          <div class="method">
+            <h4>POST</h3>
+            <p>
+              Sample body request object:
+              <pre>
+                  {
+                    "account_name": "mcdaniel",
+                    "wordpress_post_id": "lambda-test-123"
+                  }
+              </pre>
+            </p>
+          </div>
+
+            <div class="method">
+            </div>
 
           <div id="jobhistory" class="resource">
             <h3>Candidates - Job History</h3>
